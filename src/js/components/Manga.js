@@ -25,8 +25,8 @@ export default class Manga extends React.Component {
       width: "10em",
       height: "3em",
       display: "table-cell",
-      "vertical-align": "middle",
-      "text-align": "center",
+      verticalAlign: "middle",
+      textAlign: "center",
     }
 
     return (
@@ -34,12 +34,10 @@ export default class Manga extends React.Component {
         <img src={imagePath} style={imageStyle}/>
         <div style={nameStyle}>
           <span>{ name }</span>
+          <p>Chapters: { chapters }</p>
+          <p>Last Update: { lastupdate }</p>
         </div>
       </div>
     );
   }
 }
-
-
-// <p>Chapters: { chapters }</p>
-        // <p>Last Updated: { lastupdate }</p>
