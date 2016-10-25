@@ -24,17 +24,17 @@ export function reloadMangas() {
       id: 3,
       name: "Bleach", 
       chapters: 745, 
-      followed: true, 
+      followed: false, 
       lastupdate: 123,
-      image: "bleach",
+      image: "bleach.jpg",
     },
     {
       id: 4,
       name: "Onepunch-Man", 
       chapters: 250, 
-      followed: false, 
+      followed: true, 
       lastupdate: 123,
-      image: "onepunchman",
+      image: "onepunchman.jpg",
     }
   ]});
 }

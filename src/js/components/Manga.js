@@ -5,10 +5,20 @@ export default class Manga extends React.Component {
     super();
   }
 
+  followManga() {
+    console.log("Follow", this.props.name);
+    console.info("followManga Action muss implementiert werden");
+  }
+
+  unfollowManga() {
+    console.log("Unfollow", this.props.name);
+    console.info("unfollowManga Action muss implementiert werden");
+  }
+
   render() {
-    
-    const { id, name, chapters, followed, lastupdate, image } = this.props;
-    const imagePath = "images/" + image + ".jpg";
+
+    const { id, name, chapters, followed, lastupdate, image, newchapters } = this.props;
+    const imagePath = "images/" + image;
 
     const imageStyle = {
       height: "170px",
@@ -19,6 +29,7 @@ export default class Manga extends React.Component {
       width: "10em",
       height: "16em",
       border: 1,
+      display: "inline-block",
     }
 
     const nameStyle = {
@@ -31,6 +42,11 @@ export default class Manga extends React.Component {
 
     return (
       <div style={mangaStyle}>
+        {followed ? 
+          <button class="btn btn-sm btn-primary" onClick={this.followManga.bind(this)}>+ Follow</button> 
+          : 
+          <button class="btn btn-sm btn-danger" onClick={this.unfollowManga.bind(this)}>- Unfollow</button>
+        }
         <img src={imagePath} style={imageStyle}/>
         <div style={nameStyle}>
           <span>{ name }</span>

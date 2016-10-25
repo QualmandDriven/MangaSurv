@@ -49,7 +49,11 @@ export default class Mangas extends React.Component {
         <input onChange={this.filterMangas.bind(this)}/>
         <button onClick={this.reloadMangas.bind(this)}>Reload!</button>
         <h1>Mangas</h1>
-        <table>{MangaComponents}</table>
+        <div>
+          {mangas.map((manga) => {
+            return <Manga key={manga.id} {...manga}/>;
+          })}
+        </div>
       </div>
     );
   }

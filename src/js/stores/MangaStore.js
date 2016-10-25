@@ -12,7 +12,7 @@ class MangaStore extends EventEmitter {
             chapters: 745, 
             followed: true, 
             lastupdate: Date.now(),
-            image: "onepiece",
+            image: "onepiece.jpg",
           },
           {
             id: 2,
@@ -20,7 +20,7 @@ class MangaStore extends EventEmitter {
             chapters: 700, 
             followed: false, 
             lastupdate: Date.now(),
-            image: "naruto",
+            image: "naruto.jpg",
           }
         ];
       this.mangas = this.allMangas;
