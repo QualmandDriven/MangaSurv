@@ -1,6 +1,7 @@
 import { EventEmitter } from "events";
 
 import dispatcher from "../dispatcher";
+var assign = require('object-assign');
 
 class MangaStore extends EventEmitter {
   constructor() {
@@ -58,6 +59,31 @@ class MangaStore extends EventEmitter {
     this.emit("change");
   }
 
+  followManga(manga) {
+    var i = 0;
+    for(i = 0; i < this.allMangas.length; i++) {
+      if(manga.id == this.allMangas[i].id)
+        break;
+    }
+
+    this.allMangas[i] = assign({}, this.allMangas[i], {followed: true});
+
+    this.emit("change");
+  }
+
+  unfollowManga(manga) {
+    
+    var i = 0;
+    for(i = 0; i < this.allMangas.length; i++) {
+      if(manga.id == this.allMangas[i].id)
+        break;
+    }
+
+    this.allMangas[i] = assign({}, this.allMangas[i], {followed: false});
+
+    this.emit("change");
+  }
+
   handleActions(action) {
     switch(action.type) {
       case "CREATE_MANGAS": {
@@ -72,6 +98,14 @@ class MangaStore extends EventEmitter {
       }
       case "FILTER_MANGAS": {
         this.filterMangas(action.filter);
+        break;
+      }
+      case "FOLLOW_MANGA": {
+        this.followManga(action.manga);
+        break;
+      }
+      case "UNFOLLOW_MANGA": {
+        this.unfollowManga(action.manga);
         break;
       }
     }

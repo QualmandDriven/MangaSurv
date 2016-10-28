@@ -1,18 +1,18 @@
 import React from "react";
 
+import * as MangaActions from "../actions/MangaActions";
+
 export default class Manga extends React.Component {
   constructor(props) {
     super();
   }
 
   followManga() {
-    console.log("Follow", this.props.name);
-    console.info("followManga Action muss implementiert werden");
+    MangaActions.followManga(this.props);
   }
 
   unfollowManga() {
-    console.log("Unfollow", this.props.name);
-    console.info("unfollowManga Action muss implementiert werden");
+    MangaActions.unfollowManga(this.props);
   }
 
   render() {
@@ -43,9 +43,9 @@ export default class Manga extends React.Component {
     return (
       <div style={mangaStyle}>
         {followed ? 
-          <button class="btn btn-sm btn-primary" onClick={this.followManga.bind(this)}>+ Follow</button> 
-          : 
           <button class="btn btn-sm btn-danger" onClick={this.unfollowManga.bind(this)}>- Unfollow</button>
+          :
+          <button class="btn btn-sm btn-primary" onClick={this.followManga.bind(this)}>+ Follow</button> 
         }
         <img src={imagePath} style={imageStyle}/>
         <div style={nameStyle}>
