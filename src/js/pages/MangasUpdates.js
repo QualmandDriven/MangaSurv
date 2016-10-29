@@ -6,12 +6,12 @@ import MangaStore from "../stores/MangaStore";
 import SearchBar from "../components/SearchBar"
 
 
-export default class Mangas extends React.Component {
+export default class MangasFollowed extends React.Component {
   constructor() {
     super();
     this.getMangas = this.getMangas.bind(this);
     this.state = {
-      mangas: MangaStore.getAll(),
+      mangas: MangaStore.getAllMangasUpdates(),
       filterText: '',
     };
 
@@ -28,12 +28,8 @@ export default class Mangas extends React.Component {
 
   getMangas() {
     this.setState({
-      mangas: MangaStore.getAll(),
+      mangas: MangaStore.getAllMangasUpdates(),
     });
-  }
-
-  reloadMangas() {
-    MangaActions.reloadMangas();
   }
 
   filterMangas(e) {

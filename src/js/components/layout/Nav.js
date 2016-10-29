@@ -21,6 +21,7 @@ export default class Nav extends React.Component {
     const profileClass = location.pathname.match(/^\/profile/) ? "active" : "";
     const settingsClass = location.pathname.match(/^\/settings/) ? "active" : "";
     const mangasClass = location.pathname.match(/^\/mangas/) ? "active" : "";
+    const mangasFollowedClass = location.pathname.match(/^\/followed/) ? "active" : "";
     const navClass = collapsed ? "collapse" : "";
 
     return (

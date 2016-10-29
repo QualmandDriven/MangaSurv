@@ -39,10 +39,6 @@ export function reloadMangas() {
   ]});
 }
 
-export function filterMangas(filter) {
-  dispatcher.dispatch({type: "FILTER_MANGAS", filter});
-} 
-
 export function followManga(manga) {
     dispatcher.dispatch({type: "FOLLOW_MANGA", manga});
   }

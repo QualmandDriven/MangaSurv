@@ -17,7 +17,7 @@ export default class Manga extends React.Component {
 
   render() {
 
-    const { id, name, chapters, followed, lastupdate, image, newchapters } = this.props;
+    const { id, name, chapters, followed, lastupdate, image, chapterUpdates } = this.props;
     const imagePath = "images/" + image;
 
     const imageStyle = {
@@ -49,9 +49,35 @@ export default class Manga extends React.Component {
         }
         <img src={imagePath} style={imageStyle}/>
         <div style={nameStyle}>
-          <span>{ name }</span>
-          <p>Chapters: { chapters }</p>
-          <p>Last Update: { lastupdate }</p>
+          <table>
+            <thead>
+              <tr>
+                <th>{ name }</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Chapters:</td>
+                <td>{ chapters }</td>
+              </tr>
+              <tr>
+                <td>Last Update:</td>
+                <td>{ lastupdate }</td>
+              </tr>
+            </tbody>
+          </table>
+          {
+            chapterUpdates ?
+              <table>
+                <tbody>
+                  {chapterUpdates.map((chapter) => {
+                    return <tr key={chapter.id}><td>{chapter.chapter}</td><td>{chapter.added}</td></tr>;
+                  })}
+                </tbody>
+              </table>
+            :
+            ""
+          }
         </div>
       </div>
     );

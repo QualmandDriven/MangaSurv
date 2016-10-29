@@ -6,6 +6,8 @@ import Profile from "./pages/Profile";
 import Layout from "./pages/Layout";
 import Settings from "./pages/Settings";
 import Mangas from "./pages/Mangas.js";
+import MangasFollowed from "./pages/MangasFollowed.js";
+import MangasUpdates from "./pages/MangasUpdates.js";
 
 const app = document.getElementById('app');
 
@@ -16,6 +18,8 @@ ReactDOM.render(
       <Route path="profile" component={Profile}></Route>
       <Route path="settings" component={Settings}></Route>
       <Route path="mangas" component={Mangas}></Route>
+      <Route path="mangas/followed" component={MangasFollowed}></Route>
+      <Route path="mangas/updates" component={MangasUpdates}></Route>
     </Route>
   </Router>,
 app);
