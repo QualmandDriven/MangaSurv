@@ -30,7 +30,7 @@ export default class Nav extends React.Component {
       <div class="col-sm-3 col-md-2 sidebar" role="navigation">
         <ul class="nav nav-sidebar">
           <li class={profileClass}><Link to="profile" onClick={this.toggleCollapse.bind(this)}>Profile</Link></li>
-          <li><a href="#">Login</a></li>
+          <li><Link to="login" onClick={this.toggleCollapse.bind(this)}>Login</Link></li>
           <li><a href="#">Logout</a></li>
         </ul>
         <ul class="nav nav-sidebar">

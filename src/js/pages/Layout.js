@@ -6,12 +6,19 @@ import Nav from "../components/layout/Nav";
 import NavSide from "../components/layout/NavSide";
 
 export default class Layout extends React.Component {
+
   render() {
     const { location } = this.props;
     const containerStyle = {
       marginTop: "60px"
     };
 
+    let children = null;
+    if (this.props.children) {
+      children = React.cloneElement(this.props.children, {
+        auth: this.props.route.auth //sends auth instance to children
+      })
+    }
 
     return (
       <div>
@@ -20,7 +27,7 @@ export default class Layout extends React.Component {
           <div class="row">
             <NavSide location={location} />
             <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-              {this.props.children}
+              {children}
             </div>
           </div>
         </div>      

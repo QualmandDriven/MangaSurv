@@ -1,6 +1,7 @@
 import React from "react";
 
 import * as MangaActions from "../actions/MangaActions";
+var moment = require("moment");
 
 export default class Manga extends React.Component {
   constructor(props) {
@@ -13,6 +14,10 @@ export default class Manga extends React.Component {
 
   unfollowManga() {
     MangaActions.unfollowManga(this.props);
+  }
+
+  markAsRead() {
+    MangaActions.markAsRead(this.props);
   }
 
   render() {
@@ -62,19 +67,22 @@ export default class Manga extends React.Component {
               </tr>
               <tr>
                 <td>Last Update:</td>
-                <td>{ lastupdate }</td>
+                <td>{ moment(lastupdate).format("ll") }({moment(lastupdate).startOf("hour").fromNow()})</td>
               </tr>
             </tbody>
           </table>
           {
             chapterUpdates ?
-              <table>
-                <tbody>
-                  {chapterUpdates.map((chapter) => {
-                    return <tr key={chapter.id}><td>{chapter.chapter}</td><td>{chapter.added}</td></tr>;
-                  })}
-                </tbody>
-              </table>
+              <div>
+                <table>
+                  <tbody>
+                    {chapterUpdates.map((chapter) => {
+                      return <tr key={chapter.id}><td>{chapter.chapter}</td><td>{moment(chapter.added).format("ll")}</td></tr>;
+                    })}
+                  </tbody>
+                </table>
+                <button class="btn btn-success" onClick={this.markAsRead.bind(this)}>Mark as read</button>
+              </div>
             :
             ""
           }

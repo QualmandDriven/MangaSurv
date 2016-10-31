@@ -40,28 +40,37 @@ class MangaStore extends EventEmitter {
   }
 
   followManga(manga) {
-    var i = 0;
-    for(i = 0; i < this.mangas.length; i++) {
-      if(manga.id == this.mangas[i].id)
-        break;
+    var i = this.getIndex(this.mangas, manga);
+    if(i > -1) {
+      this.mangas[i] = assign({}, this.mangas[i], {followed: true});
+      this.emit("change");
     }
-
-    this.mangas[i] = assign({}, this.mangas[i], {followed: true});
-
-    this.emit("change");
   }
 
   unfollowManga(manga) {
-    
-    var i = 0;
-    for(i = 0; i < this.mangas.length; i++) {
-      if(manga.id == this.mangas[i].id)
-        break;
+    var i = this.getIndex(this.mangas, manga);
+    if(i > -1) {
+      this.mangas[i] = assign({}, this.mangas[i], {followed: false});
+      this.emit("change");
+    }
+  }
+
+  markAsRead(manga) {
+    var i = this.getIndex(this.mangasUpdates, manga);
+    if(i > -1) {
+      this.mangasUpdates.splice(i, 1);
+      this.emit("change");
+    }
+  }
+  
+  getIndex(arr, o) {
+    for(var i = 0; i < arr.length; i++) {
+      if(o.id == arr[i].id) {
+        return i;
+      }
     }
 
-    this.mangas[i] = assign({}, this.mangas[i], {followed: false});
-
-    this.emit("change");
+    return -1;
   }
 
   handleActions(action) {
@@ -87,6 +96,9 @@ class MangaStore extends EventEmitter {
         this.unfollowManga(action.manga);
         break;
       }
+      case "MARKASREAD_MANGA": {
+        this.markAsRead(action.manga);
+      }
     }
   }
 
@@ -95,47 +107,47 @@ class MangaStore extends EventEmitter {
 var MANGAS = [
   {id: 1, name: "One Piece", chapters: 745, followed: true, lastupdate: Date.now(),image: "onepiece.jpg",},
   {id: 2, name: "Naruto Shippuuden", chapters: 700, followed: false, lastupdate: Date.now(),image: "naruto.jpg",},
-  {id: 3, name: "Bleach", chapters: 745, followed: false, lastupdate: 123,image: "bleach.jpg",},
-  {id: 4, name: "Onepunch-Man", chapters: 250, followed: true, lastupdate: 123,image: "onepunchman.jpg",},
+  {id: 3, name: "Bleach", chapters: 745, followed: false, lastupdate: "2015-12-03",image: "bleach.jpg",},
+  {id: 4, name: "Onepunch-Man", chapters: 250, followed: true, lastupdate: "2015-12-03",image: "onepunchman.jpg",},
   {id: 5, name: "One Piece", chapters: 745, followed: true, lastupdate: Date.now(),image: "onepiece.jpg",},
   {id: 6, name: "Naruto Shippuuden", chapters: 700, followed: false, lastupdate: Date.now(),image: "naruto.jpg",},
-  {id: 7, name: "Bleach", chapters: 745, followed: false, lastupdate: 123,image: "bleach.jpg",},
-  {id: 8, name: "Onepunch-Man", chapters: 250, followed: true, lastupdate: 123,image: "onepunchman.jpg",},
+  {id: 7, name: "Bleach", chapters: 745, followed: false, lastupdate: "2015-12-03",image: "bleach.jpg",},
+  {id: 8, name: "Onepunch-Man", chapters: 250, followed: true, lastupdate: "2015-12-03",image: "onepunchman.jpg",},
   {id: 9, name: "One Piece", chapters: 745, followed: true, lastupdate: Date.now(),image: "onepiece.jpg",},
   {id: 10, name: "Naruto Shippuuden", chapters: 700, followed: false, lastupdate: Date.now(),image: "naruto.jpg",},
-  {id: 11, name: "Bleach", chapters: 745, followed: false, lastupdate: 123,image: "bleach.jpg",},
-  {id: 12, name: "Onepunch-Man", chapters: 250, followed: true, lastupdate: 123,image: "onepunchman.jpg",},
+  {id: 11, name: "Bleach", chapters: 745, followed: false, lastupdate: "2015-12-03",image: "bleach.jpg",},
+  {id: 12, name: "Onepunch-Man", chapters: 250, followed: true, lastupdate: "2015-12-03",image: "onepunchman.jpg",},
   {id: 13, name: "One Piece", chapters: 745, followed: true, lastupdate: Date.now(),image: "onepiece.jpg",},
   {id: 61, name: "Naruto Shippuuden", chapters: 700, followed: false, lastupdate: Date.now(),image: "naruto.jpg",},
-  {id: 71, name: "Bleach", chapters: 745, followed: false, lastupdate: 123,image: "bleach.jpg",},
-  {id: 81, name: "Onepunch-Man", chapters: 250, followed: true, lastupdate: 123,image: "onepunchman.jpg",},
+  {id: 71, name: "Bleach", chapters: 745, followed: false, lastupdate: "2015-12-03",image: "bleach.jpg",},
+  {id: 81, name: "Onepunch-Man", chapters: 250, followed: true, lastupdate: "2015-12-03",image: "onepunchman.jpg",},
   {id: 91, name: "One Piece", chapters: 745, followed: true, lastupdate: Date.now(),image: "onepiece.jpg",},
   {id: 21, name: "Naruto Shippuuden", chapters: 700, followed: false, lastupdate: Date.now(),image: "naruto.jpg",},
-  {id: 31, name: "Bleach", chapters: 745, followed: false, lastupdate: 123,image: "bleach.jpg",},
-  {id: 41, name: "Onepunch-Man", chapters: 250, followed: true, lastupdate: 123,image: "onepunchman.jpg",},
+  {id: 31, name: "Bleach", chapters: 745, followed: false, lastupdate: "2015-12-03",image: "bleach.jpg",},
+  {id: 41, name: "Onepunch-Man", chapters: 250, followed: true, lastupdate: "2015-12-03",image: "onepunchman.jpg",},
   {id: 51, name: "One Piece", chapters: 745, followed: true, lastupdate: Date.now(),image: "onepiece.jpg",},
   {id: 62, name: "Naruto Shippuuden", chapters: 700, followed: false, lastupdate: Date.now(),image: "naruto.jpg",},
-  {id: 72, name: "Bleach", chapters: 745, followed: false, lastupdate: 123,image: "bleach.jpg",},
-  {id: 82, name: "Onepunch-Man", chapters: 250, followed: true, lastupdate: 123,image: "onepunchman.jpg",},
+  {id: 72, name: "Bleach", chapters: 745, followed: false, lastupdate: "2015-12-03",image: "bleach.jpg",},
+  {id: 82, name: "Onepunch-Man", chapters: 250, followed: true, lastupdate: "2015-12-03",image: "onepunchman.jpg",},
   {id: 912, name: "One Piece", chapters: 745, followed: true, lastupdate: Date.now(),image: "onepiece.jpg",},
   {id: 922, name: "Naruto Shippuuden", chapters: 700, followed: false, lastupdate: Date.now(),image: "naruto.jpg",},
-  {id: 932, name: "Bleach", chapters: 745, followed: false, lastupdate: 123,image: "bleach.jpg",},
-  {id: 942, name: "Onepunch-Man", chapters: 250, followed: true, lastupdate: 123,image: "onepunchman.jpg",},
+  {id: 932, name: "Bleach", chapters: 745, followed: false, lastupdate: "2015-12-03",image: "bleach.jpg",},
+  {id: 942, name: "Onepunch-Man", chapters: 250, followed: true, lastupdate: "2015-12-03",image: "onepunchman.jpg",},
   {id: 992, name: "One Piece", chapters: 745, followed: true, lastupdate: Date.now(),image: "onepiece.jpg",},
   {id: 911, name: "Naruto Shippuuden", chapters: 700, followed: false, lastupdate: Date.now(),image: "naruto.jpg",},
-  {id: 711, name: "Bleach", chapters: 745, followed: false, lastupdate: 123,image: "bleach.jpg",},
-  {id: 811, name: "Onepunch-Man", chapters: 250, followed: true, lastupdate: 123,image: "onepunchman.jpg",},
+  {id: 711, name: "Bleach", chapters: 745, followed: false, lastupdate: "2015-12-03",image: "bleach.jpg",},
+  {id: 811, name: "Onepunch-Man", chapters: 250, followed: true, lastupdate: "2015-12-03",image: "onepunchman.jpg",},
 ];
 
 var MANGASFOLLOWED = [
-  {id: 3, name: "Bleach", chapters: 745, followed: true, lastupdate: 123,image: "bleach.jpg",},
-  {id: 4, name: "Onepunch-Man", chapters: 250, followed: true, lastupdate: 123,image: "onepunchman.jpg",},
+  {id: 3, name: "Bleach", chapters: 745, followed: true, lastupdate: "2015-12-03",image: "bleach.jpg",},
+  {id: 4, name: "Onepunch-Man", chapters: 250, followed: true, lastupdate: "2015-12-03",image: "onepunchman.jpg",},
 ];
 
 var MANGASUPDATES = [
-  {id: 3, name: "Bleach", chapters: 745, followed: true, lastupdate: 123,image: "bleach.jpg", chapterUpdates: [{id: 12323,  chapter: 767, added: "2016-04-23"}, {id: 22323, chapter: 768, added: "2016-04-29"}],},
-  {id: 4, name: "Onepunch-Man", chapters: 250, followed: true, lastupdate: 123,image: "onepunchman.jpg",},
-  {id: 992, name: "One Piece", chapters: 745, followed: true, lastupdate: Date.now(),image: "onepiece.jpg",},
+  {id: 3, name: "Bleach", chapters: 745, followed: true, lastupdate: "2015-12-03",image: "bleach.jpg", chapterUpdates: [{id: 12323,  chapter: 767, added: "2016-04-23"}, {id: 22323, chapter: 768, added: "2016-10-29"}],},
+  {id: 4, name: "Onepunch-Man", chapters: 250, followed: true, lastupdate: "2015-12-03",image: "onepunchman.jpg",},
+  {id: 992, name: "One Piece", chapters: 745, followed: true, lastupdate: "2015-12-03",image: "onepiece.jpg",},
 ];
 
 const mangaStore = new MangaStore;

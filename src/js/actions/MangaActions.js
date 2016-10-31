@@ -40,9 +40,13 @@ export function reloadMangas() {
 }
 
 export function followManga(manga) {
-    dispatcher.dispatch({type: "FOLLOW_MANGA", manga});
-  }
+  dispatcher.dispatch({type: "FOLLOW_MANGA", manga});
+}
 
 export function unfollowManga(manga) {
-    dispatcher.dispatch({type: "UNFOLLOW_MANGA", manga});
-  }
+  dispatcher.dispatch({type: "UNFOLLOW_MANGA", manga});
+}
+
+export function markAsRead(manga) {
+  dispatcher.dispatch({type: "MARKASREAD_MANGA", manga});
+}
