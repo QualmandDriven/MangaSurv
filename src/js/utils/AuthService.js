@@ -20,12 +20,13 @@ export default class AuthService extends EventEmitter {
     // Saves the user token
     this.setToken(authResult.idToken)
     // navigate to the home route
-    browserHistory.replace('/#/home')
+    browserHistory.replace('/#/login')
     // Async loads the user profile data
     this.lock.getProfile(authResult.idToken, (error, profile) => {
       if (error) {
         console.log('Error loading the Profile', error)
       } else {
+        console.log(profile);
         this.setProfile(profile)
       }
     })
