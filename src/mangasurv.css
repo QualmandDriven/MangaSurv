@@ -103,3 +103,148 @@ body {
   display: inline-block;
   border-radius: 50%;
 }
+
+.overview
+{
+	width:	10em;
+	height:	16em;
+	float:	left;
+	text-align: center;
+	/*font-size: 1.3em;*/
+	position: relative;
+	border-style: solid;
+	border-width: 1px;
+	border-radius: 3px;
+	border-color: #b1b3b4;
+	margin-bottom: 0.5em;
+	margin-right: 0.5em;
+	background-color: #f1f3f4;
+}
+
+.overview  > div
+{
+	height: 3em;
+	width: 10em;
+	display: table-cell;
+	vertical-align: middle;
+}
+
+.overview  > span
+{
+	width:100%;
+	text-align:center;
+	vertical-align: middle;
+}
+
+.overview  > a > img
+{
+	width: 100%;
+	height: 170px;
+}
+
+/*.newoverview
+{
+	width:	10em;
+	height:	16em;
+	float:	left;
+	text-align: center;
+	font-size: 1.3em;
+position: relative;
+	
+	width:	10em;
+	height:	16em;
+	float:	left;
+	text-align: center;
+	font-size: 1.3em;
+	position: relative;
+	border-style: solid;
+	border-width: 1px;
+	border-radius: 3px;
+	border-color: #b1b3b4;
+	margin-top: 0.5em;
+	margin-right: 0.5em;
+	background-color: #f1f3f4;
+}
+
+.newoverview  > a > img
+{
+	width: 100%;
+	height: 14.5em;
+}
+
+.newoverview  > select
+{
+	width: 100%;
+}
+
+.newoverview  > span
+{
+	width:100%;
+	text-align:center;
+}
+
+.newoverview .hovernewoverview
+{
+	position: absolute;
+    left: 0;
+    top: 0;
+    display: none;
+}
+
+.newoverview:hover .hovernewoverview
+{
+  left: 0.2em;
+  top: 10.8em;
+	display: block;
+}*/
+
+.hoveraddoverview
+{
+	/*width: 50px;
+	height: 50px;*/
+}
+
+.overview .hoveraddoverview
+{
+	position: absolute;
+    left: 0;
+    top: 0;
+    display: none;
+}
+
+.overview:hover .hoveraddoverview
+{
+	left: 5em;
+  top: 8.8em;
+	display: block;
+}
+
+.addedoverview
+{
+  position: absolute;
+  width: 35px;
+  height: 35px;
+  left: 0.2em;
+  top: 0.2em;
+}
+
+.hoverdeleteoverview
+{
+	/*width: 50px;
+	height: 50px;*/
+}
+
+.overview .hoverdeleteoverview
+{
+  	position: absolute;
+    left: 0;
+    top: 0;
+    display: none;
+}
+
+.overview:hover .hoverdeleteoverview
+{
+	  left: 5em;
+    top: 8.8em;
+  	display: block;
+}
