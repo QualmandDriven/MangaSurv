@@ -45,6 +45,15 @@ public class File
     public string Address { get; set; }
 }
 
+public class User
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+    
+    public List<Manga> FollowedMangas { get; set; } = new List<Manga>();
+    public List<Chapter> NewChapters { get; set; } = new List<Chapter>();
+}
+
 public class MangaSurvContext : DbContext
 {
     public MangaSurvContext(DbContextOptions<MangaSurvContext> options) : base(options)
@@ -55,4 +64,5 @@ public class MangaSurvContext : DbContext
     public DbSet<Manga> Mangas { get; set; }
     public DbSet<Chapter> Chapters { get; set; }
     public DbSet<File> Files { get; set; }
+    public DbSet<User> Users { get; set; }
 }
