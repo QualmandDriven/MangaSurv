@@ -7,10 +7,9 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace MangaSurvWebApi.Migrations
 {
     [DbContext(typeof(MangaSurvContext))]
-    [Migration("20161128213710_ListMigration")]
-    partial class ListMigration
+    partial class MangaSurvContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)
@@ -18,7 +17,7 @@ namespace MangaSurvWebApi.Migrations
 
             modelBuilder.Entity("Chapter", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn);
 
@@ -29,7 +28,7 @@ namespace MangaSurvWebApi.Migrations
 
                     b.Property<DateTime>("EnterDate");
 
-                    b.Property<int>("MangaId");
+                    b.Property<long>("MangaId");
 
                     b.HasKey("Id");
 
@@ -40,14 +39,14 @@ namespace MangaSurvWebApi.Migrations
 
             modelBuilder.Entity("File", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn);
 
                     b.Property<string>("Address")
                         .IsRequired();
 
-                    b.Property<int>("ChapterId");
+                    b.Property<long>("ChapterId");
 
                     b.Property<int>("FileNo");
 
@@ -63,7 +62,7 @@ namespace MangaSurvWebApi.Migrations
 
             modelBuilder.Entity("Manga", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn);
 
@@ -76,6 +75,54 @@ namespace MangaSurvWebApi.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Mangas");
+                });
+
+            modelBuilder.Entity("User", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("UserFollowMangas", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<long>("MangaId");
+
+                    b.Property<long>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MangaId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserFollowMangas");
+                });
+
+            modelBuilder.Entity("UserNewChapters", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<long>("ChapterId");
+
+                    b.Property<long>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ChapterId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserNewChapters");
                 });
 
             modelBuilder.Entity("Chapter", b =>
@@ -91,6 +138,32 @@ namespace MangaSurvWebApi.Migrations
                     b.HasOne("Chapter")
                         .WithMany("Files")
                         .HasForeignKey("ChapterId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("UserFollowMangas", b =>
+                {
+                    b.HasOne("Manga", "Manga")
+                        .WithMany("FollowingUsers")
+                        .HasForeignKey("MangaId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("User", "User")
+                        .WithMany("FollowedMangas")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("UserNewChapters", b =>
+                {
+                    b.HasOne("Chapter", "Chapter")
+                        .WithMany("NewChaptersForUsers")
+                        .HasForeignKey("ChapterId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("User", "User")
+                        .WithMany("NewChapters")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
         }

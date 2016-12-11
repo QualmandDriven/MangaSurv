@@ -19,12 +19,18 @@ namespace MangaSurvWebApi.Controllers
         [HttpGet("{userid}/mangas/")]
         public IActionResult Get(int userid)
         {
-            User user = this._context.Users.FirstOrDefault(u => u.Id == userid);
+            var mangaslist = (from manga in _context.UserFollowMangas
+                              where manga.UserId == userid
+                              select manga.MangaId).ToList();
 
-            if (user == null)
+            var mangas = this._context.Mangas.Where(m => mangaslist.Contains(m.Id));
+
+            //var mangas = this._context.Mangas.Where(m => _context.UserFollowMangas.Where(ufm => ufm.UserId == userid).Select(ufm => ufm.MangaId).Contains(m.Id));
+
+            if (mangas == null || mangas.Count<Manga>() == 0)
                 return this.NotFound();
             
-            return this.Ok(user.FollowedMangas);
+            return this.Ok(mangas);
         }
         
         // GET api/mangas/5
@@ -40,9 +46,10 @@ namespace MangaSurvWebApi.Controllers
             if (user == null)
                 return this.NotFound();
 
-            var manga = user.FollowedMangas.FirstOrDefault(m => m.Id == mangaid);
+            //var manga = user.FollowedMangas.FirstOrDefault(m => m.Id == mangaid);
 
-            return this.Ok(manga);
+            //return this.Ok(manga);
+            return this.Ok();
         }
 
         // POST api/mangas
@@ -60,9 +67,15 @@ namespace MangaSurvWebApi.Controllers
                     return this.NotFound();
 
 
-                user.FollowedMangas.Add(manga);
+                UserFollowMangas ufm = new UserFollowMangas();
+                ufm.Manga = manga;
+                ufm.MangaId = manga.Id;
+                ufm.User = user;
+                ufm.UserId = user.Id;
+
+                this._context.UserFollowMangas.Add(ufm);
                 await this._context.SaveChangesAsync();
-                return this.CreatedAtAction("POST", value);
+                return this.CreatedAtAction("POST", ufm);
             }
             catch(Exception ex)
             {
@@ -84,13 +97,13 @@ namespace MangaSurvWebApi.Controllers
             if (user == null)
                 return;
 
-            var manga = user.FollowedMangas.FirstOrDefault(m => m.Id == mangaid);
-
-            if (manga != null)
-            {
-                user.FollowedMangas.Remove(manga);
-                this._context.SaveChanges();
-            }
+            //var manga = user.FollowedMangas.FirstOrDefault(m => m.Id == mangaid);
+            
+            //if (manga != null)
+            //{
+            //    user.FollowedMangas.Remove(manga);
+            //    this._context.SaveChanges();
+            //}
         }
     }
 }
