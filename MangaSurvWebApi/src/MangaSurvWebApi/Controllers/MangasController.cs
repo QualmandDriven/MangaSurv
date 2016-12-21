@@ -58,7 +58,13 @@ namespace MangaSurvWebApi.Controllers
                 if (!ModelState.IsValid)
                     return this.BadRequest(ModelState);
 
+                List<Chapter> lChapters = value.Chapters;
+                value.Chapters = new List<Chapter>();
+
                 await this._context.Mangas.AddAsync(value);
+                await this._context.SaveChangesAsync();
+                Manga newManga = this._context.Mangas.FirstOrDefault(m => m.Id == value.Id);
+                newManga.Chapters.AddRange(lChapters);
                 await this._context.SaveChangesAsync();
                 return this.CreatedAtAction("POST", value);
             }
