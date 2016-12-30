@@ -78,6 +78,31 @@ public class User
     public List<UserNewChapters> NewChapters { get; set; } = new List<UserNewChapters>();
 }
 
+public class Anime
+{
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public long Id { get; set; }
+    [Required]
+    public string Name { get; set; }
+    [Required]
+    public string FileSystemName { get; set; }
+
+    public List<Episode> Episodes { get; set; } = new List<Episode>();
+}
+
+public class Episode
+{
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public long Id { get; set; }
+    public long AnimeId { get; set; }
+    [Required]
+    public float EpisodeNo { get; set; }
+    //public int StateId{ get; set; }
+    [Required]
+    public string Address { get; set; }
+    public DateTime EnterDate { get; set; }
+}
+
 public class MangaSurvContext : DbContext
 {
     public MangaSurvContext(DbContextOptions<MangaSurvContext> options) : base(options)
@@ -114,4 +139,7 @@ public class MangaSurvContext : DbContext
     public DbSet<User> Users { get; set; }
     public DbSet<UserFollowMangas> UserFollowMangas { get; set; }
     public DbSet<UserNewChapters> UserNewChapters { get; set; }
+
+    public DbSet<Anime> Animes { get; set; }
+    public DbSet<Episode> Episodes { get; set; }
 }
