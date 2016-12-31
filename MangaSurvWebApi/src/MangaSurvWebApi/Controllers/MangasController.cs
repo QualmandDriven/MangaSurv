@@ -35,7 +35,7 @@ namespace MangaSurvWebApi.Controllers
         }
 
         // GET api/mangas/5
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name ="MangaLink")]
         [Produces(typeof(Manga))]
         public IActionResult Get(int id)
         {
@@ -66,7 +66,7 @@ namespace MangaSurvWebApi.Controllers
                 Manga newManga = this._context.Mangas.FirstOrDefault(m => m.Id == value.Id);
                 newManga.Chapters.AddRange(lChapters);
                 await this._context.SaveChangesAsync();
-                return this.CreatedAtAction("POST", value);
+                return this.CreatedAtRoute("MangaLink", new { IDictionary = value.Id }, value);
             }
             catch(Exception ex)
             {

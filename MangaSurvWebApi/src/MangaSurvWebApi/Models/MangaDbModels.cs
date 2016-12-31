@@ -101,6 +101,12 @@ public class Episode
     [Required]
     public string Address { get; set; }
     public DateTime EnterDate { get; set; }
+
+    public void DoDefaultDate()
+    {
+        if (this.EnterDate == null || this.EnterDate == DateTime.MinValue)
+            this.EnterDate = DateTime.Now;
+    }
 }
 
 public class MangaSurvContext : DbContext

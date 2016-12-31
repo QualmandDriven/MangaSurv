@@ -27,7 +27,7 @@ namespace MangaSurvWebApi.Controllers
         }
 
         // GET api/mangas/5
-        [HttpGet("{mangaid}/chapters/{chapterid}")]
+        [HttpGet("{mangaid}/chapters/{chapterid}", Name ="MangaChapterLink")]
         public IActionResult Get(int mangaid, int chapterid)
         {
             //if(Request.QueryString.HasValue)
@@ -50,7 +50,7 @@ namespace MangaSurvWebApi.Controllers
 
                 this._context.Chapters.Add(value);
                 this._context.SaveChanges();
-                return this.CreatedAtAction("POST", value);
+                return this.CreatedAtRoute("MangaChapterLink", new { mangaid = mangaid, chapterid = value.Id }, value);
             }
             catch(Exception ex)
             {

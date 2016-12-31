@@ -35,7 +35,7 @@ namespace MangaSurvWebApi.Controllers
         }
 
         // GET api/mangas/5
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name ="UserLink")]
         [Produces(typeof(Manga))]
         public IActionResult Get(int id)
         {
@@ -60,7 +60,7 @@ namespace MangaSurvWebApi.Controllers
 
                 await this._context.Users.AddAsync(value);
                 await this._context.SaveChangesAsync();
-                return this.CreatedAtAction("POST", value);
+                return this.CreatedAtRoute("UserLink", new { id = value.Id }, value);
             }
             catch(Exception ex)
             {

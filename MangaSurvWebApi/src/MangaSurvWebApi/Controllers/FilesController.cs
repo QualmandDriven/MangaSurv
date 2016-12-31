@@ -23,7 +23,7 @@ namespace MangaSurvWebApi.Controllers
         }
 
         // GET api/mangas/5
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name ="FileLink")]
         public File Get(int id)
         {
             //if(Request.QueryString.HasValue)
@@ -44,7 +44,7 @@ namespace MangaSurvWebApi.Controllers
 
                 this._context.Files.Add(value);
                 this._context.SaveChanges();
-                return this.CreatedAtAction("POST", value);
+                return this.CreatedAtRoute("FileLink", new { id = value.Id }, value);
             }
             catch(Exception ex)
             {
