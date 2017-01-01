@@ -78,6 +78,13 @@ namespace MangaSurvWebApi.Controllers
         [HttpPut("{id}")]
         public void Put(int id, [FromBody]Manga value)
         {
+            this._context.Mangas.Attach(value);
+
+            var manga = this._context.Mangas.FirstOrDefault(m => m.Id == id);
+
+            this._context.Entry(manga).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            this._context.SaveChanges();
+            this.Ok(manga);
         }
 
         // DELETE api/mangas/5

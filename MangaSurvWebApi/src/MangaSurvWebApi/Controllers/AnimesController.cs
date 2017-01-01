@@ -135,8 +135,20 @@ namespace MangaSurvWebApi.Controllers
 
         // PUT api/mangas/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]Manga value)
+        public void Put(int id, [FromBody]Anime value)
         {
+            var anime = this._context.Animes.FirstOrDefault(m => m.Id == id);
+            if(anime != null)
+            { 
+                this._context.Animes.Attach(value);
+                this._context.Entry(anime).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                this._context.SaveChanges();
+                this.Ok(anime);
+            }
+            else
+            {
+                this.BadRequest();
+            }
         }
 
         // DELETE api/mangas/5

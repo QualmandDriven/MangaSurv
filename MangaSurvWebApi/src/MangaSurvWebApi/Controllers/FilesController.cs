@@ -15,14 +15,14 @@ namespace MangaSurvWebApi.Controllers
             this._context = context;
         }
 
-        // GET api/mangas
+        // GET api/files
         [HttpGet]
         public IEnumerable<File> Get()
         {
             return this._context.Files.ToList();
         }
 
-        // GET api/mangas/5
+        // GET api/files/5
         [HttpGet("{id}", Name ="FileLink")]
         public File Get(int id)
         {
@@ -33,7 +33,7 @@ namespace MangaSurvWebApi.Controllers
             return file;
         }
 
-        // POST api/mangas
+        // POST api/files
         [HttpPost]
         public IActionResult Post([FromBody]File value)
         {
@@ -52,13 +52,13 @@ namespace MangaSurvWebApi.Controllers
             }
         }
 
-        // PUT api/mangas/5
+        // PUT api/files/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody]File value)
         {
         }
 
-        // DELETE api/mangas/5
+        // DELETE api/files/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {

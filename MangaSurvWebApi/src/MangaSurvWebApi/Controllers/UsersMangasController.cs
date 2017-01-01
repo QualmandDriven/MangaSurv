@@ -21,35 +21,22 @@ namespace MangaSurvWebApi.Controllers
         {
             var mangaslist = (from manga in _context.UserFollowMangas
                               where manga.UserId == userid
-                              select manga.MangaId).ToList();
+                              select manga.Manga).ToList();
 
-            var mangas = this._context.Mangas.Where(m => mangaslist.Contains(m.Id));
-
-            //var mangas = this._context.Mangas.Where(m => _context.UserFollowMangas.Where(ufm => ufm.UserId == userid).Select(ufm => ufm.MangaId).Contains(m.Id));
-
-            if (mangas == null || mangas.Count<Manga>() == 0)
-                return this.NotFound();
-            
-            return this.Ok(mangas);
+            return this.Ok(mangaslist);
         }
         
         // GET api/mangas/5
-        [HttpGet("{userid}/mangas/{mangaid}")]
+        [HttpGet("{userid}/mangas/{mangaid}", Name ="UserMangaLink")]
         [Produces(typeof(Manga))]
         public IActionResult Get(int userid, int mangaid)
         {
-            //if(Request.QueryString.HasValue)
-            //    return Request.QueryString.Value;
+            var mangaslist = (from manga in _context.UserFollowMangas
+                              where manga.UserId == userid
+                              && manga.MangaId == mangaid
+                              select manga.Manga).ToList();
 
-            User user = this._context.Users.FirstOrDefault(u => u.Id == userid);
-
-            if (user == null)
-                return this.NotFound();
-
-            //var manga = user.FollowedMangas.FirstOrDefault(m => m.Id == mangaid);
-
-            //return this.Ok(manga);
-            return this.Ok();
+            return this.Ok(mangaslist.FirstOrDefault());
         }
 
         // POST api/mangas
@@ -66,16 +53,23 @@ namespace MangaSurvWebApi.Controllers
                 if (manga == null)
                     return this.NotFound();
 
+                var entry = this._context.UserFollowMangas.FirstOrDefault(u => u.UserId == userid && u.MangaId == manga.Id);
 
-                UserFollowMangas ufm = new UserFollowMangas();
-                ufm.Manga = manga;
-                ufm.MangaId = manga.Id;
-                ufm.User = user;
-                ufm.UserId = user.Id;
+                // Add entry only when it does not exist yet
+                if (entry == null)
+                {
+                    UserFollowMangas ufm = new UserFollowMangas();
+                    ufm.Manga = manga;
+                    ufm.MangaId = manga.Id;
+                    ufm.User = user;
+                    ufm.UserId = user.Id;
 
-                this._context.UserFollowMangas.Add(ufm);
-                await this._context.SaveChangesAsync();
-                return this.CreatedAtAction("POST", ufm);
+                    this._context.UserFollowMangas.Add(ufm);
+                    await this._context.SaveChangesAsync();
+
+                    entry = ufm;
+                }
+                return this.CreatedAtRoute("UserMangaLink", new { userid = entry.UserId, mangaid = entry.MangaId }, entry);
             }
             catch(Exception ex)
             {
@@ -93,17 +87,12 @@ namespace MangaSurvWebApi.Controllers
         [HttpDelete("{userid}/mangas/{mangaid}")]
         public void Delete(int userid, int mangaid)
         {
-            var user = this._context.Users.FirstOrDefault(u => u.Id == userid);
-            if (user == null)
+            var usermanga = this._context.UserFollowMangas.FirstOrDefault(u => u.UserId == userid && u.MangaId == mangaid);
+            if (usermanga == null)
                 return;
 
-            //var manga = user.FollowedMangas.FirstOrDefault(m => m.Id == mangaid);
-            
-            //if (manga != null)
-            //{
-            //    user.FollowedMangas.Remove(manga);
-            //    this._context.SaveChanges();
-            //}
+            this._context.UserFollowMangas.Remove(usermanga);
+            this._context.SaveChanges();
         }
     }
 }
