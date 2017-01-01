@@ -22,12 +22,14 @@ export default class Manga extends React.Component {
 
   render() {
 
-    const { id, name, chapters, followed, lastupdate, image, chapterUpdates } = this.props;
-    const imagePath = "images/" + image;
+    // const { id, name, chapters, followed, lastupdate, image, chapterUpdates } = this.props;
+    // const imagePath = "images/" + this.props.image;
+    console.log(this.props.fileSystemName);
+    const imagePath = "images/" + this.props.fileSystemName.replace(" ", "_");
 
     return (
       <div class="overview">
-        {followed ? 
+        {this.props.followed ? 
           <button class="btn btn-sm btn-danger hoverdeleteoverview" onClick={this.unfollowManga.bind(this)}>- Unfollow</button>
           :
           <button class="btn btn-sm btn-primary hoveraddoverview" onClick={this.followManga.bind(this)}>+ Follow</button> 
@@ -39,26 +41,26 @@ export default class Manga extends React.Component {
           <table>
             <thead>
               <tr>
-                <th colSpan="3">{ name }</th>
+                <th colSpan="3">{ this.props.name }</th>
               </tr>
             </thead>
             <tbody>
               <tr>
                 <td>Chapters:</td>
-                <td>{ chapters }</td>
+                <td>{ this.props.chapters }</td>
               </tr>
               <tr>
                 <td>Last Update:</td>
-                <td>{ moment(lastupdate).format("ll") }({moment(lastupdate).startOf("hour").fromNow()})</td>
+                <td>{ moment(this.props.lastupdate).format("ll") }({moment(this.props.lastupdate).startOf("hour").fromNow()})</td>
               </tr>
             </tbody>
           </table>
           {
-            chapterUpdates ?
+            this.props.chapterUpdates ?
               <div>
                 <table>
                   <tbody>
-                    {chapterUpdates.map((chapter) => {
+                    {this.props.chapterUpdates.map((chapter) => {
                       return <tr key={chapter.id}><td>{chapter.chapter}</td><td>{moment(chapter.added).format("ll")}</td></tr>;
                     })}
                   </tbody>

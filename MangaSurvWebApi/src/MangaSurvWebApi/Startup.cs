@@ -41,6 +41,7 @@ namespace MangaSurvWebApi
                 opts.UseNpgsql(Configuration.GetConnectionString("MangaSurvPostgres"))
             );
 
+            services.AddCors();
             services.AddMvc();
         }
 
@@ -54,6 +55,7 @@ namespace MangaSurvWebApi
 
             app.UseApplicationInsightsExceptionTelemetry();
 
+            app.UseCors(builder => builder.WithOrigins("http://localhost:8080"));
             app.UseMvc();
         }
     }

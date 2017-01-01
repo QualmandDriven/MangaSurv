@@ -30,7 +30,7 @@ namespace MangaSurvWebApi.Controllers
             {
                 return this.Ok(mangas.Where(m => m.Name == HttpContext.Request.Query["name"].ToString()));
             }
-
+            
             return this.Ok(mangas);
         }
 

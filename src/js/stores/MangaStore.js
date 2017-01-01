@@ -1,13 +1,21 @@
 import { EventEmitter } from "events";
 
 import dispatcher from "../dispatcher";
+import * as MangaActions from "../actions/MangaActions";
+
 var assign = require('object-assign');
 
 class MangaStore extends EventEmitter {
   constructor() {
     super()
-        this.mangas = MANGAS;
-        this.followedMangas = MANGASFOLLOWED;
+        this.mangas = [];
+        this.followedMangas = [];
+        this.mangasUpdates = [];
+        // this.mangas = MANGAS;
+        
+        MangaActions.reloadMangas();
+        MangaActions.reloadMangasFollowed();
+        // this.followedMangas = MANGASFOLLOWED;
         this.mangasUpdates = MANGASUPDATES;
   }
 
@@ -81,6 +89,11 @@ class MangaStore extends EventEmitter {
       }
       case "RECEIVE_MANGAS": {
         this.mangas = action.mangas;
+        this.emit("change");
+        break;
+      }
+      case "RECEIVE_FOLLOWED_MANGAS": {
+        this.followedMangas = action.mangas;
         this.emit("change");
         break;
       }
