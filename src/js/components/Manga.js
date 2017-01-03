@@ -24,8 +24,7 @@ export default class Manga extends React.Component {
 
     // const { id, name, chapters, followed, lastupdate, image, chapterUpdates } = this.props;
     // const imagePath = "images/" + this.props.image;
-    console.log(this.props.fileSystemName);
-    const imagePath = "images/" + this.props.fileSystemName.replace(" ", "_");
+    const imagePath = "images/" + this.props.fileSystemName.replace(/[ :]/g, "_") + ".jpg";
 
     return (
       <div class="overview">
