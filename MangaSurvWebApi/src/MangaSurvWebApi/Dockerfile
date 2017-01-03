@@ -1,13 +1,7 @@
-FROM microsoft/dotnet:latest
+FROM microsoft/dotnet:runtime
 
-COPY . /app
+WORKDIR /MangaSurvWebApi
 
-WORKDIR /app
+COPY out .
 
-RUN ["dotnet", "restore"]
-
-RUN ["dotnet", "build"]
-
-EXPOSE 5000/tcp
-
-CMD ["dotnet", "run", "--server.urls", "http://*:5000"]
+ENTRYPOINT ["dotnet", "MangaSurvWebApi.dll"]
