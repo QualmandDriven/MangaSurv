@@ -17,8 +17,6 @@ namespace mangasurvfetcher
             animeManager.LoadAnimes();
             //animeManager.LoadAnimeImages();
             animeManager.SearchNewEpisodes();
-
-            Console.Read();
         }
     }
 }

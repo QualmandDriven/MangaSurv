@@ -187,7 +187,7 @@ namespace mangasurvlib.Manga
                     int iStart = sLink.IndexOf("_ch") + 3;
                     int iEnd = sLink.IndexOf("_", iStart);
 
-                    this.Chapter = double.Parse(sLink.Substring(iStart, iEnd - iStart).Replace(".", ","));
+                    this.Chapter = double.Parse(sLink.Substring(iStart, iEnd - iStart).Replace(".", ","), System.Globalization.NumberStyles.Number);
                 }
                 else
                 {
@@ -195,12 +195,12 @@ namespace mangasurvlib.Manga
                     if (lSplittedUrl[lSplittedUrl.Count - 1].ToUpper().Contains("CHAPTER"))
                     {
                         // Url looks like http://www.mangapanda.com/94-36557-3/bleach/chapter-379.html
-                        this.Chapter = double.Parse(lSplittedUrl[lSplittedUrl.Count - 1].Replace("chapter-", "").Replace(".html", "").Replace(".", ","));
+                        this.Chapter = double.Parse(lSplittedUrl[lSplittedUrl.Count - 1].Replace("chapter-", "").Replace(".html", "").Replace(".", ","), System.Globalization.NumberStyles.Number);
                     }
                     else
                     {
                         // Url looks like http://www.mangapanda.com/bleach/560
-                        this.Chapter = double.Parse(lSplittedUrl[lSplittedUrl.Count - 1].Replace(".", ","));
+                        this.Chapter = double.Parse(lSplittedUrl[lSplittedUrl.Count - 1].Replace(".", ","), System.Globalization.NumberStyles.Number);
                     }
                 }
             }

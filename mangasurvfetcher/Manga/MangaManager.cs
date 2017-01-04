@@ -256,7 +256,7 @@ namespace mangasurvlib.Manga
 
             logger.LogInformation("'{0}' downloadable chapters found!", newChapters.Count);
 
-#if RELEASE
+#if TASKMACHTPROBLEME
             List<Task> tasks = new List<Task>();
             foreach (dynamic newChapter in newChapters)
             {
@@ -347,7 +347,7 @@ namespace mangasurvlib.Manga
         /// </summary>
         public void SearchNewChapters()
         {
-#if RELEASE
+#if TASKMACHTPROBLEME
             List<Task> tasks = new List<Task>();
 
             foreach (Manga manga in this.Mangas)
@@ -375,7 +375,7 @@ namespace mangasurvlib.Manga
 
         public void LoadMangaImages()
         {
-#if RELEASE
+#if TASKMACHTPROBLEME
             List<Task> tasks = new List<Task>();
             foreach (Manga manga in this.Mangas)
             {

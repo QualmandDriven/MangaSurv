@@ -136,7 +136,7 @@ namespace mangasurvlib.Manga
         /// <param name="Chapter"></param>
         public void DownloadChapter(List<MangaChapter> lMangaChapter)
         {
-#if RELEASE
+#if TASKMACHTPROBLEME
             List<Task> tasks = new List<Task>();
             foreach (MangaChapter chapter in lMangaChapter)
             {
@@ -179,7 +179,7 @@ namespace mangasurvlib.Manga
         /// <param name="lMangaChapters"></param>
         private void LoadChapters(List<MangaChapter> lMangaChapters)
         {
-#if RELEASE
+#if TASKMACHTPROBLEME
             List<Task> tasks = new List<Task>();
 
             foreach (MangaChapter chapter in lMangaChapters)
@@ -218,7 +218,7 @@ namespace mangasurvlib.Manga
 
             try
             {
-#if RELEASE
+#if TASKMACHTPROBLEME
                 List<Task<List<MangaChapter>>> tasks = new List<Task<List<MangaChapter>>>();
                 foreach (MangaConstants.MangaPage mangaPage in (MangaConstants.MangaPage[])Enum.GetValues(typeof(MangaConstants.MangaPage)))
                 {
