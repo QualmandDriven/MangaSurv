@@ -7,6 +7,7 @@ using HtmlAgilityPack;
 using System.IO;
 using mangasurvlib.Extensions;
 using Microsoft.Extensions.Logging;
+using System.Threading.Tasks;
 
 namespace mangasurvlib.Manga
 {
@@ -500,38 +501,72 @@ namespace mangasurvlib.Manga
         private string GetMangaList()
         {
             FileInfo fi = new FileInfo(_FILENAME);
-            string sContent = String.Empty;
+
+            StringBuilder sb = new StringBuilder();
             if (!fi.Exists || fi.LastWriteTime.Year != DateTime.Now.Year || fi.LastWriteTime.Day < DateTime.Now.Day - 7)
             {
-                int searchCount = 1;
-
+                sb.Append("<html><body><table><tbody>");
+                List<Task<Tuple<bool, string>>> tasks = new List<Task<Tuple<bool, string>>>();
                 do
                 {
-                    //if (searchCount == 100)
-                    //    break;
+                    tasks.Add(Task.Factory.StartNew<Tuple<bool, string>>(() => DoAjaxRequest("http://bato.to/search_ajax?&p=")));
 
-                    string sHtml = Helper.WebHelper.DownloadString("http://bato.to/search_ajax?&p=" + searchCount);
+                    if (tasks.Count == 10)
+                    { 
+                        Task.WaitAll(tasks.ToArray());
 
-                    if (sHtml.Contains("No (more) comics found!"))
-                        break;
+                        bool bBreak = false;
+                        foreach (Task<Tuple<bool, string>> t in tasks)
+                        {
+                            if (t.Result.Item1 == false)
+                                bBreak = true;
 
-                    int iStart = sHtml.IndexOf("<tbody>") + 7;
-                    int iEnd = sHtml.IndexOf("</tbody>");
-                    sContent += sHtml.Substring(iStart, iEnd - iStart);
+                            sb.Append(t.Result.Item2);
+                        }
 
-                    Console.WriteLine(searchCount);
-                    searchCount++;
+                        tasks.Clear();
+
+                        if (bBreak)
+                            break;
+                    }
+
+                    
                 } while (true);
 
-                sContent = "<html><body><table><tbody>" + sContent + "</tbody></table></body></html>";
-                File.WriteAllText(_FILENAME, sContent);
+                sb.Append("</tbody></table></body></html>");
+
+                File.WriteAllText(_FILENAME, sb.ToString());
             }
             else
             {
-                sContent = File.ReadAllText(_FILENAME);
+                sb.Append(File.ReadAllText(_FILENAME));
             }
 
-            return sContent;
+            return sb.ToString();
+        }
+
+        private int _searchCount = 0;
+        private object lockObject = new object();
+
+        private Tuple<bool, string> DoAjaxRequest(string sUrl)
+        {
+            lock(lockObject)
+            {
+                _searchCount++;
+                sUrl += _searchCount;
+            }
+
+            logger.LogInformation("Loading Cache Part '{0}'", sUrl);
+            string sHtml = Helper.WebHelper.DownloadString(sUrl);
+
+            if (sHtml.Contains("No (more) comics found!"))
+                return new Tuple<bool, string>(false, String.Empty);
+
+            int iStart = sHtml.IndexOf("<tbody>") + 7;
+            int iEnd = sHtml.IndexOf("</tbody>");
+            string sContent = sHtml.Substring(iStart, iEnd - iStart);
+
+            return new Tuple<bool, string>(true, sContent);
         }
 
         public Uri GetManga(string sName)
