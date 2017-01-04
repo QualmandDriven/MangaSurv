@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -18,10 +19,11 @@ namespace mangasurvlib.Rest
 
     public class RestController
     {
+        private static ILogger logger = Logging.ApplicationLogging.CreateLogger<RestController>();
 #if DEBUG
         public const string API_URL = "http://192.168.178.70:5000/api";
 #else
-        public const string API_URL = "http://localhost:50107/api";
+        public const string API_URL = "http://192.168.178.70:5000/api";
 #endif
 
         private readonly Uri Url;
@@ -179,6 +181,8 @@ namespace mangasurvlib.Rest
         /// <returns>Returns the HttpWebResponse object and the content (if exists).</returns>
         private Tuple<HttpWebResponse, string> DoRequest(Uri Uri, string sMethod)
         {
+            logger.LogInformation("Calling '{0}' at '{1}'", sMethod, Uri.AbsoluteUri);
+
             HttpWebRequest request = this.CreateHttpWebRequest(Uri, sMethod);
             HttpWebResponse response = this.GetHttpWebResponse(request);
 
