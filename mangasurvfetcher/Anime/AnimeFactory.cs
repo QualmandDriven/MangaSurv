@@ -54,7 +54,10 @@ namespace mangasurvlib.Anime
                     lAnimes.Add(anime);
                 }
                 catch (Exception ex)
-                { }
+                {
+                    logger.LogError(ex.Message);
+                }
+
             }
 
             return lAnimes;
