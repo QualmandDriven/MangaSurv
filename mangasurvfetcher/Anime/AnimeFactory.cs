@@ -32,28 +32,28 @@ namespace mangasurvlib.Anime
             {
                 try
                 {
-                    Anime anime = CreateAnime(dbAnime.Name, AnimeConstants._ANIMEPATH, AnimeConstants.AnimePage.AnimefansFtw);
+                    Anime anime = CreateAnime((string)dbAnime.name, AnimeConstants._ANIMEPATH, AnimeConstants.AnimePage.AnimefansFtw);
 
                     logger.LogInformation("Loading anime '{0}'", anime.Name);
 
-                    anime.ID = dbAnime.ID;
+                    anime.ID = dbAnime.id;
                     anime.Episodes = new List<AnimeEpisode>();
 
                     string sEpisodes = ctr.Get(String.Format("animes/{0}/episodes", anime.ID)).Item2;
-                    List<dynamic> restEpisodes = Helper.JsonHelper.DeserializeString<List<dynamic>>(sAnimes);
+                    List<dynamic> restEpisodes = Helper.JsonHelper.DeserializeString<List<dynamic>>(sEpisodes);
 
-                    if (restAnimes != null)
+                    if (restEpisodes != null)
                     {
                         foreach (dynamic episode in restEpisodes)
                         {
-                            AnimeEpisode newEpisode = CreateAnimeEpisode(anime.Name, Convert.ToDouble(episode.EpisodeNo));
+                            AnimeEpisode newEpisode = CreateAnimeEpisode(anime.Name, (double)episode.episodeNo);
                             anime.Episodes.Add(newEpisode);
                         }
                     }
 
                     lAnimes.Add(anime);
                 }
-                catch (Exception)
+                catch (Exception ex)
                 { }
             }
 

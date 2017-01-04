@@ -18,7 +18,7 @@ namespace mangasurvlib.Rest
 
     public class RestController
     {
-#if RELEASE
+#if DEBUG
         public const string API_URL = "http://192.168.178.70:5000/api";
 #else
         public const string API_URL = "http://localhost:50107/api";
