@@ -43,6 +43,13 @@ namespace AnimeSurvWebApi.Controllers
                 if (!ModelState.IsValid)
                     return this.BadRequest(ModelState);
 
+                var anime = this.Get(animeid);
+                if (anime is NotFoundResult)
+                    return this.NotFound();
+
+                // Wenn kein Datum übergeben wurde, dann setzen wir das jetzige
+                value.DoDefaultDate();
+
                 this._context.Episodes.Add(value);
                 this._context.SaveChanges();
                 return this.CreatedAtRoute("AnimeEpisodeLink", new { animeid = animeid, episodeid = value.Id }, value);
