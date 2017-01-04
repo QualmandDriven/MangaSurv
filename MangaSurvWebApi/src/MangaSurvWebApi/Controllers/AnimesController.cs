@@ -37,9 +37,6 @@ namespace MangaSurvWebApi.Controllers
         [Produces(typeof(Manga))]
         public IActionResult GetAnime(int id)
         {
-            //if(Request.QueryString.HasValue)
-            //    return Request.QueryString.Value;
-            
             var anime = this._context.Animes.FirstOrDefault(a => a.Id == id);
             if (anime == null)
                 return this.NotFound();

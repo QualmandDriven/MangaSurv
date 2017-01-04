@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace MangaSurvWebApi.Controllers
 {
@@ -19,8 +20,23 @@ namespace MangaSurvWebApi.Controllers
         [HttpGet("{mangaid}/chapters")]
         public IActionResult Get(int mangaid)
         {
-            //if(Request.QueryString.HasValue)
-            //    return Request.QueryString.Value;
+            if (Request.QueryString.HasValue)
+            {
+                var results = this._context.Chapters.Where(d => d.MangaId == mangaid);
+                foreach (KeyValuePair<string, Microsoft.Extensions.Primitives.StringValues> pair in Request.Query)
+                {
+                    switch (pair.Key.ToUpper())
+                    {
+                        case "INCLUDE":
+                            results = results.Include(o => o.Files);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+
+                return this.Ok(results);
+            }
 
             var chapters = this._context.Chapters.Where(d => d.MangaId == mangaid);
             return this.Ok(chapters);
@@ -30,9 +46,6 @@ namespace MangaSurvWebApi.Controllers
         [HttpGet("{mangaid}/chapters/{chapterid}", Name ="MangaChapterLink")]
         public IActionResult Get(int mangaid, int chapterid)
         {
-            //if(Request.QueryString.HasValue)
-            //    return Request.QueryString.Value;
-
             Chapter chapter = this._context.Chapters.FirstOrDefault(d => d.Id == chapterid && d.MangaId == mangaid);
             return this.Ok(chapter);
         }
@@ -60,8 +73,15 @@ namespace MangaSurvWebApi.Controllers
 
         // PUT api/mangas/5
         [HttpPut("{mangaid}/chapters/{chapterid}")]
-        public void Put(int mangaid, int chapterid, [FromBody]Manga value)
+        public IActionResult Put(int mangaid, int chapterid, [FromBody]Chapter value)
         {
+            this._context.Chapters.Attach(value);
+
+            var chapter = this._context.Chapters.FirstOrDefault(o => o.Id == chapterid);
+
+            this._context.Entry(chapter).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            this._context.SaveChanges();
+            return this.Ok(chapter);
         }
 
         // DELETE api/mangas/5

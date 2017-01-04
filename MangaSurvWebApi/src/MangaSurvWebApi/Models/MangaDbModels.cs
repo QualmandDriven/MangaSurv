@@ -24,7 +24,7 @@ public class Chapter
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public long Id { get; set; }
     public long MangaId { get; set; }
-    //public long PageId{ get; set; }
+    public long PageId{ get; set; }
     [Required]
     public float ChapterNo { get; set; }
     public int StateId{ get; set; }
@@ -47,6 +47,16 @@ public class File
     public string Name { get; set; }
     [Required]
     public string Address { get; set; }
+}
+
+public class Page
+{
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public long Id { get; set; }
+    [Required]
+    public string Name { get; set; }
+    public string Address { get; set; }
+    public string ContentType { get; set; }
 }
 
 public class UserNewChapters
@@ -194,6 +204,7 @@ public class MangaSurvContext : DbContext
     public DbSet<Manga> Mangas { get; set; }
     public DbSet<Chapter> Chapters { get; set; }
     public DbSet<File> Files { get; set; }
+    public DbSet<Page> Pages { get; set; }
     public DbSet<User> Users { get; set; }
     public DbSet<UserFollowMangas> UserFollowMangas { get; set; }
     public DbSet<UserNewChapters> UserNewChapters { get; set; }

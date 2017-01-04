@@ -7,21 +7,21 @@ using Microsoft.AspNetCore.Mvc;
 namespace MangaSurvWebApi.Controllers
 {
     [Route("api/[controller]")]
-    public class ChaptersController : Controller
+    public class EpisodesController : Controller
     {
         private readonly MangaSurvContext _context;
-        public ChaptersController(MangaSurvContext context)
+        public EpisodesController(MangaSurvContext context)
         {
             this._context = context;
         }
 
-        // GET api/chapters
+        // GET api/episodes
         [HttpGet]
         public IActionResult Get()
         {
             if(Request.QueryString.HasValue)
             {
-                var results = this._context.Chapters.ToList();
+                var results = this._context.Episodes.ToList();
                 foreach (KeyValuePair<string, Microsoft.Extensions.Primitives.StringValues> pair in Request.Query)
                 {
                     switch (pair.Key.ToUpper())
@@ -37,29 +37,29 @@ namespace MangaSurvWebApi.Controllers
                 return this.Ok(results);
             }
 
-            return this.Ok(this._context.Chapters.ToList());
+            return this.Ok(this._context.Episodes.ToList());
         }
 
-        // GET api/chapters/5
-        [HttpGet("{id}", Name ="ChapterLink")]
-        public Chapter Get(int id)
+        // GET api/episodes/5
+        [HttpGet("{id}", Name ="EpisodeLink")]
+        public Episode Get(int id)
         {
-            var result = this._context.Chapters.FirstOrDefault(d => d.Id == id);
+            var result = this._context.Episodes.FirstOrDefault(d => d.Id == id);
             return result;
         }
 
-        // POST api/chapters
+        // POST api/episodes
         [HttpPost]
-        public IActionResult Post([FromBody]Chapter value)
+        public IActionResult Post([FromBody]Episode value)
         {
             try
             {
                 if (!ModelState.IsValid)
                     return this.BadRequest(ModelState);
 
-                this._context.Chapters.Add(value);
+                this._context.Episodes.Add(value);
                 this._context.SaveChanges();
-                return this.CreatedAtRoute("ChapterLink", new { id = value.Id }, value);
+                return this.CreatedAtRoute("EpisodeLink", new { id = value.Id }, value);
             }
             catch(Exception ex)
             {
@@ -67,26 +67,26 @@ namespace MangaSurvWebApi.Controllers
             }
         }
 
-        // PUT api/chapters/5
+        // PUT api/episodes/5
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody]Chapter value)
+        public IActionResult Put(int id, [FromBody]Episode value)
         {
-            this._context.Chapters.Attach(value);
+            this._context.Episodes.Attach(value);
 
-            var chapter = this._context.Chapters.FirstOrDefault(o => o.Id == id);
+            var episode = this._context.Episodes.FirstOrDefault(o => o.Id == id);
 
-            this._context.Entry(chapter).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            this._context.Entry(episode).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
             this._context.SaveChanges();
-            return this.Ok(chapter);
+            return this.Ok(episode);
         }
 
-        // DELETE api/chapters/5
+        // DELETE api/episodes/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-            var result = this._context.Chapters.FirstOrDefault(c => c.Id == id);
+            var result = this._context.Episodes.FirstOrDefault(c => c.Id == id);
             if (result != null)
-                this._context.Chapters.Remove(result);
+                this._context.Episodes.Remove(result);
         }
     }
 }

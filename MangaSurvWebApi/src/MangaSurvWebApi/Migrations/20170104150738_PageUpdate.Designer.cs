@@ -7,9 +7,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace MangaSurvWebApi.Migrations
 {
     [DbContext(typeof(MangaSurvContext))]
-    partial class MangaSurvContextModelSnapshot : ModelSnapshot
+    [Migration("20170104150738_PageUpdate")]
+    partial class PageUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)
@@ -137,8 +138,6 @@ namespace MangaSurvWebApi.Migrations
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn);
 
                     b.Property<string>("Address");
-
-                    b.Property<string>("ContentType");
 
                     b.Property<string>("Name")
                         .IsRequired();

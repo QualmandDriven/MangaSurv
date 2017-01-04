@@ -7,9 +7,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace MangaSurvWebApi.Migrations
 {
     [DbContext(typeof(MangaSurvContext))]
-    partial class MangaSurvContextModelSnapshot : ModelSnapshot
+    [Migration("20170104181615_PageContentTypeUpdate")]
+    partial class PageContentTypeUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)

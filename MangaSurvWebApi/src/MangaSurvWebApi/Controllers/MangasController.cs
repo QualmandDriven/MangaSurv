@@ -66,7 +66,7 @@ namespace MangaSurvWebApi.Controllers
                 Manga newManga = this._context.Mangas.FirstOrDefault(m => m.Id == value.Id);
                 newManga.Chapters.AddRange(lChapters);
                 await this._context.SaveChangesAsync();
-                return this.CreatedAtRoute("MangaLink", new { IDictionary = value.Id }, value);
+                return this.CreatedAtRoute("MangaLink", new { id = value.Id }, value);
             }
             catch(Exception ex)
             {
