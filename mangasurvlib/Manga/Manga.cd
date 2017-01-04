@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="ParadiseLib.Manga.Manga" Collapsed="true">
+    <Position X="2.75" Y="3.75" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>ACBACAFAAQCQCAEEgAACMAQAAAAAAAgAAEBAAAAAAAA=</HashCode>
+      <FileName>Manga\Manga.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ParadiseLib.Manga.MangaConstants">
+    <Position X="11.75" Y="0.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Enum Name="ParadiseLib.Manga.MangaConstants.MangaPage">
+        <TypeIdentifier>
+          <NewMemberFileName>Manga\Manga.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Manga\Manga.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ParadiseLib.Manga.MangaChapter" Collapsed="true">
+    <Position X="4.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAADAAQAgAEUkhAAAEAAAAAAAEIwACoEGAAgAAIA=</HashCode>
+      <FileName>Manga\MangaChapter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ParadiseLib.Anime.AnimeFactory">
+    <Position X="13.5" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAAAAAAAAAAAAAAAAAgAAAAIAAAEAAAAAAAAAA=</HashCode>
+      <FileName>Anime\AnimeFactory.cs</FileName>
+      <NewMemberFileName>Manga\MangaFactory.cs</NewMemberFileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ParadiseLib.Manga.MangaHelper">
+    <Position X="10" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAA=</HashCode>
+      <FileName>Manga\MangaHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ParadiseLib.Manga.MangaBB" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="6.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgBAAAIAAACAAAAAAAAAAAAAAAABAAAAAAhAAAA=</HashCode>
+      <FileName>Manga\MangaHelper.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ParadiseLib.Manga.MangaPanda" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="8.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgBAAAAAAACAAAAAAAAAAAAAAAABAAAAAAhAAAA=</HashCode>
+      <FileName>Manga\MangaHelper.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ParadiseLib.Manga.MangaManager" Collapsed="true">
+    <Position X="0.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAABAAACQBCCAAAAAAAAIAAAAAABAAAAAAAgAQA=</HashCode>
+      <FileName>Manga\MangaManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
