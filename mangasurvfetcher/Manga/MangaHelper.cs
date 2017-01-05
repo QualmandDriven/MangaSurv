@@ -8,6 +8,7 @@ using System.IO;
 using mangasurvlib.Extensions;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace mangasurvlib.Manga
 {
@@ -486,103 +487,55 @@ namespace mangasurvlib.Manga
         private const string _MANGAURL = "http://bato.to/";
         private const string _FILENAME = "batotoMangaList.html";
 
-        private static HtmlDocument MangaListCache = new HtmlDocument();
+        private static string MangaListCache = String.Empty;
 
         public Batoto()
         {
             this.PrepareCache();
         }
 
-        /// <summary>
-        /// Batoto has no site where all mangas are listed.
-        /// We can only access a few with each query.
-        /// So we query as long as we have to to get the complete list.
-        /// </summary>
-        private string GetMangaList()
-        {
-            FileInfo fi = new FileInfo(_FILENAME);
-
-            StringBuilder sb = new StringBuilder();
-            if (!fi.Exists || fi.LastWriteTime.Year != DateTime.Now.Year || fi.LastWriteTime.Day < DateTime.Now.Day - 7)
-            {
-                sb.Append("<html><body><table><tbody>");
-                List<Task<Tuple<bool, string>>> tasks = new List<Task<Tuple<bool, string>>>();
-                do
-                {
-                    tasks.Add(Task.Factory.StartNew<Tuple<bool, string>>(() => DoAjaxRequest("http://bato.to/search_ajax?&p=")));
-
-                    if (tasks.Count == 10)
-                    { 
-                        Task.WaitAll(tasks.ToArray());
-
-                        bool bBreak = false;
-                        foreach (Task<Tuple<bool, string>> t in tasks)
-                        {
-                            if (t.Result.Item1 == false)
-                                bBreak = true;
-
-                            sb.Append(t.Result.Item2);
-                        }
-
-                        tasks.Clear();
-
-                        if (bBreak)
-                            break;
-                    }
-
-                    
-                } while (true);
-
-                sb.Append("</tbody></table></body></html>");
-
-                File.WriteAllText(_FILENAME, sb.ToString());
-            }
-            else
-            {
-                sb.Append(File.ReadAllText(_FILENAME));
-            }
-
-            return sb.ToString();
-        }
-
-        private int _searchCount = 0;
-        private object lockObject = new object();
-
-        private Tuple<bool, string> DoAjaxRequest(string sUrl)
-        {
-            lock(lockObject)
-            {
-                _searchCount++;
-                sUrl += _searchCount;
-            }
-
-            logger.LogInformation("Loading Cache Part '{0}'", sUrl);
-            string sHtml = Helper.WebHelper.DownloadString(sUrl);
-
-            if (sHtml.Contains("No (more) comics found!"))
-                return new Tuple<bool, string>(false, String.Empty);
-
-            int iStart = sHtml.IndexOf("<tbody>") + 7;
-            int iEnd = sHtml.IndexOf("</tbody>");
-            string sContent = sHtml.Substring(iStart, iEnd - iStart);
-
-            return new Tuple<bool, string>(true, sContent);
-        }
-
         public Uri GetManga(string sName)
         {
-            foreach (HtmlNode element in MangaListCache.DocumentNode.Descendants("strong"))
+            // IgnoreCase wird hier mit (?i) geschrieben
+            // Ist für Java auch gleich
+            string sRegexName = sName.Replace("(", ".*").Replace(")", ".*").Replace("-", ".*").Replace(" ", ".*").Trim();
+            Regex rx = new Regex("<a.*>.*" + sRegexName + ".*</a>", RegexOptions.IgnoreCase);
+            MatchCollection ms = rx.Matches(MangaListCache);
+            if(ms.Count > 1)
             {
-                foreach (HtmlNode link in element.Descendants("a"))
-                {
-                    if (link.Name == "a" && link.Attributes["href"] != null && link.InnerText.Trim().ToUpper() == sName.Trim().ToUpper())
-                    {
-                        string sLink = link.Attributes["href"].Value.Replace("&amp;", "&");
 
-                        return new System.Uri(sLink);
+            }
+            foreach (Match m in ms)
+            {
+                if (m.Success)
+                {
+                    HtmlDocument doc = new HtmlDocument();
+                    doc.LoadHtml(m.Value);
+
+                    foreach (HtmlNode link in doc.DocumentNode.Descendants("a"))
+                    {
+                        rx = new Regex(sRegexName, RegexOptions.IgnoreCase);
+                        if (link.Name == "a" && link.Attributes["href"] != null && rx.IsMatch(link.InnerText.Trim()))
+                        {
+                            string sLink = link.Attributes["href"].Value.Replace("&amp;", "&");
+
+                            return new System.Uri(sLink);
+                        }
                     }
                 }
             }
+            //foreach (HtmlNode element in MangaListCache.DocumentNode.Descendants("strong"))
+            //{
+            //    foreach (HtmlNode link in element.Descendants("a"))
+            //    {
+            //        if (link.Name == "a" && link.Attributes["href"] != null && link.InnerText.Trim().ToUpper() == sName.Trim().ToUpper())
+            //        {
+            //            string sLink = link.Attributes["href"].Value.Replace("&amp;", "&");
+
+            //            return new System.Uri(sLink);
+            //        }
+            //    }
+            //}
 
             return null;
         }
@@ -740,11 +693,76 @@ namespace mangasurvlib.Manga
             return null;
         }
 
-
         public void PrepareCache()
         {
-            string sTemp = this.GetMangaList();
-            MangaListCache.LoadHtml(sTemp);
+            FileInfo fi = new FileInfo(_FILENAME);
+
+            if (!fi.Exists || fi.LastWriteTime.Year != DateTime.Now.Year || fi.LastWriteTime.Day < DateTime.Now.Day - 7)
+            {
+                StringBuilder sb = new StringBuilder();
+
+                sb.Append("<html><body><table><tbody>");
+                List<Task<Tuple<bool, string>>> tasks = new List<Task<Tuple<bool, string>>>();
+                do
+                {
+                    tasks.Add(Task.Factory.StartNew<Tuple<bool, string>>(() => DoAjaxRequest("http://bato.to/search_ajax?&p=")));
+
+                    if (tasks.Count == 10)
+                    {
+                        Task.WaitAll(tasks.ToArray());
+
+                        bool bBreak = false;
+                        foreach (Task<Tuple<bool, string>> t in tasks)
+                        {
+                            if (t.Result.Item1 == false)
+                                bBreak = true;
+
+                            sb.Append(t.Result.Item2);
+                        }
+
+                        tasks.Clear();
+
+                        if (bBreak)
+                            break;
+                    }
+                } while (true);
+
+                sb.Append("</tbody></table></body></html>");
+                File.WriteAllText(_FILENAME, sb.ToString());
+                //MangaListCache.LoadHtml(sb.ToString());
+                MangaListCache = WebUtility.HtmlDecode(sb.ToString());
+            }
+            else
+            {
+                //string sText = File.ReadAllText(fi.FullName);
+                //MangaListCache.LoadHtml(sText);
+                MangaListCache = WebUtility.HtmlDecode(File.ReadAllText(fi.FullName));
+            }
         }
+
+        private int _searchCount = 0;
+        private object lockObject = new object();
+
+        private Tuple<bool, string> DoAjaxRequest(string sUrl)
+        {
+            lock (lockObject)
+            {
+                _searchCount++;
+                sUrl += _searchCount;
+            }
+
+            logger.LogInformation("Loading Cache Part '{0}'", sUrl);
+            string sHtml = Helper.WebHelper.DownloadString(sUrl);
+
+            if (sHtml.Contains("No (more) comics found!"))
+                return new Tuple<bool, string>(false, String.Empty);
+
+            int iStart = sHtml.IndexOf("<tbody>") + 7;
+            int iEnd = sHtml.IndexOf("</tbody>");
+            string sContent = sHtml.Substring(iStart, iEnd - iStart);
+
+            return new Tuple<bool, string>(true, sContent);
+        }
+
     }
 }
