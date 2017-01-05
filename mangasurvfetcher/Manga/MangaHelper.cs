@@ -560,6 +560,11 @@ namespace mangasurvlib.Manga
                             string sLink = link.Attributes["href"].Value.Replace("&amp;", "&");
 
                             MangaChapter chapter = MangaFactory.CreateMangaChapter(manga, new System.Uri(sLink), MangaConstants.MangaPage.Batoto);
+                            if(chapter.Chapter == 0)
+                            {
+                                chapter.GetChapterOfDescription(link.InnerText.Trim());
+                            }
+
                             chapter.MangaPage = MangaConstants.MangaPage.Batoto;
                             lMangaChapters.Add(chapter);
                         }

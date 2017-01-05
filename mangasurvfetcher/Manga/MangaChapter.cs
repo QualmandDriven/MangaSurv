@@ -177,6 +177,14 @@ namespace mangasurvlib.Manga
         /// </summary>
         private void GetChapter()
         {
+            this.GetChapter(this.Url);
+        }
+
+        /// <summary>
+        /// Get Chapter number of URL.
+        /// </summary>
+        private void GetChapter(Uri url)
+        {
             try
             {
                 // Get Chapter
@@ -184,7 +192,7 @@ namespace mangasurvlib.Manga
                 if (this.MangaPage == MangaConstants.MangaPage.Batoto)
                 {
                     // Batoto Link http://bato.to/read/_/9379/fairy-tail_ch096_by_franky-house
-                    string sLink = this.Url.AbsoluteUri;
+                    string sLink = url.AbsoluteUri;
                     int iStart = sLink.IndexOf("_ch") + 3;
                     int iEnd = sLink.IndexOf("_", iStart);
 
@@ -192,7 +200,7 @@ namespace mangasurvlib.Manga
                 }
                 else
                 {
-                    List<string> lSplittedUrl = this.SplitUrl();
+                    List<string> lSplittedUrl = this.SplitUrl(url);
                     if (lSplittedUrl[lSplittedUrl.Count - 1].ToUpper().Contains("CHAPTER"))
                     {
                         // Url looks like http://www.mangapanda.com/94-36557-3/bleach/chapter-379.html
@@ -207,7 +215,31 @@ namespace mangasurvlib.Manga
             }
             catch (Exception ex)
             {
-                logger.LogError("Failed to get chapter no of '{0}' {1}", this.Url.AbsoluteUri, ex.Message);
+                logger.LogError("Failed to get chapter no of '{0}' {1}", url.AbsoluteUri, ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Get Chapter number of URL.
+        /// </summary>
+        public void GetChapterOfDescription(string sDescription)
+        {
+            try
+            {
+                // Get Chapter
+
+                if (this.MangaPage == MangaConstants.MangaPage.Batoto)
+                {
+                    // Batoto Description: "Vol.8 Ch.71: Father's confession"
+                    int iStart = sDescription.IndexOf("Ch.") + 3;
+                    int iEnd = sDescription.IndexOf(":", iStart);
+
+                    this.Chapter = double.Parse(sDescription.Substring(iStart, iEnd - iStart), System.Globalization.CultureInfo.InvariantCulture);
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.LogError("Failed to get chapter no of '{0}' {1}", sDescription, ex.Message);
             }
         }
 
@@ -280,9 +312,9 @@ namespace mangasurvlib.Manga
         /// Split URL at "/".
         /// </summary>
         /// <returns></returns>
-        private List<string> SplitUrl()
+        private List<string> SplitUrl(Uri url)
         {
-            return this.Url.AbsoluteUri.Split('/').ToList();
+            return url.AbsoluteUri.Split('/').ToList();
         }
 
         public override string ToString()
