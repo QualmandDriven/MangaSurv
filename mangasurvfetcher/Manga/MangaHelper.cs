@@ -501,10 +501,6 @@ namespace mangasurvlib.Manga
             string sRegexName = sName.Replace("(", ".*").Replace(")", ".*").Replace("-", ".*").Replace(" ", ".*").Trim();
             Regex rx = new Regex("<a.*>.*" + sRegexName + ".*</a>", RegexOptions.IgnoreCase);
             MatchCollection ms = rx.Matches(MangaListCache);
-            if(ms.Count > 1)
-            {
-
-            }
             foreach (Match m in ms)
             {
                 if (m.Success)
@@ -524,18 +520,6 @@ namespace mangasurvlib.Manga
                     }
                 }
             }
-            //foreach (HtmlNode element in MangaListCache.DocumentNode.Descendants("strong"))
-            //{
-            //    foreach (HtmlNode link in element.Descendants("a"))
-            //    {
-            //        if (link.Name == "a" && link.Attributes["href"] != null && link.InnerText.Trim().ToUpper() == sName.Trim().ToUpper())
-            //        {
-            //            string sLink = link.Attributes["href"].Value.Replace("&amp;", "&");
-
-            //            return new System.Uri(sLink);
-            //        }
-            //    }
-            //}
 
             return null;
         }
