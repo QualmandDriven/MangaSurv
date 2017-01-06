@@ -52,6 +52,34 @@ namespace mangasurvlib.Manga
 
             return GetMangaClass();
         }
+
+        public static Uri ExtractMangaLink(string sName, string sHtml)
+        {
+            string sRegexName = sName.Replace("(", ".*").Replace(")", ".*").Replace("-", ".*").Replace(" ", ".*").Trim();
+            Regex rx = new Regex("<a.*>.*" + sRegexName + ".*</a>", RegexOptions.IgnoreCase);
+            MatchCollection ms = rx.Matches(sHtml);
+            foreach (Match m in ms)
+            {
+                if (m.Success)
+                {
+                    HtmlDocument doc = new HtmlDocument();
+                    doc.LoadHtml(m.Value);
+
+                    foreach (HtmlNode link in doc.DocumentNode.Descendants("a"))
+                    {
+                        rx = new Regex(sRegexName, RegexOptions.IgnoreCase);
+                        if (link.Name == "a" && link.Attributes["href"] != null && rx.IsMatch(link.InnerText.Trim()))
+                        {
+                            string sLink = link.Attributes["href"].Value.Replace("&amp;", "&");
+
+                            return new System.Uri(sLink);
+                        }
+                    }
+                }
+            }
+
+            return null;
+        }
     }
 
     internal class MangaBB : IMangaLoader
@@ -61,7 +89,7 @@ namespace mangasurvlib.Manga
         private const string _MANGALISTURL = "http://www.mangabb.me/manga-list";
         private const string _MANGAURL = "http://www.mangabb.me/";
 
-        private static HtmlDocument MangaListCache = new HtmlDocument();
+        private static string MangaListCache = String.Empty;
 
         public MangaBB()
         {
@@ -70,17 +98,7 @@ namespace mangasurvlib.Manga
 
         public Uri GetManga(string sName)
         {
-            foreach (HtmlNode link in MangaListCache.GetElementbyId("content").Descendants())
-            {
-                if (link.Name == "a" && link.Attributes["href"] != null && link.InnerText.Trim().ToUpper() == sName.Trim().ToUpper())
-                {
-                    string sLink = link.Attributes["href"].Value.Replace("&amp;", "&");
-
-                    return new System.Uri(sLink);
-                }
-            }
-
-            return null;
+            return MangaHelper.ExtractMangaLink(sName, MangaListCache);
         }
 
         public List<MangaChapter> GetChapters(Manga manga, Uri uMangaUrl)
@@ -229,7 +247,8 @@ namespace mangasurvlib.Manga
 
         public void PrepareCache()
         {
-            MangaListCache.LoadHtml(Helper.WebHelper.DownloadString(_MANGALISTURL));
+            //MangaListCache.LoadHtml(Helper.WebHelper.DownloadString(_MANGALISTURL));
+            MangaListCache = WebUtility.HtmlDecode(Helper.WebHelper.DownloadString(_MANGALISTURL));
         }
     }
 
@@ -239,7 +258,7 @@ namespace mangasurvlib.Manga
         private const string _MANGALISTURL = "http://www.mangapanda.com/alphabetical";
         private const string _MANGAURL = "http://www.mangapanda.com";
 
-        private static HtmlDocument MangaListCache = new HtmlDocument();
+        private static string MangaListCache = String.Empty;
 
         public MangaPanda()
         {
@@ -248,17 +267,7 @@ namespace mangasurvlib.Manga
 
         public Uri GetManga(string sName)
         {
-            foreach (HtmlNode link in MangaListCache.GetElementbyId("wrapper_body").Descendants())
-            {
-                if (link.Name == "a" && link.Attributes["href"] != null && link.InnerText.Trim().ToUpper() == sName.Trim().ToUpper())
-                {
-                    string sLink = link.Attributes["href"].Value.Replace("&amp;", "&");
-
-                    return new System.Uri(_MANGAURL + sLink);
-                }
-            }
-
-            return null;
+            return MangaHelper.ExtractMangaLink(sName, MangaListCache);
         }
 
         public List<MangaChapter> GetChapters(Manga manga, Uri uMangaUrl)
@@ -353,7 +362,8 @@ namespace mangasurvlib.Manga
 
         public void PrepareCache()
         {
-            MangaListCache.LoadHtml(Helper.WebHelper.DownloadString(_MANGALISTURL));
+            //MangaListCache.LoadHtml(Helper.WebHelper.DownloadString(_MANGALISTURL));
+            MangaListCache = WebUtility.HtmlDecode(Helper.WebHelper.DownloadString(_MANGALISTURL));
         }
     }
 
@@ -363,7 +373,7 @@ namespace mangasurvlib.Manga
         private const string _MANGALISTURL = "http://www.mangareader.net/alphabetical";
         private const string _MANGAURL = "http://www.mangareader.net";
 
-        private static HtmlDocument MangaListCache = new HtmlDocument();
+        private static string MangaListCache = String.Empty;
 
         public MangaReader()
         {
@@ -372,17 +382,7 @@ namespace mangasurvlib.Manga
 
         public Uri GetManga(string sName)
         {
-            foreach (HtmlNode link in MangaListCache.GetElementbyId("wrapper_body").Descendants())
-            {
-                if (link.Name == "a" && link.Attributes["href"] != null && link.InnerText.Trim().ToUpper() == sName.Trim().ToUpper())
-                {
-                    string sLink = link.Attributes["href"].Value.Replace("&amp;", "&");
-
-                    return new System.Uri(_MANGAURL + sLink);
-                }
-            }
-
-            return null;
+            return MangaHelper.ExtractMangaLink(sName, MangaListCache);
         }
 
         public List<MangaChapter> GetChapters(Manga manga, Uri uMangaUrl)
@@ -476,7 +476,8 @@ namespace mangasurvlib.Manga
 
         public void PrepareCache()
         {
-            MangaListCache.LoadHtml(Helper.WebHelper.DownloadString(_MANGALISTURL));
+            //MangaListCache.LoadHtml(Helper.WebHelper.DownloadString(_MANGALISTURL));
+            MangaListCache = WebUtility.HtmlDecode(Helper.WebHelper.DownloadString(_MANGALISTURL));
         }
     }
 
@@ -496,32 +497,7 @@ namespace mangasurvlib.Manga
 
         public Uri GetManga(string sName)
         {
-            // IgnoreCase wird hier mit (?i) geschrieben
-            // Ist für Java auch gleich
-            string sRegexName = sName.Replace("(", ".*").Replace(")", ".*").Replace("-", ".*").Replace(" ", ".*").Trim();
-            Regex rx = new Regex("<a.*>.*" + sRegexName + ".*</a>", RegexOptions.IgnoreCase);
-            MatchCollection ms = rx.Matches(MangaListCache);
-            foreach (Match m in ms)
-            {
-                if (m.Success)
-                {
-                    HtmlDocument doc = new HtmlDocument();
-                    doc.LoadHtml(m.Value);
-
-                    foreach (HtmlNode link in doc.DocumentNode.Descendants("a"))
-                    {
-                        rx = new Regex(sRegexName, RegexOptions.IgnoreCase);
-                        if (link.Name == "a" && link.Attributes["href"] != null && rx.IsMatch(link.InnerText.Trim()))
-                        {
-                            string sLink = link.Attributes["href"].Value.Replace("&amp;", "&");
-
-                            return new System.Uri(sLink);
-                        }
-                    }
-                }
-            }
-
-            return null;
+            return MangaHelper.ExtractMangaLink(sName, MangaListCache);
         }
 
         public List<MangaChapter> GetChapters(Manga manga, Uri uMangaUrl)
