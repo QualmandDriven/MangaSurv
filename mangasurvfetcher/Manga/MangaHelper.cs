@@ -67,7 +67,7 @@ namespace mangasurvlib.Manga
 
                     foreach (HtmlNode link in doc.DocumentNode.Descendants("a"))
                     {
-                        rx = new Regex(sRegexName, RegexOptions.IgnoreCase);
+                        rx = new Regex("^" + sRegexName + "$", RegexOptions.IgnoreCase);
                         if (link.Name == "a" && link.Attributes["href"] != null && rx.IsMatch(link.InnerText.Trim()))
                         {
                             string sLink = link.Attributes["href"].Value.Replace("&amp;", "&");
