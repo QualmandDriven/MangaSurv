@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace MangaSurvWebApi.Controllers
 {
@@ -19,6 +20,64 @@ namespace MangaSurvWebApi.Controllers
         [HttpGet]
         public IActionResult Get()
         {
+            if (Request.QueryString.HasValue)
+            {
+                IQueryable<Manga> results = this._context.Mangas.Where(m => 1 == 1);
+                foreach (KeyValuePair<string, Microsoft.Extensions.Primitives.StringValues> pair in Request.Query)
+                {
+                    switch (pair.Key.ToUpper())
+                    {
+                        case "CHAPTERSTATEID":
+
+                            List<Chapter> lNewChapters = this._context.Chapters.Where(c => c.StateId == int.Parse(pair.Value.ToString())).ToList();
+                            List<Manga> lMangas = new List<Manga>();
+                            List<long> lMangaIds = new List<long>();
+
+                            foreach (Chapter chapter in lNewChapters)
+                            {
+                                if (lMangaIds.Contains(chapter.MangaId))
+                                {
+                                    Manga manga = lMangas.Find(m => m.Id == chapter.MangaId);
+                                    manga.Chapters.Add(chapter);
+                                }
+                                else
+                                {
+                                    Manga manga = this._context.Mangas.FirstOrDefault(m => m.Id == chapter.MangaId);
+                                    if (manga != null)
+                                    {
+                                        //manga.Chapters.Add(chapter);
+                                        lMangas.Add(manga);
+                                        lMangaIds.Add(manga.Id);
+                                    }
+                                }
+                            }
+
+                            return this.Ok(lMangas);
+                            //List<dynamic> dynMangas = new List<dynamic>();
+                            //foreach(Manga manga in lMangas)
+                            //{
+                            //    List<dynamic> dynChapters = new List<dynamic>();
+                            //    foreach(Chapter chapter in manga.Chapters)
+                            //    {
+                            //        dynChapters.Add(new { ChapterNo = chapter.ChapterNo, Address = chapter.Address, EnterDate=chapter.EnterDate });
+                            //    }
+
+                            //    dynamic dynManga = new { Id = manga.Id, Name = manga.Name, FileSystemName = manga.FileSystemName, EnterDate = manga.EnterDate, Chapters = dynChapters };
+                            //    dynMangas.Add(dynManga);
+                            //}
+
+                            //return this.Ok(dynMangas);
+                        case "INCLUDE":
+                            results.Include(m => m.Chapters);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+
+                return this.Ok(results);
+            }
+
             if (HttpContext.Request.Query.ContainsKey("include") && HttpContext.Request.Query["include"].ToString() == "1") { 
                 var results = _context.Mangas.Select(m => new { m.Id, m.Name, m.FileSystemName, m.Chapters }).ToList();
                 return this.Ok(results);

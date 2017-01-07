@@ -31,8 +31,8 @@ ReactDOM.render(
       <Route path="profile" component={Profile} onEnter={requireAuth}></Route>
       <Route path="settings" component={Settings}></Route>
       <Route path="mangas" component={Mangas}></Route>
-      <Route path="mangas/followed" component={MangasFollowed} onEnter={requireAuth}></Route>
-      <Route path="mangas/updates" component={MangasUpdates} onEnter={requireAuth}></Route>
+      <Route path="mangas/followed" component={MangasFollowed}></Route>
+      <Route path="mangas/updates" component={MangasUpdates}></Route>
       <Route path="login" component={Login}></Route>
     </Route>
   </Router>,
