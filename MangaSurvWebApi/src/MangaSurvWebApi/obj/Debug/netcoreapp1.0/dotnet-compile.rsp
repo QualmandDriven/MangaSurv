@@ -59,6 +59,7 @@
 --reference:C:\Users\Alexander\.nuget\packages\Microsoft.CodeAnalysis.CSharp\1.3.0\lib\netstandard1.3\Microsoft.CodeAnalysis.CSharp.dll
 --reference:C:\Users\Alexander\.nuget\packages\Microsoft.CSharp\4.3.0\ref\netstandard1.0\Microsoft.CSharp.dll
 --reference:C:\Users\Alexander\.nuget\packages\Microsoft.DotNet.Cli.Utils\1.0.0-preview2-003121\lib\netstandard1.6\Microsoft.DotNet.Cli.Utils.dll
+--reference:C:\Users\Alexander\.nuget\packages\Microsoft.DotNet.InternalAbstractions\1.0.0\lib\netstandard1.3\Microsoft.DotNet.InternalAbstractions.dll
 --reference:C:\Users\Alexander\.nuget\packages\Microsoft.DotNet.PlatformAbstractions\1.1.0\lib\netstandard1.3\Microsoft.DotNet.PlatformAbstractions.dll
 --reference:C:\Users\Alexander\.nuget\packages\Microsoft.DotNet.ProjectModel\1.0.0-rc3-003121\lib\netstandard1.6\Microsoft.DotNet.ProjectModel.dll
 --reference:C:\Users\Alexander\.nuget\packages\Microsoft.DotNet.ProjectModel.Loader\1.0.0-preview2-003121\lib\netstandard1.6\Microsoft.DotNet.ProjectModel.Loader.dll

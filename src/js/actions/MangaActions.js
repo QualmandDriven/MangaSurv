@@ -20,7 +20,7 @@ export function reloadMangas() {
   // })
   
   dispatcher.dispatch({type: "FETCH_MANGAS"});
-  fetch('http://localhost:50107/api/mangas')
+  fetch('http://192.168.178.70:5000/api/mangas')
         .then(result => result.json())
         .then(items => dispatcher.dispatch({
         type: "RECEIVE_MANGAS", mangas: items
@@ -47,11 +47,20 @@ export function reloadMangas() {
 
 export function reloadMangasFollowed(user) {
   dispatcher.dispatch({type: "FETCH_MANGAS"});
-  // fetch('http://localhost:50107/api/users' + user.id + '/mangas')
-  fetch('http://localhost:50107/api/users/' + 1 + '/mangas')
+  // fetch('http://192.168.178.70:5000/api/users/' + user.id + '/mangas')
+  fetch('http://192.168.178.70:5000/api/users/' + 1 + '/mangas')
         .then(result => result.json())
         .then(items => dispatcher.dispatch({
         type: "RECEIVE_FOLLOWED_MANGAS", mangas: items
+      }));
+}
+
+export function reloadNewChapters(user) {
+  dispatcher.dispatch({type: "FETCH_MANGAS"});
+  fetch('http://localhost:50107/api/mangas?chapterstateid=1')
+        .then(result => result.json())
+        .then(items => dispatcher.dispatch({
+        type: "RECEIVE_NEW_CHAPTERS", mangas: items
       }));
 }
 
