@@ -196,7 +196,8 @@ namespace mangasurvlib.Manga
                     int iStart = sLink.IndexOf("_ch") + 3;
                     int iEnd = sLink.IndexOf("_", iStart);
 
-                    this.Chapter = double.Parse(sLink.Substring(iStart, iEnd - iStart), System.Globalization.CultureInfo.InvariantCulture);
+                    if(iEnd > iStart)
+                        this.Chapter = double.Parse(sLink.Substring(iStart, iEnd - iStart), System.Globalization.CultureInfo.InvariantCulture);
                 }
                 else
                 {

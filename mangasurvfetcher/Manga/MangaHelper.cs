@@ -53,7 +53,7 @@ namespace mangasurvlib.Manga
             return GetMangaClass();
         }
 
-        public static Uri ExtractMangaLink(string sName, string sHtml)
+        public static Uri ExtractMangaLink(string sName, string sHtml, string sBaseUri)
         {
             string sRegexName = sName.Replace("(", ".*").Replace(")", ".*").Replace("-", ".*").Replace(" ", ".*").Trim();
             Regex rx = new Regex("<a.*>.*" + sRegexName + ".*</a>", RegexOptions.IgnoreCase);
@@ -71,6 +71,8 @@ namespace mangasurvlib.Manga
                         if (link.Name == "a" && link.Attributes["href"] != null && rx.IsMatch(link.InnerText.Trim()))
                         {
                             string sLink = link.Attributes["href"].Value.Replace("&amp;", "&");
+                            if (sLink.StartsWith("/"))
+                                sLink = sBaseUri + sLink;
 
                             return new System.Uri(sLink);
                         }
@@ -98,13 +100,11 @@ namespace mangasurvlib.Manga
 
         public Uri GetManga(string sName)
         {
-            return MangaHelper.ExtractMangaLink(sName, MangaListCache);
+            return MangaHelper.ExtractMangaLink(sName, MangaListCache, _MANGAURL);
         }
 
         public List<MangaChapter> GetChapters(Manga manga, Uri uMangaUrl)
         {
-            logger.LogInformation("Getting all Chapters for Manga '{0}'", manga.Name);
-
             List<MangaChapter> lMangaChapters = new List<MangaChapter>();
 
             if (uMangaUrl == null)
@@ -112,6 +112,8 @@ namespace mangasurvlib.Manga
                 logger.LogInformation("Manga '{0}' not found in Manga list of 'MangaBB'!", manga.Name);
                 return new List<MangaChapter>();
             }
+
+            logger.LogInformation("Getting all Chapters for Manga '{0}' at '{0}'", manga.Name, uMangaUrl.AbsoluteUri);
 
             // The Chapters are not all on one page, sometimes if there are many chapters > 200
             // It will get separated in more sites to display all chapters
@@ -267,13 +269,11 @@ namespace mangasurvlib.Manga
 
         public Uri GetManga(string sName)
         {
-            return MangaHelper.ExtractMangaLink(sName, MangaListCache);
+            return MangaHelper.ExtractMangaLink(sName, MangaListCache, _MANGAURL);
         }
 
         public List<MangaChapter> GetChapters(Manga manga, Uri uMangaUrl)
         {
-            logger.LogInformation("Getting all Chapters for Manga '{0}'", manga.Name);
-
             List<MangaChapter> lMangaChapters = new List<MangaChapter>();
 
             if (uMangaUrl == null)
@@ -281,6 +281,8 @@ namespace mangasurvlib.Manga
                 logger.LogInformation("Manga '{0}' not found in Manga list of 'MangaPanda'!", manga.Name);
                 return new List<MangaChapter>();
             }
+
+            logger.LogInformation("Getting all Chapters for Manga '{0}' at '{0}'", manga.Name, uMangaUrl.AbsoluteUri);
 
             HtmlDocument doc = new HtmlDocument();
             doc.LoadHtml(Helper.WebHelper.DownloadString(uMangaUrl.AbsoluteUri));
@@ -382,19 +384,20 @@ namespace mangasurvlib.Manga
 
         public Uri GetManga(string sName)
         {
-            return MangaHelper.ExtractMangaLink(sName, MangaListCache);
+            return MangaHelper.ExtractMangaLink(sName, MangaListCache, _MANGAURL);
         }
 
         public List<MangaChapter> GetChapters(Manga manga, Uri uMangaUrl)
         {
-            List<MangaChapter> lMangaChapters = new List<MangaChapter>();
-
             if (uMangaUrl == null)
             {
                 logger.LogInformation("Manga '{0}' not found in Manga list of 'MangaReader'!", manga.Name);
                 return new List<MangaChapter>();
             }
-            
+
+            List<MangaChapter> lMangaChapters = new List<MangaChapter>();
+            logger.LogInformation("Getting all Chapters for Manga '{0}' at '{0}'", manga.Name, uMangaUrl.AbsoluteUri);
+
             HtmlDocument doc = new HtmlDocument();
             doc.LoadHtml(Helper.WebHelper.DownloadString(uMangaUrl.AbsoluteUri));
 
@@ -497,13 +500,11 @@ namespace mangasurvlib.Manga
 
         public Uri GetManga(string sName)
         {
-            return MangaHelper.ExtractMangaLink(sName, MangaListCache);
+            return MangaHelper.ExtractMangaLink(sName, MangaListCache, _MANGAURL);
         }
 
         public List<MangaChapter> GetChapters(Manga manga, Uri uMangaUrl)
         {
-            logger.LogInformation("Getting all Chapters for Manga '{0}'", manga.Name);
-
             List<MangaChapter> lMangaChapters = new List<MangaChapter>();
 
             if (uMangaUrl == null)
@@ -511,7 +512,9 @@ namespace mangasurvlib.Manga
                 logger.LogInformation("Manga '{0}' not found in Manga list of 'Batoto'!", manga.Name);
                 return new List<MangaChapter>();
             }
-            
+
+            logger.LogInformation("Getting all Chapters for Manga '{0}' at '{0}'", manga.Name, uMangaUrl.AbsoluteUri);
+
             string sTest = Helper.WebHelper.DownloadString(uMangaUrl.AbsoluteUri);
 
             HtmlDocument doc = new HtmlDocument();

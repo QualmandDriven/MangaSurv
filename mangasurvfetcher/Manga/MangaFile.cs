@@ -20,6 +20,12 @@ namespace mangasurvlib.Manga
             internal set;
         }
 
+        public Uri FileAddress
+        {
+            get;
+            internal set;
+        }
+
         internal MangaFile(string sFileName)
         {
             this.FileName = sFileName;

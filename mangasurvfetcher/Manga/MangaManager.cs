@@ -187,13 +187,12 @@ namespace mangasurvlib.Manga
                 string sChapter = ctr.Post("mangas/" + manga.id + "/chapters", chapterRest).Item2;
                 chapterRest = Helper.JsonHelper.DeserializeString<dynamic>(sChapter);
 
-                    
-                foreach(MangaFile file in chapter.MangaFiles)
+                if (chapter.Files != null)
                 {
-                    sAddress = String.Empty;
-
-                    if (chapter.Files != null)
+                    foreach (MangaFile file in chapter.MangaFiles)
                     {
+                        sAddress = String.Empty;
+
                         foreach (KeyValuePair<int, Uri> pair in chapter.Files)
                         {
                             if (pair.Key == file.FileNumber)
@@ -202,16 +201,16 @@ namespace mangasurvlib.Manga
                                 break;
                             }
                         }
+
+                        dynamic restFile = new
+                        {
+                            name = System.IO.Path.GetFileName(file.FileName),
+                            fileno = file.FileNumber,
+                            address = sAddress
+                        };
+
+                        ctr.Post(String.Format("mangas/{0}/chapters/{1}/files", manga.id, chapterRest.id), restFile);
                     }
-
-                    dynamic restFile = new
-                    {
-                        name = System.IO.Path.GetFileName(file.FileName),
-                        fileno = file.FileNumber,
-                        address = sAddress
-                    };
-
-                    ctr.Post(String.Format("mangas/{0}/chapters/{1}/files", manga.id, chapterRest.id), restFile);
                 }
             }
         }

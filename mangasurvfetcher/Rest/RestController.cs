@@ -123,6 +123,9 @@ namespace mangasurvlib.Rest
                 stream.Write(bytes, 0, bytes.Length);
             }
 
+            logger.LogInformation("Calling '{0}' at '{1}'", HttpVerbs.Post, ub.Uri.AbsoluteUri);
+            logger.LogInformation("Content: '{0}'", sJson);
+
             HttpWebResponse response = this.GetHttpWebResponse(request);
 
             return new Tuple<HttpStatusCode, string>(response.StatusCode, this.ExtractResponseContent(response));
@@ -242,6 +245,11 @@ namespace mangasurvlib.Rest
             {
                 return (ex.Response as HttpWebResponse);
             }
+            //catch(Exception ex)
+            //{
+            //    logger.LogError("Could not get WebResponse from '{0}' with error message '{1}'", request.RequestUri.AbsoluteUri, ex.Message);
+            //    return null;
+            //}
         }
     }
 }
