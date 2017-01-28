@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using MangaSurvWebApi.Model;
 
 namespace AnimeSurvWebApi.Controllers
 {
@@ -47,11 +48,8 @@ namespace AnimeSurvWebApi.Controllers
                 if (anime is NotFoundResult)
                     return this.NotFound();
 
-                // Wenn kein Datum übergeben wurde, dann setzen wir das jetzige
-                value.DoDefaultDate();
+                Episode.AddEpisode(this._context, value, true);
 
-                this._context.Episodes.Add(value);
-                this._context.SaveChanges();
                 return this.CreatedAtRoute("AnimeEpisodeLink", new { animeid = animeid, episodeid = value.Id }, value);
             }
             catch(Exception ex)

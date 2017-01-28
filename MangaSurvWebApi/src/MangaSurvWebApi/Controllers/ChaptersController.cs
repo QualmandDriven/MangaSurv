@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using MangaSurvWebApi.Model;
 
 namespace MangaSurvWebApi.Controllers
 {
@@ -57,8 +58,8 @@ namespace MangaSurvWebApi.Controllers
                 if (!ModelState.IsValid)
                     return this.BadRequest(ModelState);
 
-                this._context.Chapters.Add(value);
-                this._context.SaveChanges();
+                Chapter.AddChapter(this._context, value, true);
+
                 return this.CreatedAtRoute("ChapterLink", new { id = value.Id }, value);
             }
             catch(Exception ex)

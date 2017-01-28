@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using MangaSurvWebApi.Model;
 
 namespace MangaSurvWebApi.Controllers
 {
@@ -46,23 +47,15 @@ namespace MangaSurvWebApi.Controllers
 
         // POST api/mangas
         [HttpPost]
-        public async Task<IActionResult> PostAnime([FromBody]Anime value)
+        public IActionResult PostAnime([FromBody]Anime value)
         {
             try
             {
                 if (!ModelState.IsValid)
                     return this.BadRequest(ModelState);
 
-                List<Episode> lEpisodes = value.Episodes;
-                lEpisodes.ForEach(e => e.DoDefaultDate());
+                Anime.AddAnime(this._context, value, true);
 
-                value.Episodes = new List<Episode>();
-
-                await this._context.Animes.AddAsync(value);
-                await this._context.SaveChangesAsync();
-                var newAnime = this._context.Animes.FirstOrDefault(a => a.Id == value.Id);
-                newAnime.Episodes.AddRange(lEpisodes);
-                await this._context.SaveChangesAsync();
                 return this.CreatedAtRoute("AnimeLink", new { animeid = value.Id }, value);
             }
             catch(Exception ex)

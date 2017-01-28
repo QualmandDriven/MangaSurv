@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using MangaSurvWebApi.Model;
 
 namespace ChapterSurvWebApi.Controllers
 {

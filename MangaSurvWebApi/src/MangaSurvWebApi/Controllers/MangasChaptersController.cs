@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
+using MangaSurvWebApi.Model;
 
 namespace MangaSurvWebApi.Controllers
 {
@@ -51,7 +53,7 @@ namespace MangaSurvWebApi.Controllers
 
         // POST api/mangas
         [HttpPost("{mangaid}/chapters")]
-        public IActionResult Post(int mangaid, [FromBody]Chapter value)
+        public async Task<IActionResult> Post(int mangaid, [FromBody]Chapter value)
         {
             try
             {
@@ -60,8 +62,8 @@ namespace MangaSurvWebApi.Controllers
                 if (!ModelState.IsValid)
                     return this.BadRequest(ModelState);
 
-                this._context.Chapters.Add(value);
-                this._context.SaveChanges();
+               Chapter.AddChapter(this._context, value, true);
+
                 return this.CreatedAtRoute("MangaChapterLink", new { mangaid = mangaid, chapterid = value.Id }, value);
             }
             catch(Exception ex)

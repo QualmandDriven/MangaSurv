@@ -4,6 +4,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using MangaSurvWebApi.Model;
 
 namespace MangaSurvWebApi.Controllers
 {
@@ -53,20 +54,6 @@ namespace MangaSurvWebApi.Controllers
                             }
 
                             return this.Ok(lMangas);
-                            //List<dynamic> dynMangas = new List<dynamic>();
-                            //foreach(Manga manga in lMangas)
-                            //{
-                            //    List<dynamic> dynChapters = new List<dynamic>();
-                            //    foreach(Chapter chapter in manga.Chapters)
-                            //    {
-                            //        dynChapters.Add(new { ChapterNo = chapter.ChapterNo, Address = chapter.Address, EnterDate=chapter.EnterDate });
-                            //    }
-
-                            //    dynamic dynManga = new { Id = manga.Id, Name = manga.Name, FileSystemName = manga.FileSystemName, EnterDate = manga.EnterDate, Chapters = dynChapters };
-                            //    dynMangas.Add(dynManga);
-                            //}
-
-                            //return this.Ok(dynMangas);
                         case "INCLUDE":
                             results.Include(m => m.Chapters);
                             break;
@@ -110,21 +97,15 @@ namespace MangaSurvWebApi.Controllers
 
         // POST api/mangas
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody]Manga value)
+        public IActionResult Post([FromBody]Manga value)
         {
             try
             {
                 if (!ModelState.IsValid)
                     return this.BadRequest(ModelState);
 
-                List<Chapter> lChapters = value.Chapters;
-                value.Chapters = new List<Chapter>();
+                Manga.AddManga(this._context, value, true);
 
-                await this._context.Mangas.AddAsync(value);
-                await this._context.SaveChangesAsync();
-                Manga newManga = this._context.Mangas.FirstOrDefault(m => m.Id == value.Id);
-                newManga.Chapters.AddRange(lChapters);
-                await this._context.SaveChangesAsync();
                 return this.CreatedAtRoute("MangaLink", new { id = value.Id }, value);
             }
             catch(Exception ex)
