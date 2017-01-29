@@ -20,22 +20,17 @@ namespace MangaSurvWebApi.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            if(Request.QueryString.HasValue)
+            Helper.QueryString queryString = new Helper.QueryString(Request);
+            if (queryString.ContainsKeys())
             {
-                var results = this._context.Episodes.ToList();
-                foreach (KeyValuePair<string, Microsoft.Extensions.Primitives.StringValues> pair in Request.Query)
+                if (queryString.ContainsKey("STATEID"))
                 {
-                    switch (pair.Key.ToUpper())
-                    {
-                        case "STATEID":
-                            results = results.Where(o => o.StateId == int.Parse(pair.Value.ToString())).ToList();
-                            break;
-                        default:
-                            break;
-                    }
+                    return this.Ok(this._context.Episodes.Where(o => o.StateId == int.Parse(queryString.GetValue("STATEID"))).ToList());
                 }
-
-                return this.Ok(results);
+                else
+                {
+                    return this.Ok(this._context.Episodes.ToList());
+                }
             }
 
             return this.Ok(this._context.Episodes.ToList());

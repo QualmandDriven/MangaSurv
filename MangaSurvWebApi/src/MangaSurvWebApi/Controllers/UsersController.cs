@@ -20,18 +20,21 @@ namespace MangaSurvWebApi.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            if (HttpContext.Request.Query.ContainsKey("include") && HttpContext.Request.Query["include"].ToString() == "1") { 
-                var results = _context.Users.Select(u => new { u.Id, u.Name, u.FollowedMangas, u.NewChapters }).ToList();
-                return this.Ok(results);
+            Helper.QueryString queryString = new Helper.QueryString(Request);
+            if(queryString.ContainsKeys())
+            {
+                if(queryString.ContainsKey("INCLUDE"))
+                {
+                    var results = _context.Users.Select(u => new { u.Id, u.Name, u.FollowedMangas, u.NewChapters }).ToList();
+                    return this.Ok(results);
+                }
+                else if(queryString.ContainsKey("NAME"))
+                {
+                    return this.Ok(this._context.Users.Where(u => u.Name == queryString.GetValue("name")));
+                }
             }
 
             var users = this._context.Users.ToList();
-
-            if (HttpContext.Request.Query.ContainsKey("name"))
-            {
-                return this.Ok(users.Where(u => u.Name == HttpContext.Request.Query["name"].ToString()));
-            }
-
             return this.Ok(users);
         }
 
@@ -40,9 +43,6 @@ namespace MangaSurvWebApi.Controllers
         [Produces(typeof(Manga))]
         public IActionResult Get(int id)
         {
-            //if(Request.QueryString.HasValue)
-            //    return Request.QueryString.Value;
-            
             User user = this._context.Users.FirstOrDefault(u => u.Id == id);
             if (user == null)
                 return this.NotFound();

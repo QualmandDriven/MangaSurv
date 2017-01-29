@@ -20,14 +20,18 @@ namespace MangaSurvWebApi.Controllers
         [HttpGet]
         public IActionResult GetAnimes()
         {
-            if (HttpContext.Request.Query.ContainsKey("include") && HttpContext.Request.Query["include"].ToString() == "1") { 
-                var results = _context.Animes.Select(a => new { a.Id, a.Name, a.FileSystemName, a.Episodes }).ToList();
-                return this.Ok(results);
-            }
-            
-            if (HttpContext.Request.Query.ContainsKey("name"))
+            Helper.QueryString queryString = new Helper.QueryString(Request);
+            if (queryString.ContainsKeys())
             {
-                return this.Ok(this._context.Animes.Where(a => a.Name == HttpContext.Request.Query["name"].ToString()));
+                if (queryString.ContainsKey("include") && queryString.GetValue("include") == "1")
+                {
+                    var results = _context.Animes.Select(a => new { a.Id, a.Name, a.FileSystemName, a.Episodes }).ToList();
+                    return this.Ok(results);
+                }
+                else if (queryString.ContainsKey("name"))
+                {
+                    return this.Ok(this._context.Animes.Where(a => a.Name == queryString.GetValue("name")));
+                }
             }
 
             return this.Ok(this._context.Animes.ToList());

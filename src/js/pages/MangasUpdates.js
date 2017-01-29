@@ -32,6 +32,10 @@ export default class MangasFollowed extends React.Component {
     });
   }
 
+  reloadMangas() {
+    MangaActions.reloadNewChapters();
+  }
+
   filterMangas(e) {
     this.setState({
       filterText: e
@@ -45,6 +49,7 @@ export default class MangasFollowed extends React.Component {
       <div>
         <h1>Mangas</h1>
         <SearchBar filterText = {this.state.filterText} onUserInput={this.filterMangas} />
+        <button class="btn btn-success" onClick={this.reloadMangas.bind(this)}>Refresh</button>
 
         <div>
           {mangas.map((manga) => {

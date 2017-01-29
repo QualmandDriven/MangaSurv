@@ -23,61 +23,44 @@ namespace MangaSurvWebApi.Controllers
         {
             if (Request.QueryString.HasValue)
             {
-                IQueryable<Manga> results = this._context.Mangas.Where(m => 1 == 1);
-                foreach (KeyValuePair<string, Microsoft.Extensions.Primitives.StringValues> pair in Request.Query)
+                Helper.QueryString queryString = new Helper.QueryString(Request);
+                if (queryString.ContainsKey("CHAPTERSTATEID"))
                 {
-                    switch (pair.Key.ToUpper())
+                    List<Chapter> lNewChapters = this._context.Chapters.Where(c => c.StateId == int.Parse(queryString.GetValue("CHAPTERSTATEID"))).ToList();
+                    List<Manga> lMangas = new List<Manga>();
+                    List<long> lMangaIds = new List<long>();
+
+                    foreach (Chapter chapter in lNewChapters)
                     {
-                        case "CHAPTERSTATEID":
-
-                            List<Chapter> lNewChapters = this._context.Chapters.Where(c => c.StateId == int.Parse(pair.Value.ToString())).ToList();
-                            List<Manga> lMangas = new List<Manga>();
-                            List<long> lMangaIds = new List<long>();
-
-                            foreach (Chapter chapter in lNewChapters)
+                        if (lMangaIds.Contains(chapter.MangaId))
+                        {
+                            Manga manga = lMangas.Find(m => m.Id == chapter.MangaId);
+                            manga.Chapters.Add(chapter);
+                        }
+                        else
+                        {
+                            Manga manga = this._context.Mangas.FirstOrDefault(m => m.Id == chapter.MangaId);
+                            if (manga != null)
                             {
-                                if (lMangaIds.Contains(chapter.MangaId))
-                                {
-                                    Manga manga = lMangas.Find(m => m.Id == chapter.MangaId);
-                                    manga.Chapters.Add(chapter);
-                                }
-                                else
-                                {
-                                    Manga manga = this._context.Mangas.FirstOrDefault(m => m.Id == chapter.MangaId);
-                                    if (manga != null)
-                                    {
-                                        //manga.Chapters.Add(chapter);
-                                        lMangas.Add(manga);
-                                        lMangaIds.Add(manga.Id);
-                                    }
-                                }
+                                lMangas.Add(manga);
+                                lMangaIds.Add(manga.Id);
                             }
-
-                            return this.Ok(lMangas);
-                        case "INCLUDE":
-                            results.Include(m => m.Chapters);
-                            break;
-                        default:
-                            break;
+                        }
                     }
+
+                    return this.Ok(lMangas);
                 }
-
-                return this.Ok(results);
+                else if (queryString.ContainsKey("INCLUDE"))
+                {
+                    return this.Ok(this._context.Mangas.Include(m => m.Chapters));
+                }
+                else if(queryString.ContainsKey("NAME"))
+                {
+                    return this.Ok(this._context.Mangas.Where(m => m.Name == queryString.GetValue("NAME")));
+                }
             }
 
-            if (HttpContext.Request.Query.ContainsKey("include") && HttpContext.Request.Query["include"].ToString() == "1") { 
-                var results = _context.Mangas.Select(m => new { m.Id, m.Name, m.FileSystemName, m.Chapters }).ToList();
-                return this.Ok(results);
-            }
-
-            var mangas = this._context.Mangas.ToList();
-
-            if (HttpContext.Request.Query.ContainsKey("name"))
-            {
-                return this.Ok(mangas.Where(m => m.Name == HttpContext.Request.Query["name"].ToString()));
-            }
-            
-            return this.Ok(mangas);
+            return this.Ok(this._context.Mangas.ToList());
         }
 
         // GET api/mangas/5
@@ -85,13 +68,19 @@ namespace MangaSurvWebApi.Controllers
         [Produces(typeof(Manga))]
         public IActionResult Get(int id)
         {
-            //if(Request.QueryString.HasValue)
-            //    return Request.QueryString.Value;
-            
             Manga manga = this._context.Mangas.FirstOrDefault(m => m.Id == id);
             if (manga == null)
                 return this.NotFound();
-            
+
+            Helper.QueryString queryString = new Helper.QueryString(Request);
+            if(queryString.ContainsKeys())
+            {
+                if (queryString.ContainsKey("INCLUDE"))
+                {
+                    return this.Ok(this._context.Mangas.Where(m=> m.Id == id).Include(m => m.Chapters).FirstOrDefault());
+                }
+            }
+
             return this.Ok(manga);
         }
 

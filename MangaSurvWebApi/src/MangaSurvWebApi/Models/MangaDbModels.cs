@@ -126,18 +126,28 @@ namespace MangaSurvWebApi.Model
             // Add chapter to following users
             var users = from user in context.UserFollowMangas
                         where user.MangaId == chapter.MangaId
-                        select user;
+                        select user.UserId;
 
-            await users.ForEachAsync(user =>
+            foreach(int userId in users)
             {
-                UserNewChapters unc = new UserNewChapters();
-                unc.ChapterId = chapter.Id;
-                unc.UserId = user.UserId;
-                context.UserNewChapters.Add(unc);
-            });
+                await AddChapterToUser(context, chapter, userId, bSaveChanges);
+            }
 
             if (bSaveChanges)
                 await context.SaveChangesAsync();
+        }
+
+        public static async Task<UserNewChapters> AddChapterToUser(MangaSurvContext context, Chapter chapter, int userId, bool bSaveChanges)
+        {
+            UserNewChapters unc = new UserNewChapters();
+            unc.ChapterId = chapter.Id;
+            unc.UserId = userId;
+            context.UserNewChapters.Add(unc);
+
+            if (bSaveChanges)
+                await context.SaveChangesAsync();
+
+            return unc;
         }
     }
 
@@ -187,18 +197,31 @@ namespace MangaSurvWebApi.Model
             // Add chapter to following users
             var users = from user in context.UserFollowAnimes
                         where user.AnimeId == episode.AnimeId
-                        select user;
+                        select user.UserId;
 
-            await users.ForEachAsync(user =>
+            foreach(int userId in users)
             {
-                UserNewEpisodes une = new UserNewEpisodes();
-                une.EpisodeId = episode.Id;
-                une.UserId = user.UserId;
-                context.UserNewEpisodes.Add(une);
-            });
+                await AddEpisodeToUser(context, episode, userId, false);
+            }
 
             if (bSaveChanges)
                 await context.SaveChangesAsync();
+        }
+
+        public static async Task<UserNewEpisodes> AddEpisodeToUser(MangaSurvContext context, Episode episode, long userId, bool bSaveChanges)
+        {
+            UserNewEpisodes une = new UserNewEpisodes();
+            une.EpisodeId = episode.Id;
+            une.UserId = userId;
+            context.UserNewEpisodes.Add(une);
+
+            if (bSaveChanges)
+            {
+                await context.UserNewEpisodes.AddAsync(une);
+                await context.SaveChangesAsync();
+            }
+
+            return une;
         }
     }
 

@@ -42,7 +42,7 @@ namespace EpisodeSurvWebApi.Controllers
 
         // POST api/episodes
         [HttpPost("{userid}/episodes/")]
-        public async Task<IActionResult> Post(int userid, [FromBody]Episode value)
+        public IActionResult Post(int userid, [FromBody]Episode value)
         {
             try
             {
@@ -54,22 +54,7 @@ namespace EpisodeSurvWebApi.Controllers
                 if (episode == null)
                     return this.NotFound();
 
-                var entry = this._context.UserNewEpisodes.FirstOrDefault(u => u.UserId == userid && u.EpisodeId == episode.Id);
-
-                // Add entry only when it does not exist yet
-                if (entry == null)
-                {
-                    UserNewEpisodes ufm = new UserNewEpisodes();
-                    ufm.Episode = episode;
-                    ufm.EpisodeId = episode.Id;
-                    ufm.User = user;
-                    ufm.UserId = user.Id;
-
-                    this._context.UserNewEpisodes.Add(ufm);
-                    await this._context.SaveChangesAsync();
-
-                    entry = ufm;
-                }
+                var entry = UserNewEpisodes.AddEpisodeToUser(this._context, episode, user.Id, true).Result;
 
                 return this.CreatedAtRoute("UserEpisodeLink", new { userid = entry.UserId, episodeid = entry.EpisodeId }, entry);
             }

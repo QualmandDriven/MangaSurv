@@ -232,6 +232,7 @@ C:\Users\Alexander\Documents\GitHub\mangasurv\MangaSurvWebApi\src\MangaSurvWebAp
 C:\Users\Alexander\Documents\GitHub\mangasurv\MangaSurvWebApi\src\MangaSurvWebApi\Controllers\UsersController.cs
 C:\Users\Alexander\Documents\GitHub\mangasurv\MangaSurvWebApi\src\MangaSurvWebApi\Controllers\UsersEpisodesController.cs
 C:\Users\Alexander\Documents\GitHub\mangasurv\MangaSurvWebApi\src\MangaSurvWebApi\Controllers\UsersMangasController.cs
+C:\Users\Alexander\Documents\GitHub\mangasurv\MangaSurvWebApi\src\MangaSurvWebApi\Helper\QueryString.cs
 C:\Users\Alexander\Documents\GitHub\mangasurv\MangaSurvWebApi\src\MangaSurvWebApi\Migrations\20161211162614_InitialMigration.cs
 C:\Users\Alexander\Documents\GitHub\mangasurv\MangaSurvWebApi\src\MangaSurvWebApi\Migrations\20161211162614_InitialMigration.Designer.cs
 C:\Users\Alexander\Documents\GitHub\mangasurv\MangaSurvWebApi\src\MangaSurvWebApi\Migrations\20161229150857_animemigration.cs

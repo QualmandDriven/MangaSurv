@@ -23,20 +23,11 @@ namespace MangaSurvWebApi.Controllers
         {
             if (Request.QueryString.HasValue)
             {
-                var results = this._context.Chapters.Where(d => d.MangaId == mangaid);
-                foreach (KeyValuePair<string, Microsoft.Extensions.Primitives.StringValues> pair in Request.Query)
+                Helper.QueryString queryString = new Helper.QueryString(Request);
+                if(queryString.ContainsKey("INCLUDE"))
                 {
-                    switch (pair.Key.ToUpper())
-                    {
-                        case "INCLUDE":
-                            results = results.Include(o => o.Files);
-                            break;
-                        default:
-                            break;
-                    }
+                    return this.Ok(this._context.Chapters.Where(d => d.MangaId == mangaid).Include(o => o.Files));
                 }
-
-                return this.Ok(results);
             }
 
             var chapters = this._context.Chapters.Where(d => d.MangaId == mangaid);

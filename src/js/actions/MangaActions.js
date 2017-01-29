@@ -25,24 +25,6 @@ export function reloadMangas() {
         .then(items => dispatcher.dispatch({
         type: "RECEIVE_MANGAS", mangas: items
       }));
-  // dispatcher.dispatch({type: "RECEIVE_MANGAS", mangas: [
-  //   {
-  //     id: 3,
-  //     name: "Bleach", 
-  //     chapters: 745, 
-  //     followed: false, 
-  //     lastupdate: 123,
-  //     image: "bleach.jpg",
-  //   },
-  //   {
-  //     id: 4,
-  //     name: "Onepunch-Man", 
-  //     chapters: 250, 
-  //     followed: true, 
-  //     lastupdate: 123,
-  //     image: "onepunchman.jpg",
-  //   }
-  // ]});
 }
 
 export function reloadMangasFollowed(user) {
@@ -57,11 +39,16 @@ export function reloadMangasFollowed(user) {
 
 export function reloadNewChapters(user) {
   dispatcher.dispatch({type: "FETCH_MANGAS"});
-  fetch('http://localhost:50107/api/mangas?chapterstateid=1')
-        .then(result => result.json())
-        .then(items => dispatcher.dispatch({
-        type: "RECEIVE_NEW_CHAPTERS", mangas: items
-      }));
+  // fetch('http://192.168.178.70:5000/api/mangas?chapterstateid=1')
+  // fetch('http://192.168.178.70:5000/api/users/' + user.id + '/chapters')
+  fetch('http://localhost:50107/api/users/1/chapters?sortby=manga', {
+    method: 'GET'
+    })
+    .then(result => result.json())
+    .then(items => {
+      dispatcher.dispatch({ type: "RECEIVE_NEW_CHAPTERS", mangas: items });
+    });
+  
 }
 
 export function followManga(manga) {
@@ -73,5 +60,23 @@ export function unfollowManga(manga) {
 }
 
 export function markAsRead(manga) {
-  dispatcher.dispatch({type: "MARKASREAD_MANGA", manga});
+  // dispatcher.dispatch({type: "MARKASREAD_MANGA", manga});
+    manga.chapters.forEach(chapter => {
+      // const formData = new FormData();
+      // formData.append('id', chapter.id);
+      // console.log(formData);
+      fetch('http://localhost:50107/api/users/1/chapters/' + chapter.id, {
+        method: 'DELETE'
+        // body: formData
+      })
+      .then(result => { 
+        console.log(result);
+        reloadNewChapters();
+      })
+      .catch(err => { 
+        console.log(err);
+        reloadNewChapters(); 
+      });
+    });
+    // reloadNewChapters();
 }
