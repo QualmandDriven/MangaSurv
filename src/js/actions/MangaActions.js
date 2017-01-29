@@ -41,7 +41,7 @@ export function reloadNewChapters(user) {
   dispatcher.dispatch({type: "FETCH_MANGAS"});
   // fetch('http://192.168.178.70:5000/api/mangas?chapterstateid=1')
   // fetch('http://192.168.178.70:5000/api/users/' + user.id + '/chapters')
-  fetch('http://localhost:50107/api/users/1/chapters?sortby=manga', {
+  fetch('192.168.178.70:5000/api/users/1/chapters?sortby=manga', {
     method: 'GET'
     })
     .then(result => result.json())
@@ -65,7 +65,7 @@ export function markAsRead(manga) {
       // const formData = new FormData();
       // formData.append('id', chapter.id);
       // console.log(formData);
-      fetch('http://localhost:50107/api/users/1/chapters/' + chapter.id, {
+      fetch('http://192.168.178.70:5000/api/users/1/chapters/' + chapter.id, {
         method: 'DELETE'
         // body: formData
       })
