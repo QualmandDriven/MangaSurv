@@ -53,7 +53,7 @@ namespace MangaSurvWebApi.Controllers
 
         // POST api/mangas
         [HttpPost("{mangaid}/chapters")]
-        public async Task<IActionResult> Post(int mangaid, [FromBody]Chapter value)
+        public IActionResult Post(int mangaid, [FromBody]Chapter value)
         {
             try
             {

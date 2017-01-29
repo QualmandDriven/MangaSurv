@@ -42,7 +42,7 @@ namespace AnimeSurvWebApi.Controllers
 
         // POST api/animes
         [HttpPost("{userid}/animes/")]
-        public async Task<IActionResult> Post(int userid, [FromBody]Anime value)
+        public IActionResult Post(int userid, [FromBody]Anime value)
         {
             try
             {
