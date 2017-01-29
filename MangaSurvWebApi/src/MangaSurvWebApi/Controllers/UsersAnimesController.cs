@@ -54,22 +54,8 @@ namespace AnimeSurvWebApi.Controllers
                 if (anime == null)
                     return this.NotFound();
 
-                var entry = this._context.UserFollowAnimes.FirstOrDefault(u => u.UserId == userid && u.AnimeId == anime.Id);
+                var entry = UserFollowAnimes.AddAnimeToUser(this._context, anime, user).Result;
 
-                // Add entry only when it does not exist yet
-                if (entry == null)
-                {
-                    UserFollowAnimes ufm = new UserFollowAnimes();
-                    ufm.Anime = anime;
-                    ufm.AnimeId = anime.Id;
-                    ufm.User = user;
-                    ufm.UserId = user.Id;
-
-                    this._context.UserFollowAnimes.Add(ufm);
-                    await this._context.SaveChangesAsync();
-
-                    entry = ufm;
-                }
                 return this.CreatedAtRoute("UserAnimeLink", new { userid = entry.UserId, animeid = entry.AnimeId }, entry);
             }
             catch(Exception ex)
@@ -88,11 +74,11 @@ namespace AnimeSurvWebApi.Controllers
         [HttpDelete("{userid}/animes/{animeid}")]
         public void Delete(int userid, int animeid)
         {
-            var useranime = this._context.UserFollowAnimes.FirstOrDefault(u => u.UserId == userid && u.AnimeId == animeid);
-            if (useranime == null)
+            var useranimes = this._context.UserFollowAnimes.Where(u => u.UserId == userid && u.AnimeId == animeid);
+            if (useranimes == null || useranimes.Count() == 0)
                 return;
 
-            this._context.UserFollowAnimes.Remove(useranime);
+            this._context.UserFollowAnimes.RemoveRange(useranimes);
             this._context.SaveChanges();
         }
     }

@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using System.Threading.Tasks;
 
 namespace MangaSurvWebApi.Model
 {
@@ -148,6 +150,26 @@ namespace MangaSurvWebApi.Model
 
         public long MangaId { get; set; }
         public Manga Manga { get; set; }
+
+        /// <summary>
+        /// Adds manga to specific user.
+        /// Adds manga to user 1 in general (admin user).
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="manga"></param>
+        public async static Task<UserFollowMangas> AddMangaToUser(MangaSurvContext context, Manga manga, User user)
+        {
+            UserFollowMangas ufm = new UserFollowMangas();
+            ufm.Manga = manga;
+            ufm.MangaId = manga.Id;
+            ufm.User = user;
+            ufm.UserId = user.Id;
+
+            await context.UserFollowMangas.AddAsync(ufm);
+            await context.SaveChangesAsync();
+
+            return ufm;
+        }
     }
 
     public class UserNewEpisodes
@@ -189,6 +211,20 @@ namespace MangaSurvWebApi.Model
 
         public long AnimeId { get; set; }
         public Anime Anime { get; set; }
+
+        public async static Task<UserFollowAnimes> AddAnimeToUser(MangaSurvContext context, Anime anime, User user)
+        {
+            UserFollowAnimes ufa = new UserFollowAnimes();
+            ufa.Anime = anime;
+            ufa.AnimeId = anime.Id;
+            ufa.User = user;
+            ufa.UserId = user.Id;
+
+            await context.UserFollowAnimes.AddAsync(ufa);
+            await context.SaveChangesAsync();
+
+            return ufa;
+        }
     }
 
     public class User

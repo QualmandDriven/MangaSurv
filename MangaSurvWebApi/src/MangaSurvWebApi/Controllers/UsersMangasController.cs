@@ -54,22 +54,8 @@ namespace MangaSurvWebApi.Controllers
                 if (manga == null)
                     return this.NotFound();
 
-                var entry = this._context.UserFollowMangas.FirstOrDefault(u => u.UserId == userid && u.MangaId == manga.Id);
+                var entry = UserFollowMangas.AddMangaToUser(this._context, manga, user).Result;
 
-                // Add entry only when it does not exist yet
-                if (entry == null)
-                {
-                    UserFollowMangas ufm = new UserFollowMangas();
-                    ufm.Manga = manga;
-                    ufm.MangaId = manga.Id;
-                    ufm.User = user;
-                    ufm.UserId = user.Id;
-
-                    this._context.UserFollowMangas.Add(ufm);
-                    await this._context.SaveChangesAsync();
-
-                    entry = ufm;
-                }
                 return this.CreatedAtRoute("UserMangaLink", new { userid = entry.UserId, mangaid = entry.MangaId }, entry);
             }
             catch(Exception ex)
