@@ -20,7 +20,9 @@ export function reloadMangas() {
   // })
   
   dispatcher.dispatch({type: "FETCH_MANGAS"});
-  fetch('http://192.168.178.70:5000/api/mangas')
+  fetch('http://192.168.178.70:5000/api/mangas', {
+    mode: 'no-cors',
+  })
         .then(result => result.json())
         .then(items => dispatcher.dispatch({
         type: "RECEIVE_MANGAS", mangas: items
@@ -42,7 +44,8 @@ export function reloadNewChapters(user) {
   // fetch('http://192.168.178.70:5000/api/mangas?chapterstateid=1')
   // fetch('http://192.168.178.70:5000/api/users/' + user.id + '/chapters')
   fetch('192.168.178.70:5000/api/users/1/chapters?sortby=manga', {
-    method: 'GET'
+    method: 'GET',
+    mode: 'no-cors'
     })
     .then(result => result.json())
     .then(items => {
