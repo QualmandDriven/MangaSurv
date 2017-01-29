@@ -42,7 +42,13 @@ namespace MangaSurvWebApi
                 opts.UseNpgsql(Configuration.GetConnectionString("MangaSurvPostgres"))
             );
 
-            services.AddCors();
+            services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
+            {
+                builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+            }));
+
             services.AddMvc();
         }
 
@@ -56,7 +62,12 @@ namespace MangaSurvWebApi
 
             app.UseApplicationInsightsExceptionTelemetry();
 
-            app.UseCors(builder => builder.WithOrigins("http://localhost:8080"));
+            app.UseCors(builder =>
+            {
+                builder.AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader();
+            });
             app.UseMvc();
         }
     }

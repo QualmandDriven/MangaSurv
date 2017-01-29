@@ -20,33 +20,28 @@ export function reloadMangas() {
   // })
   
   dispatcher.dispatch({type: "FETCH_MANGAS"});
-  fetch('http://192.168.178.70:5000/api/mangas', {
-    mode: 'no-cors',
-  })
-        .then(result => result.json())
-        .then(items => dispatcher.dispatch({
-        type: "RECEIVE_MANGAS", mangas: items
-      }));
+  fetch('http://192.168.178.70:5000/api/mangas')
+    .then(result => result.json())
+    .then(items => dispatcher.dispatch({
+    type: "RECEIVE_MANGAS", mangas: items
+  }));
 }
 
 export function reloadMangasFollowed(user) {
   dispatcher.dispatch({type: "FETCH_MANGAS"});
   // fetch('http://192.168.178.70:5000/api/users/' + user.id + '/mangas')
   fetch('http://192.168.178.70:5000/api/users/' + 1 + '/mangas')
-        .then(result => result.json())
-        .then(items => dispatcher.dispatch({
-        type: "RECEIVE_FOLLOWED_MANGAS", mangas: items
-      }));
+    .then(result => result.json())
+    .then(items => dispatcher.dispatch({
+    type: "RECEIVE_FOLLOWED_MANGAS", mangas: items
+  }));
 }
 
 export function reloadNewChapters(user) {
   dispatcher.dispatch({type: "FETCH_MANGAS"});
   // fetch('http://192.168.178.70:5000/api/mangas?chapterstateid=1')
   // fetch('http://192.168.178.70:5000/api/users/' + user.id + '/chapters')
-  fetch('192.168.178.70:5000/api/users/1/chapters?sortby=manga', {
-    method: 'GET',
-    mode: 'no-cors'
-    })
+  fetch('http://192.168.178.70:5000/api/users/1/chapters?sortby=manga')
     .then(result => result.json())
     .then(items => {
       dispatcher.dispatch({ type: "RECEIVE_NEW_CHAPTERS", mangas: items });
@@ -68,7 +63,7 @@ export function markAsRead(manga) {
       // const formData = new FormData();
       // formData.append('id', chapter.id);
       // console.log(formData);
-      fetch('http://192.168.178.70:5000/api/users/1/chapters/' + chapter.id, {
+      fetch('http://localhost:50107/api/users/1/chapters/' + chapter.id, {
         method: 'DELETE'
         // body: formData
       })
