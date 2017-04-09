@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.Threading.Tasks;
+using MangaSurvWebApi.Service;
 
 namespace MangaSurvWebApi.Model
 {
@@ -23,26 +24,28 @@ namespace MangaSurvWebApi.Model
         public List<Chapter> Chapters { get; set; } = new List<Chapter>();
         public List<UserFollowMangas> FollowingUsers { get; set; } = new List<UserFollowMangas>();
 
-        public async static void AddManga(MangaSurvContext context, Manga manga, bool bSaveChanges)
+        public static void AddManga(Manga manga)
         {
-            List<Chapter> lChapters = manga.Chapters;
-            manga.Chapters = new List<Chapter>();
-
-            await context.Mangas.AddAsync(manga);
-            await context.SaveChangesAsync();
-
-            lChapters.ForEach(chapter =>
+            using (MangaSurvContext context = ApplicationDependencies.GetMangaSurvContext())
             {
-                chapter.MangaId = manga.Id;
-                Chapter.AddChapter(context, chapter, bSaveChanges);
-            });
+                List<Chapter> lChapters = manga.Chapters;
+                manga.Chapters = new List<Chapter>();
 
-            if (bSaveChanges)
-                await context.SaveChangesAsync();
+                context.Mangas.Add(manga);
+                context.SaveChanges();
+
+                lChapters.ForEach(chapter =>
+                {
+                    chapter.MangaId = manga.Id;
+                    Chapter.AddChapter(chapter);
+                });
+
+                context.SaveChanges();
+            }
         }
     }
 
-    public class Chapter
+    public class Chapter : IComparable
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long Id { get; set; }
@@ -58,25 +61,36 @@ namespace MangaSurvWebApi.Model
         public List<File> Files { get; set; } = new List<File>();
         public List<UserNewChapters> NewChaptersForUsers { get; set; } = new List<UserNewChapters>();
 
-        public async static void AddChapter(MangaSurvContext context, Chapter chapter, bool bSaveChanges)
+        public static void AddChapter(Chapter chapter)
         {
-            List<File> lFiles = chapter.Files;
-            chapter.Files = new List<File>();
-
-            await context.Chapters.AddAsync(chapter);
-            await context.SaveChangesAsync();
-            
-            // Add new chapters to following users
-            UserNewChapters.AddChapterToUsers(context, chapter, true);
-
-            lFiles.ForEach(file =>
+            using (MangaSurvContext context = ApplicationDependencies.GetMangaSurvContext())
             {
-                file.ChapterId = chapter.Id;
-                File.AddFile(context, file, false);
-            });
+                List<File> lFiles = chapter.Files;
+                chapter.Files = new List<File>();
 
-            if (bSaveChanges)
-                await context.SaveChangesAsync();
+                context.Chapters.Add(chapter);
+                context.SaveChanges();
+
+                // Add new chapters to following users
+                UserNewChapters.AddChapterToUsers(chapter);
+
+                lFiles.ForEach(file =>
+                {
+                    file.ChapterId = chapter.Id;
+                    File.AddFile(file);
+                });
+
+                context.SaveChanges();
+            }
+        }
+
+        public int CompareTo(object obj)
+        {
+            if (!(obj is Chapter))
+                return -1;
+
+            //return (obj as Chapter).ChapterNo.CompareTo(this.ChapterNo);
+            return this.ChapterNo.CompareTo((obj as Chapter).ChapterNo);
         }
     }
 
@@ -89,15 +103,16 @@ namespace MangaSurvWebApi.Model
         public int FileNo { get; set; }
         [Required]
         public string Name { get; set; }
-        [Required]
+
         public string Address { get; set; }
 
-        public async static void AddFile(MangaSurvContext context, File file, bool bSaveChanges)
+        public static void AddFile(File file)
         {
-            await context.Files.AddAsync(file);
-
-            if (bSaveChanges)
-                await context.SaveChangesAsync();
+            using (MangaSurvContext context = ApplicationDependencies.GetMangaSurvContext())
+            {
+                context.Files.Add(file);
+                context.SaveChanges();
+            }
         }
     }
 
@@ -121,33 +136,39 @@ namespace MangaSurvWebApi.Model
         public long ChapterId { get; set; }
         public Chapter Chapter { get; set; }
 
-        public static async void AddChapterToUsers(MangaSurvContext context, Chapter chapter, bool bSaveChanges)
+        public static async void AddChapterToUsers(Chapter chapter)
         {
-            // Add chapter to following users
-            var users = from user in context.UserFollowMangas
-                        where user.MangaId == chapter.MangaId
-                        select user.UserId;
-
-            foreach(int userId in users)
+            using (MangaSurvContext context = ApplicationDependencies.GetMangaSurvContext())
             {
-                await AddChapterToUser(context, chapter, userId, bSaveChanges);
-            }
 
-            if (bSaveChanges)
+                // Add chapter to following users
+                var users = from user in context.UserFollowMangas
+                            where user.MangaId == chapter.MangaId
+                            select user.UserId;
+
+                foreach (int userId in users)
+                {
+                    await AddChapterToUser(chapter, userId);
+                }
+
                 await context.SaveChangesAsync();
+            }
         }
 
-        public static async Task<UserNewChapters> AddChapterToUser(MangaSurvContext context, Chapter chapter, int userId, bool bSaveChanges)
+        public static async Task<UserNewChapters> AddChapterToUser(Chapter chapter, long userId)
         {
-            UserNewChapters unc = new UserNewChapters();
-            unc.ChapterId = chapter.Id;
-            unc.UserId = userId;
-            context.UserNewChapters.Add(unc);
+            using (MangaSurvContext context = ApplicationDependencies.GetMangaSurvContext())
+            {
 
-            if (bSaveChanges)
+                UserNewChapters unc = new UserNewChapters();
+                unc.ChapterId = chapter.Id;
+                unc.UserId = userId;
+                context.UserNewChapters.Add(unc);
+                
                 await context.SaveChangesAsync();
 
-            return unc;
+                return unc;
+            }
         }
     }
 
@@ -167,18 +188,21 @@ namespace MangaSurvWebApi.Model
         /// </summary>
         /// <param name="context"></param>
         /// <param name="manga"></param>
-        public async static Task<UserFollowMangas> AddMangaToUser(MangaSurvContext context, Manga manga, User user)
+        public async static Task<UserFollowMangas> AddMangaToUser(Manga manga, User user)
         {
-            UserFollowMangas ufm = new UserFollowMangas();
-            ufm.Manga = manga;
-            ufm.MangaId = manga.Id;
-            ufm.User = user;
-            ufm.UserId = user.Id;
+            using (MangaSurvContext context = ApplicationDependencies.GetMangaSurvContext())
+            {
+                UserFollowMangas ufm = new UserFollowMangas();
+                ufm.Manga = manga;
+                ufm.MangaId = manga.Id;
+                ufm.User = user;
+                ufm.UserId = user.Id;
 
-            await context.UserFollowMangas.AddAsync(ufm);
-            await context.SaveChangesAsync();
+                await context.UserFollowMangas.AddAsync(ufm);
+                await context.SaveChangesAsync();
 
-            return ufm;
+                return ufm;
+            }
         }
     }
 
@@ -192,36 +216,38 @@ namespace MangaSurvWebApi.Model
         public long EpisodeId { get; set; }
         public Episode Episode { get; set; }
 
-        public static async void AddEpisodeToUsers(MangaSurvContext context, Episode episode, bool bSaveChanges)
+        public static async void AddEpisodeToUsers(Episode episode)
         {
-            // Add chapter to following users
-            var users = from user in context.UserFollowAnimes
-                        where user.AnimeId == episode.AnimeId
-                        select user.UserId;
-
-            foreach(int userId in users)
+            using (MangaSurvContext context = ApplicationDependencies.GetMangaSurvContext())
             {
-                await AddEpisodeToUser(context, episode, userId, false);
-            }
+                // Add chapter to following users
+                var users = from user in context.UserFollowAnimes
+                            where user.AnimeId == episode.AnimeId
+                            select user.UserId;
 
-            if (bSaveChanges)
+                foreach (int userId in users)
+                {
+                    await AddEpisodeToUser(episode, userId);
+                }
+                
                 await context.SaveChangesAsync();
+            }
         }
 
-        public static async Task<UserNewEpisodes> AddEpisodeToUser(MangaSurvContext context, Episode episode, long userId, bool bSaveChanges)
+        public static async Task<UserNewEpisodes> AddEpisodeToUser(Episode episode, long userId)
         {
-            UserNewEpisodes une = new UserNewEpisodes();
-            une.EpisodeId = episode.Id;
-            une.UserId = userId;
-            context.UserNewEpisodes.Add(une);
-
-            if (bSaveChanges)
+            using (MangaSurvContext context = ApplicationDependencies.GetMangaSurvContext())
             {
+                UserNewEpisodes une = new UserNewEpisodes();
+                une.EpisodeId = episode.Id;
+                une.UserId = userId;
+                context.UserNewEpisodes.Add(une);
+
                 await context.UserNewEpisodes.AddAsync(une);
                 await context.SaveChangesAsync();
-            }
 
-            return une;
+                return une;
+            }
         }
     }
 
@@ -235,18 +261,21 @@ namespace MangaSurvWebApi.Model
         public long AnimeId { get; set; }
         public Anime Anime { get; set; }
 
-        public async static Task<UserFollowAnimes> AddAnimeToUser(MangaSurvContext context, Anime anime, User user)
+        public async static Task<UserFollowAnimes> AddAnimeToUser(Anime anime, User user)
         {
-            UserFollowAnimes ufa = new UserFollowAnimes();
-            ufa.Anime = anime;
-            ufa.AnimeId = anime.Id;
-            ufa.User = user;
-            ufa.UserId = user.Id;
+            using (MangaSurvContext context = ApplicationDependencies.GetMangaSurvContext())
+            {
+                UserFollowAnimes ufa = new UserFollowAnimes();
+                ufa.Anime = anime;
+                ufa.AnimeId = anime.Id;
+                ufa.User = user;
+                ufa.UserId = user.Id;
 
-            await context.UserFollowAnimes.AddAsync(ufa);
-            await context.SaveChangesAsync();
+                await context.UserFollowAnimes.AddAsync(ufa);
+                await context.SaveChangesAsync();
 
-            return ufa;
+                return ufa;
+            }
         }
     }
 
@@ -260,6 +289,52 @@ namespace MangaSurvWebApi.Model
 
         public List<UserFollowAnimes> FollowedAnimes { get; set; } = new List<UserFollowAnimes>();
         public List<UserNewEpisodes> NewEpisodes { get; set; } = new List<UserNewEpisodes>();
+
+        public static User GetUser(long userid, UserTokenDetails userDetails)
+        {
+            if (userDetails.IsVerified == false)
+            {
+                return null;
+            }
+
+            using (MangaSurvContext context = ApplicationDependencies.GetMangaSurvContext())
+            {
+                User user = null;
+                if (userid > 0 && userDetails.IsAdmin)
+                {
+                    // Wenn mit Admin-Account auf einen anderen Benutzer zugegriffen werden soll,
+                    // dann geben wir den User gleich zurück - auch wenn er nicht existiert
+                    // Kein Admin legt einen Benutzer für jemand anderen an
+                    // -> Wir haben dann auch keine Auth0-ID die wir setzen können
+                    return context.Users.FirstOrDefault(u => u.Id == userid);
+                }
+                else if (userid == 0)
+                {
+                    user = context.Users.FirstOrDefault(u => u.Name == userDetails.id);
+                }
+
+                // Wenn Nutzer nicht existiert, dann legen wir ihn an
+                if(user == null)
+                {
+                    user = AddUser(userDetails);
+                }
+
+                return user;
+            }
+        }
+
+        public static User AddUser(UserTokenDetails userDetails)
+        {
+            using (MangaSurvContext context = ApplicationDependencies.GetMangaSurvContext())
+            {
+                User user = new User();
+                user.Name = userDetails.id;
+                context.Users.Add(user);
+                context.SaveChanges();
+
+                return user;
+            }
+        }
     }
 
     public class Anime
@@ -276,26 +351,28 @@ namespace MangaSurvWebApi.Model
         public List<Episode> Episodes { get; set; } = new List<Episode>();
         public List<UserFollowAnimes> FollowingUsers { get; set; } = new List<UserFollowAnimes>();
 
-        public async static void AddAnime(MangaSurvContext context, Anime anime, bool bSaveChanges)
+        public static void AddAnime(Anime anime)
         {
-            List<Episode> lEpisodes = anime.Episodes;
-            anime.Episodes = new List<Episode>();
-
-            await context.Animes.AddAsync(anime);
-            await context.SaveChangesAsync();
-
-            lEpisodes.ForEach(episode =>
+            using (MangaSurvContext context = ApplicationDependencies.GetMangaSurvContext())
             {
-                episode.AnimeId = anime.Id;
-                Episode.AddEpisode(context, episode, false);
-            });
+                List<Episode> lEpisodes = anime.Episodes;
+                anime.Episodes = new List<Episode>();
 
-            if (bSaveChanges)
-                await context.SaveChangesAsync();
+                context.Animes.Add(anime);
+                context.SaveChanges();
+
+                lEpisodes.ForEach(episode =>
+                {
+                    episode.AnimeId = anime.Id;
+                    Episode.AddEpisode(episode);
+                });
+                
+                context.SaveChanges();
+            }
         }
     }
 
-    public class Episode
+    public class Episode : IComparable
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long Id { get; set; }
@@ -314,16 +391,27 @@ namespace MangaSurvWebApi.Model
                 this.EnterDate = DateTime.Now;
         }
 
-        public async static void AddEpisode(MangaSurvContext context, Episode episode, bool bSaveChanges)
+        public static void AddEpisode(Episode episode)
         {
-            episode.DoDefaultDate();
-            await context.Episodes.AddAsync(episode);
-            await context.SaveChangesAsync();
+            using (MangaSurvContext context = ApplicationDependencies.GetMangaSurvContext())
+            {
+                episode.DoDefaultDate();
+                context.Episodes.Add(episode);
+                context.SaveChanges();
 
-            UserNewEpisodes.AddEpisodeToUsers(context, episode, bSaveChanges);
+                UserNewEpisodes.AddEpisodeToUsers(episode);
+                
+                context.SaveChanges();
+            }
+        }
 
-            if (bSaveChanges)
-                await context.SaveChangesAsync();
+        public int CompareTo(object obj)
+        {
+            if (!(obj is Episode))
+                return -1;
+
+            //return (obj as Episode).CompareTo(this.EpisodeNo);
+            return this.EpisodeNo.CompareTo((obj as Episode).EpisodeNo);
         }
     }
 

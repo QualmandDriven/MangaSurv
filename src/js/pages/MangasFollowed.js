@@ -7,13 +7,19 @@ import SearchBar from "../components/SearchBar"
 
 
 export default class MangasFollowed extends React.Component {
-  constructor() {
-    super();
+  constructor(props, context) {
+    super(props, context);
     this.getMangas = this.getMangas.bind(this);
     this.state = {
       mangas: MangaStore.getAllFollowedMangas(),
       filterText: '',
+      profile: props.auth.getProfile(),
+      auth: props.auth
     };
+
+    props.auth.on('profile_updated', (newProfile) => {
+      this.setState({profile: newProfile})
+    })
 
     this.filterMangas = this.filterMangas.bind(this);
   }
@@ -32,6 +38,10 @@ export default class MangasFollowed extends React.Component {
     });
   }
 
+  reloadMangas() {
+    MangaActions.reloadMangasFollowed(this.state.profile.name, this.state.auth.getToken());
+  }
+
   filterMangas(e) {
     this.setState({
       filterText: e
@@ -39,12 +49,13 @@ export default class MangasFollowed extends React.Component {
   }
 
   render() {
-    const { mangas } = this.state;
+    const { mangas, profile } = this.state;
 
     return (
       <div>
         <h1>Mangas</h1>
         <SearchBar filterText = {this.state.filterText} onUserInput={this.filterMangas} />
+        <button class="btn btn-success" onClick={this.reloadMangas.bind(this)}>Refresh</button>
 
         <div>
           {mangas.map((manga) => {

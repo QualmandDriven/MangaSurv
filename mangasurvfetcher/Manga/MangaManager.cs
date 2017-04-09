@@ -5,13 +5,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using static mangasurvlib.Manga.MangaConstants;
 using mangasurvlib.Helper;
+using mangasurvlib.Rest;
 
 namespace mangasurvlib.Manga
 {
     internal class MangaManager : IMangaManager
     {
         private static ILogger logger = Logging.ApplicationLogging.CreateLogger<MangaManager>();
-        private static Rest.RestController ctr = Rest.RestController.GetRestController();
+        private static Rest.RestController ctr;
 
         public List<Manga> Mangas
         {
@@ -30,8 +31,18 @@ namespace mangasurvlib.Manga
         /// </summary>
         internal MangaManager()
         {
+            
             this.Mangas = new List<Manga>();
             this.NewChapters = new List<MangaChapter>();
+        }
+
+        /// <summary>
+        /// Creates new instance of MangaManager.
+        /// </summary>
+        internal MangaManager(string sApiToken) : this()
+        {
+
+            this.ConfigureApiController(sApiToken);
         }
 
         /// <summary>
@@ -396,6 +407,11 @@ namespace mangasurvlib.Manga
             {
                 MangaHelper.GetMangaClass(mangaPage);
             }
+        }
+
+        public void ConfigureApiController(string sToken)
+        {
+            ctr = Rest.RestController.GetRestController(new List<KeyValuePair<System.Net.HttpRequestHeader, string>>() { new KeyValuePair<System.Net.HttpRequestHeader, string>(System.Net.HttpRequestHeader.Authorization, "Bearer " + sToken) });
         }
     }
 }

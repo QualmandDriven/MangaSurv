@@ -4,6 +4,8 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using MangaSurvWebApi.Model;
+using Microsoft.AspNetCore.Authorization;
+using MangaSurvWebApi.Service;
 
 namespace MangaSurvWebApi.Controllers
 {
@@ -17,6 +19,7 @@ namespace MangaSurvWebApi.Controllers
         }
 
         // GET api/mangas
+        [Authorize]
         [HttpGet]
         public IActionResult Get()
         {
@@ -39,6 +42,7 @@ namespace MangaSurvWebApi.Controllers
         }
 
         // GET api/mangas/5
+        [Authorize(Roles = WebApiAccess.USER_ROLE)]
         [HttpGet("{id}", Name ="UserLink")]
         [Produces(typeof(Manga))]
         public IActionResult Get(int id)
@@ -49,8 +53,9 @@ namespace MangaSurvWebApi.Controllers
             
             return this.Ok(user);
         }
-        
+
         // POST api/mangas
+        [Authorize(Roles = WebApiAccess.WRITE_ROLE)]
         [HttpPost]
         public async Task<IActionResult> Post([FromBody]User value)
         {
@@ -70,12 +75,21 @@ namespace MangaSurvWebApi.Controllers
         }
 
         // PUT api/mangas/5
+        [Authorize(Roles = WebApiAccess.WRITE_ROLE)]
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]Manga value)
+        public void Put(int id, [FromBody]User value)
         {
+            this._context.Users.Attach(value);
+
+            var user = this._context.Users.FirstOrDefault(u => u.Id == id);
+
+            this._context.Entry(user).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            this._context.SaveChanges();
+            this.Ok(user);
         }
 
         // DELETE api/mangas/5
+        [Authorize(Roles = WebApiAccess.WRITE_ROLE)]
         [HttpDelete("{id}")]
         public void Delete(int id)
         {

@@ -4,7 +4,6 @@
     "debugType": "portable"
   },
   "dependencies": {
-    "xunit": "2.1.0",
     "dotnet-test-xunit": "2.2.0-preview2-build1029",
     "MangaSurvWebApi": {
       "target": "project"
@@ -12,8 +11,9 @@
     "Microsoft.NETCore.App": "1.1.0",
     "System.Runtime.Serialization.Primitives": "4.3.0",
     "Microsoft.AspNetCore.TestHost": "1.1.0",
-    "xunit.runner.visualstudio": "2.1.0",
-    "Moq": "4.6.38-alpha"
+    "Moq": "4.6.38-alpha",
+    "xunit": "2.2.0-beta5-build3474",
+    "xunit.runner.visualstudio": "2.2.0-beta5-build1225"
   },
   "testRunner": "xunit",
   "frameworks": {

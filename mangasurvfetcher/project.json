@@ -14,15 +14,17 @@
       "type": "platform",
       "version": "1.1.0"
     },
+    "Auth0.AuthenticationApi": "4.0.0-beta1",
+    "Auth0.ManagementApi": "4.0.0-beta1",
+    "jose-jwt": "2.1.0",
+    "MySql.Data": "7.0.7-m61"
   },
-
   "frameworks": {
     "netcoreapp1.1": {
       "imports": "dnxcore50"
     }
   },
-
-  "tooling": {
-    "defaultNamespace": "mangasurvfetcher"
-  }
+    "tooling": {
+      "defaultNamespace": "mangasurvfetcher"
+    }
 }

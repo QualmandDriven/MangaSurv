@@ -5,7 +5,7 @@ using System.Text;
 
 namespace mangasurvlib.Manga
 {
-    public interface IMangaManager
+    public interface IMangaManager : IManager
     {
         /// <summary>
         /// Add a Manga to list.

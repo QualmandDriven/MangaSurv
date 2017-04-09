@@ -4,6 +4,8 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using MangaSurvWebApi.Model;
+using Microsoft.AspNetCore.Authorization;
+using MangaSurvWebApi.Service;
 
 namespace MangaSurvWebApi.Controllers
 {
@@ -50,6 +52,7 @@ namespace MangaSurvWebApi.Controllers
         }
 
         // POST api/mangas
+        [Authorize(Roles = WebApiAccess.WRITE_ROLE)]
         [HttpPost]
         public IActionResult PostAnime([FromBody]Anime value)
         {
@@ -58,9 +61,9 @@ namespace MangaSurvWebApi.Controllers
                 if (!ModelState.IsValid)
                     return this.BadRequest(ModelState);
 
-                Anime.AddAnime(this._context, value, true);
+                Anime.AddAnime(value);
 
-                return this.CreatedAtRoute("AnimeLink", new { animeid = value.Id }, value);
+                return this.CreatedAtRoute("AnimeLink", new { id = value.Id }, value);
             }
             catch(Exception ex)
             {
@@ -69,6 +72,7 @@ namespace MangaSurvWebApi.Controllers
         }
 
         // PUT api/mangas/5
+        [Authorize(Roles = WebApiAccess.WRITE_ROLE)]
         [HttpPut("{id}")]
         public void Put(int id, [FromBody]Anime value)
         {
@@ -87,6 +91,7 @@ namespace MangaSurvWebApi.Controllers
         }
 
         // DELETE api/mangas/5
+        [Authorize(Roles = WebApiAccess.WRITE_ROLE)]
         [HttpDelete("{animeid}")]
         public void DeleteAnime(int animeid)
         {

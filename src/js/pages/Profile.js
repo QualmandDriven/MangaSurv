@@ -13,7 +13,8 @@ export default class Profile extends React.Component {
   constructor(props, context) {
     super(props, context)
     this.state = {
-      profile: props.auth.getProfile()
+      profile: props.auth.getProfile(),
+      auth: props.auth,
     }
     props.auth.on('profile_updated', (newProfile) => {
       this.setState({profile: newProfile})
@@ -21,12 +22,13 @@ export default class Profile extends React.Component {
   }
 
   render() {
-    const { profile } = this.state;
-
+    const { profile, auth } = this.state;
+    console.log(profile);
     return (
       <div>
         <h1>Profile</h1>
         <p>Hi {profile.name}!</p>
+        <p>Token: { auth.getToken() }</p>
       </div>
     );
   }

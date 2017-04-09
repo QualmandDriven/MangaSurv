@@ -4,6 +4,9 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using MangaSurvWebApi.Model;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
+using MangaSurvWebApi.Service;
 
 namespace MangaSurvWebApi.Controllers
 {
@@ -17,44 +20,79 @@ namespace MangaSurvWebApi.Controllers
         }
 
         // GET api/mangas
+        [Authorize(Roles = WebApiAccess.USER_ROLE)]
         [HttpGet("{userid}/mangas/")]
         public IActionResult Get(int userid)
         {
-            var mangaslist = (from manga in _context.UserFollowMangas
-                              where manga.UserId == userid
-                              select manga.Manga).ToList();
+            UserTokenDetails userDetails = new UserTokenDetails(User);
+            User user = Model.User.GetUser(userid, userDetails);
 
-            return this.Ok(mangaslist);
+            if (user == null)
+                return this.Forbid();
+
+            List<Manga> mangaslist = (from manga in _context.UserFollowMangas
+                                      where manga.UserId == user.Id
+                                      orderby manga.Manga.Name
+                                      select manga.Manga).ToList();
+
+            List<dynamic> lMangas = new List<dynamic>();
+            foreach(Manga manga in mangaslist)
+            {
+                dynamic m = new {
+                    manga.Chapters,
+                    manga.EnterDate,
+                    manga.FileSystemName,
+                    manga.Id,
+                    manga.LastUpdate,
+                    manga.Name,
+                    followed = true
+                };
+
+                lMangas.Add(m);
+            }
+
+            return this.Ok(lMangas);
         }
-        
+
         // GET api/mangas/5
+        [Authorize(Roles = WebApiAccess.USER_ROLE)]
         [HttpGet("{userid}/mangas/{mangaid}", Name ="UserMangaLink")]
         [Produces(typeof(Manga))]
         public IActionResult Get(int userid, int mangaid)
         {
-            var mangaslist = (from manga in _context.UserFollowMangas
-                              where manga.UserId == userid
-                              && manga.MangaId == mangaid
-                              select manga.Manga).ToList();
+            UserTokenDetails userDetails = new UserTokenDetails(User);
+            User user = Model.User.GetUser(userid, userDetails);
+
+            if (user == null)
+                return this.Forbid();
+
+            List<Manga> mangaslist = (from manga in _context.UserFollowMangas
+                                      where manga.UserId == user.Id
+                                      && manga.MangaId == mangaid
+                                      orderby manga.Manga.Name
+                                      select manga.Manga).ToList();
 
             return this.Ok(mangaslist.FirstOrDefault());
         }
 
         // POST api/mangas
+        [Authorize(Roles = WebApiAccess.USER_ROLE)]
         [HttpPost("{userid}/mangas/")]
         public IActionResult Post(int userid, [FromBody]Manga value)
         {
             try
             {
-                var user = this._context.Users.FirstOrDefault(u => u.Id == userid);
+                UserTokenDetails userDetails = new UserTokenDetails(User);
+                User user = Model.User.GetUser(userid, userDetails);
+
                 if (user == null)
-                    return this.NotFound();
+                    return this.Forbid();
 
                 var manga = this._context.Mangas.FirstOrDefault(m => m.Id == value.Id);
                 if (manga == null)
                     return this.NotFound();
 
-                var entry = UserFollowMangas.AddMangaToUser(this._context, manga, user).Result;
+                var entry = UserFollowMangas.AddMangaToUser(manga, user).Result;
 
                 return this.CreatedAtRoute("UserMangaLink", new { userid = entry.UserId, mangaid = entry.MangaId }, entry);
             }
@@ -65,21 +103,35 @@ namespace MangaSurvWebApi.Controllers
         }
 
         // PUT api/mangas/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]Manga value)
-        {
-        }
+        //[Authorize(Roles = WebApiAccess.USER_ROLE)]
+        //[HttpPut("{id}")]
+        //public void Put(int id, [FromBody]Manga value)
+        //{
+        //}
 
         // DELETE api/mangas/5
+        [Authorize]
         [HttpDelete("{userid}/mangas/{mangaid}")]
         public void Delete(int userid, int mangaid)
         {
-            var usermanga = this._context.UserFollowMangas.FirstOrDefault(u => u.UserId == userid && u.MangaId == mangaid);
+            UserTokenDetails userDetails = new UserTokenDetails(User);
+            User user = Model.User.GetUser(userid, userDetails);
+
+            if (user == null)
+                return;
+
+            var usermanga = this._context.UserFollowMangas.FirstOrDefault(u => u.UserId == user.Id && u.MangaId == mangaid);
             if (usermanga == null)
                 return;
 
             this._context.UserFollowMangas.Remove(usermanga);
             this._context.SaveChanges();
+        }
+
+        [HttpOptions("{userid}/mangas")]
+        public IActionResult Options(int userid)
+        {
+            return this.Ok();
         }
     }
 }
