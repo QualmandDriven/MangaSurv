@@ -4,6 +4,8 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using MangaSurvWebApi.Model;
+using Microsoft.AspNetCore.Authorization;
+using MangaSurvWebApi.Service;
 
 namespace MangaSurvWebApi.Controllers
 {
@@ -17,17 +19,25 @@ namespace MangaSurvWebApi.Controllers
         }
 
         // GET api/chapters
+        [Authorize(Roles = WebApiAccess.USER_ROLE)]
         [HttpGet("{userid}/chapters/")]
         public IActionResult Get(int userid)
         {
+            UserTokenDetails userDetails = new UserTokenDetails(User);
+            User user = Model.User.GetUser(userid, userDetails);
+
+            if (user == null)
+                return this.Forbid();
+
             if (Request.QueryString.HasValue)
             {
                 Helper.QueryString queryString = new Helper.QueryString(Request);
                 if (queryString.ContainsKey("SORTBY") && queryString.GetValue("SORTBY").ToUpper().Equals("MANGA"))
                 {
                     List<Chapter> lNewChapters = (from chapter in _context.UserNewChapters
-                                                    where chapter.UserId == userid
-                                                    select chapter.Chapter).ToList();
+                                                  where chapter.UserId == user.Id
+                                                  orderby chapter.Chapter
+                                                  select chapter.Chapter).ToList();
 
                     List<Manga> lMangas = new List<Manga>();
                     List<long> lMangaIds = new List<long>();
@@ -39,6 +49,8 @@ namespace MangaSurvWebApi.Controllers
                             Manga manga = lMangas.Find(m => m.Id == chapter.MangaId);
                             if(!manga.Chapters.Contains(chapter))
                                 manga.Chapters.Add(chapter);
+
+                            manga.Chapters.Sort();
                         }
                         else
                         {
@@ -53,43 +65,53 @@ namespace MangaSurvWebApi.Controllers
 
                     return this.Ok(lMangas);
                 }
-            }
+            } 
 
             var chapterslist = (from chapter in _context.UserNewChapters
-                            where chapter.UserId == userid
-                            select chapter.Chapter).ToList();
+                                where chapter.UserId == user.Id
+                                select chapter.Chapter).ToList();
 
             return this.Ok(chapterslist);
         }
-        
+
         // GET api/chapters/5
+        [Authorize(Roles = WebApiAccess.USER_ROLE)]
         [HttpGet("{userid}/chapters/{chapterid}", Name ="UserChapterLink")]
         [Produces(typeof(Chapter))]
         public IActionResult Get(int userid, int chapterid)
         {
-            var chapterslist = (from chapter in _context.UserNewChapters
-                                where chapter.UserId == userid
-                                && chapter.ChapterId == chapterid
-                                select chapter.Chapter).ToList();
+            UserTokenDetails userDetails = new UserTokenDetails(User);
+            User user = Model.User.GetUser(userid, userDetails);
+
+            if (user == null)
+                return this.Forbid();
+
+            List<Chapter> chapterslist = (from chapter in _context.UserNewChapters
+                                          where chapter.UserId == user.Id
+                                          && chapter.ChapterId == chapterid
+                                          select chapter.Chapter).ToList();
 
             return this.Ok(chapterslist.FirstOrDefault());
         }
 
         // POST api/chapters
+        [Authorize(Roles = WebApiAccess.USER_ROLE)]
         [HttpPost("{userid}/chapters/")]
         public async Task<IActionResult> Post(int userid, [FromBody]Chapter value)
         {
             try
             {
-                var user = this._context.Users.FirstOrDefault(u => u.Id == userid);
+                UserTokenDetails userDetails = new UserTokenDetails(User);
+                User user = Model.User.GetUser(userid, userDetails);
+
                 if (user == null)
-                    return this.NotFound();
+                    return this.Forbid();
 
                 var chapter = this._context.Chapters.FirstOrDefault(m => m.Id == value.Id);
                 if (chapter == null)
                     return this.NotFound();
 
-                var entry = await UserNewChapters.AddChapterToUser(this._context, chapter, userid, true);
+                var entry = await UserNewChapters.AddChapterToUser(chapter, user.Id);
 
                 return this.CreatedAtRoute("UserChapterLink", new { userid = entry.UserId, chapterid = entry.ChapterId }, entry);
             }
@@ -100,18 +122,26 @@ namespace MangaSurvWebApi.Controllers
         }
 
         // PUT api/chapters/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]Chapter value)
-        {
-        }
+        //[Authorize(Roles = WebApiAccess.USER_ROLE)]
+        //[HttpPut("{id}")]
+        //public void Put(int id, [FromBody]Chapter value)
+        //{
+        //}
 
         // DELETE api/chapters/5
+        [Authorize(Roles = WebApiAccess.USER_ROLE)]
         [HttpDelete("{userid}/chapters/{chapterid}")]
         public IActionResult Delete(int userid, int chapterid)
         {
             try
-            { 
-                var userchapters = this._context.UserNewChapters.Where(u => u.UserId == userid && u.ChapterId == chapterid);
+            {
+                UserTokenDetails userDetails = new UserTokenDetails(User);
+                User user = Model.User.GetUser(userid, userDetails);
+
+                if (user == null)
+                    return this.Forbid();
+
+                var userchapters = this._context.UserNewChapters.Where(u => u.UserId == user.Id && u.ChapterId == chapterid);
                 if (userchapters == null || userchapters.Count() == 0)
                     return this.Ok();
 

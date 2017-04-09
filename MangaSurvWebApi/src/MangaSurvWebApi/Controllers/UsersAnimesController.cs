@@ -4,8 +4,10 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using MangaSurvWebApi.Model;
+using Microsoft.AspNetCore.Authorization;
+using MangaSurvWebApi.Service;
 
-namespace AnimeSurvWebApi.Controllers
+namespace MangaSurvWebApi.Controllers
 {
     [Route("api/users")]
     public class UsersAnimesController : Controller
@@ -17,44 +19,62 @@ namespace AnimeSurvWebApi.Controllers
         }
 
         // GET api/animes
+        [Authorize(Roles = WebApiAccess.USER_ROLE)]
         [HttpGet("{userid}/animes/")]
         public IActionResult Get(int userid)
         {
-            var animeslist = (from anime in _context.UserFollowAnimes
-                              where anime.UserId == userid
-                              select anime.Anime).ToList();
+            UserTokenDetails userDetails = new UserTokenDetails(User);
+            User user = Model.User.GetUser(userid, userDetails);
+
+            if (user == null)
+                return this.Forbid();
+
+            List<Anime> animeslist = (from anime in _context.UserFollowAnimes
+                                      where anime.UserId == user.Id
+                                      orderby anime.Anime.Name
+                                      select anime.Anime).ToList();
 
             return this.Ok(animeslist);
         }
-        
+
         // GET api/animes/5
+        [Authorize(Roles = WebApiAccess.USER_ROLE)]
         [HttpGet("{userid}/animes/{animeid}", Name ="UserAnimeLink")]
         [Produces(typeof(Anime))]
         public IActionResult Get(int userid, int animeid)
         {
-            var animeslist = (from anime in _context.UserFollowAnimes
-                              where anime.UserId == userid
-                              && anime.AnimeId == animeid
-                              select anime.Anime).ToList();
+            UserTokenDetails userDetails = new UserTokenDetails(User);
+            User user = Model.User.GetUser(userid, userDetails);
+
+            if (user == null)
+                return this.Forbid();
+
+            List<Anime> animeslist = (from anime in _context.UserFollowAnimes
+                                      where anime.UserId == user.Id
+                                      && anime.AnimeId == animeid
+                                      select anime.Anime).ToList();
 
             return this.Ok(animeslist.FirstOrDefault());
         }
 
         // POST api/animes
+        [Authorize(Roles = WebApiAccess.USER_ROLE)]
         [HttpPost("{userid}/animes/")]
         public IActionResult Post(int userid, [FromBody]Anime value)
         {
             try
             {
-                var user = this._context.Users.FirstOrDefault(u => u.Id == userid);
+                UserTokenDetails userDetails = new UserTokenDetails(User);
+                User user = Model.User.GetUser(userid, userDetails);
+
                 if (user == null)
-                    return this.NotFound();
+                    return this.Forbid();
 
                 var anime = this._context.Animes.FirstOrDefault(m => m.Id == value.Id);
                 if (anime == null)
                     return this.NotFound();
 
-                var entry = UserFollowAnimes.AddAnimeToUser(this._context, anime, user).Result;
+                var entry = UserFollowAnimes.AddAnimeToUser(anime, user).Result;
 
                 return this.CreatedAtRoute("UserAnimeLink", new { userid = entry.UserId, animeid = entry.AnimeId }, entry);
             }
@@ -65,16 +85,24 @@ namespace AnimeSurvWebApi.Controllers
         }
 
         // PUT api/animes/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]Anime value)
-        {
-        }
+        //[Authorize(Roles = WebApiAccess.USER_ROLE)]
+        //[HttpPut("{id}")]
+        //public void Put(int id, [FromBody]Anime value)
+        //{
+        //}
 
         // DELETE api/animes/5
+        [Authorize(Roles = WebApiAccess.USER_ROLE)]
         [HttpDelete("{userid}/animes/{animeid}")]
         public void Delete(int userid, int animeid)
         {
-            var useranimes = this._context.UserFollowAnimes.Where(u => u.UserId == userid && u.AnimeId == animeid);
+            UserTokenDetails userDetails = new UserTokenDetails(User);
+            User user = Model.User.GetUser(userid, userDetails);
+
+            if (user == null)
+                return;
+
+            var useranimes = this._context.UserFollowAnimes.Where(u => u.UserId == user.Id && u.AnimeId == animeid);
             if (useranimes == null || useranimes.Count() == 0)
                 return;
 

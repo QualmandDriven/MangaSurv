@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using MangaSurvWebApi.Model;
+using Microsoft.AspNetCore.Authorization;
+using MangaSurvWebApi.Service;
 
 namespace MangaSurvWebApi.Controllers
 {
@@ -36,6 +38,7 @@ namespace MangaSurvWebApi.Controllers
         }
 
         // POST api/mangas/5/chapters/2/files
+        [Authorize(Roles = WebApiAccess.WRITE_ROLE)]
         [HttpPost("{mangaid}/chapters/{chapterid}/files")]
         public IActionResult Post(int mangaid, int chapterid, [FromBody]File value)
         {
@@ -46,7 +49,7 @@ namespace MangaSurvWebApi.Controllers
                 if (!ModelState.IsValid)
                     return this.BadRequest(ModelState);
 
-                MangaSurvWebApi.Model.File.AddFile(this._context, value, true);
+                MangaSurvWebApi.Model.File.AddFile(value);
 
                 return this.CreatedAtRoute("MangaChapterFileLink", new { mangaid = mangaid, chapterid = chapterid, fileid = value.Id }, value);
             }
@@ -57,12 +60,14 @@ namespace MangaSurvWebApi.Controllers
         }
 
         // PUT api/mangas/5/chapters/2/files/34
+        [Authorize(Roles = WebApiAccess.WRITE_ROLE)]
         [HttpPut("{mangaid}/chapters/{chapterid}/files/{fileid}")]
         public void Put(int mangaid, int chapterid, int fileid, [FromBody]Manga value)
         {
         }
 
         // DELETE api/mangas/5/chapters/2/files/34
+        [Authorize(Roles = WebApiAccess.WRITE_ROLE)]
         [HttpDelete("{mangaid}/chapters/{chapterid}/files/{fileid}")]
         public void Delete(int mangaid, int chapterid, int fileid)
         {

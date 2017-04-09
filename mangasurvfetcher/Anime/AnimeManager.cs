@@ -11,12 +11,17 @@ namespace mangasurvlib.Anime
     public class AnimeManager : IAnimeManager
     {
         private static ILogger logger = Logging.ApplicationLogging.CreateLogger<AnimeManager>();
-        private static Rest.RestController ctr = Rest.RestController.GetRestController();
+        private static Rest.RestController ctr;
 
         private const string SaveFile = "Animelist.json";
 
         public List<Anime> Animes { get; private set; }
         public List<AnimeEpisode> NewEpisodes { get; private set; }
+
+        public AnimeManager(string sApiToken) : this()
+        {
+            this.ConfigureApiController(sApiToken);
+        }
 
         public AnimeManager()
         {
@@ -266,6 +271,11 @@ namespace mangasurvlib.Anime
             {
                 AnimeHelper.GetAnimeClass(animePage);
             }
+        }
+
+        public void ConfigureApiController(string sToken)
+        {
+             ctr = Rest.RestController.GetRestController(new List<KeyValuePair<System.Net.HttpRequestHeader, string>>() { new KeyValuePair<System.Net.HttpRequestHeader, string>(System.Net.HttpRequestHeader.Authorization, "Bearer " + sToken) });
         }
     }
 }

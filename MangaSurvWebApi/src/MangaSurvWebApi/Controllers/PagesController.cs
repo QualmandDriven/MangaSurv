@@ -4,6 +4,8 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using MangaSurvWebApi.Model;
+using Microsoft.AspNetCore.Authorization;
+using MangaSurvWebApi.Service;
 
 namespace MangaSurvWebApi.Controllers
 {
@@ -49,6 +51,7 @@ namespace MangaSurvWebApi.Controllers
         }
 
         // POST api/pages
+        [Authorize(Roles = WebApiAccess.WRITE_ROLE)]
         [HttpPost]
         public async Task<IActionResult> Post([FromBody]Page value)
         {
@@ -68,6 +71,7 @@ namespace MangaSurvWebApi.Controllers
         }
 
         // PUT api/pages/5
+        [Authorize(Roles = WebApiAccess.WRITE_ROLE)]
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody]Page value)
         {
@@ -81,6 +85,7 @@ namespace MangaSurvWebApi.Controllers
         }
 
         // DELETE api/pages/5
+        [Authorize(Roles = WebApiAccess.WRITE_ROLE)]
         [HttpDelete("{id}")]
         public void Delete(int id)
         {

@@ -21,7 +21,7 @@ namespace mangasurvlib.Rest
     {
         private static ILogger logger = Logging.ApplicationLogging.CreateLogger<RestController>();
 #if DEBUG
-        public const string API_URL = "http://192.168.178.70:5000/api";
+        public const string API_URL = "http://localhost:5000/api";
 #else
         public const string API_URL = "http://192.168.178.70:5000/api";
 #endif
@@ -33,22 +33,39 @@ namespace mangasurvlib.Rest
             return GetRestController(API_URL);
         }
 
+        public static RestController GetRestController(List<KeyValuePair<HttpRequestHeader, string>> reqHeaders)
+        {
+            return GetRestController(API_URL, reqHeaders);
+        }
+
         public static RestController GetRestController(string sUrl)
         {
             if (String.IsNullOrEmpty(sUrl))
-                return new RestController(API_URL);
+                return new RestController(API_URL, new List<KeyValuePair<HttpRequestHeader, string>>());
 
-            return new RestController(sUrl);
+            return new RestController(sUrl, new List<KeyValuePair<HttpRequestHeader, string>>());
         }
+
+        public static RestController GetRestController(string sUrl, List<KeyValuePair<HttpRequestHeader, string>> reqHeaders)
+        {
+            if (String.IsNullOrEmpty(sUrl))
+                return new RestController(API_URL, reqHeaders);
+
+            return new RestController(sUrl, reqHeaders);
+        }
+
+        private readonly List<KeyValuePair<HttpRequestHeader, string>> _reqHeaders;
 
         /// <summary>
         /// Instanziate REST client object.
         /// </summary>
         /// <param name="sUrl">Endpoint-Url which the object calls (e.g. "http://localhost:8080/api/test").</param>
-        public RestController(string sUrl)
+        public RestController(string sUrl, List<KeyValuePair<HttpRequestHeader, string>> reqHeaders)
         {
             if (sUrl.Length == 0)
                 throw new ArgumentException("Endpoint-Url for REST API is empty!");
+
+            this._reqHeaders = reqHeaders;
 
             if (sUrl.EndsWith("/"))
                 sUrl = sUrl.Substring(0, sUrl.Length - 1);
@@ -94,12 +111,22 @@ namespace mangasurvlib.Rest
                     sQueryString = String.Format("{0}&{1}={2}", sQueryString, Query[i].Key, Query[i].Value);
             }
 
-            UriBuilder ub = new UriBuilder(this.Url.AbsoluteUri + "/" + sParam);
-            ub.Query = sQueryString;
+            UriBuilder ub = this.GetUriBuilder(this.Url, sParam);
+
+            if(!String.IsNullOrEmpty(sQueryString))
+                ub.Query = sQueryString;
 
             Tuple<HttpWebResponse, string> result = this.DoRequest(ub.Uri, HttpVerbs.Get);
 
             return new Tuple<HttpStatusCode, string>(result.Item1.StatusCode, result.Item2);
+        }
+
+        private UriBuilder GetUriBuilder(Uri uri, string sParam)
+        {
+            if (this.Url.AbsoluteUri.Last() == '/')
+                return new UriBuilder(this.Url.AbsoluteUri + sParam);
+
+            return new UriBuilder(this.Url.AbsoluteUri + "/" + sParam);
         }
 
         /// <summary>
@@ -110,7 +137,7 @@ namespace mangasurvlib.Rest
         /// <returns>Newly created object of Endpoint.</returns>
         public Tuple<HttpStatusCode, string> Post(string sParam, object o)
         {
-            UriBuilder ub = new UriBuilder(this.Url.AbsoluteUri + "/" + sParam);
+            UriBuilder ub = this.GetUriBuilder(this.Url, sParam);
 
             HttpWebRequest request = this.CreateHttpWebRequest(ub.Uri, HttpVerbs.Post);
             request.ContentType = "application/json";
@@ -128,6 +155,9 @@ namespace mangasurvlib.Rest
 
             HttpWebResponse response = this.GetHttpWebResponse(request);
 
+            if(response == null)
+                return new Tuple<HttpStatusCode, string>(HttpStatusCode.BadRequest, null);
+
             return new Tuple<HttpStatusCode, string>(response.StatusCode, this.ExtractResponseContent(response));
         }
 
@@ -139,7 +169,7 @@ namespace mangasurvlib.Rest
         /// <returns>Newly created object of Endpoint.</returns>
         public Tuple<HttpStatusCode, string> Put(string sParam, object o)
         {
-            UriBuilder ub = new UriBuilder(this.Url.AbsoluteUri + "/" + sParam);
+            UriBuilder ub = this.GetUriBuilder(this.Url, sParam);
 
             HttpWebRequest request = this.CreateHttpWebRequest(ub.Uri, HttpVerbs.Put);
             request.ContentType = "application/json";
@@ -159,7 +189,7 @@ namespace mangasurvlib.Rest
         /// <returns></returns>
         public Tuple<HttpStatusCode, string> Delete(string sParam)
         {
-            UriBuilder ub = new UriBuilder(this.Url.AbsoluteUri + "/" + sParam);
+            UriBuilder ub = this.GetUriBuilder(this.Url, sParam);
             Tuple<HttpWebResponse, string> result = this.DoRequest(ub.Uri, HttpVerbs.Delete);
 
             return new Tuple<HttpStatusCode, string>(result.Item1.StatusCode, result.Item2);
@@ -226,6 +256,7 @@ namespace mangasurvlib.Rest
             HttpWebRequest request = WebRequest.Create(Uri) as HttpWebRequest;
             request.Method = sMethod;
             request.ContinueTimeout = 5000;
+            request.AddRequestHeaders(this._reqHeaders);
 
             return request;
         }
@@ -245,11 +276,22 @@ namespace mangasurvlib.Rest
             {
                 return (ex.Response as HttpWebResponse);
             }
-            //catch(Exception ex)
-            //{
-            //    logger.LogError("Could not get WebResponse from '{0}' with error message '{1}'", request.RequestUri.AbsoluteUri, ex.Message);
-            //    return null;
-            //}
+            catch (Exception ex)
+            {
+                logger.LogError("Could not get WebResponse from '{0}' with error message '{1}'", request.RequestUri.AbsoluteUri, ex.Message);
+                return null;
+            }
+        }
+    }
+
+    internal static class Extensions
+    {
+        public static void AddRequestHeaders(this HttpWebRequest request, List<KeyValuePair<HttpRequestHeader, string>> reqHeaders)
+        {
+            foreach (KeyValuePair<HttpRequestHeader, string> header in reqHeaders)
+            {
+                request.Headers[header.Key] = header.Value;
+            }
         }
     }
 }

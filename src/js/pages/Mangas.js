@@ -7,12 +7,13 @@ import SearchBar from "../components/SearchBar"
 
 
 export default class Mangas extends React.Component {
-  constructor() {
-    super();
+  constructor(props, context) {
+    super(props, context);
     this.getMangas = this.getMangas.bind(this);
     this.state = {
       mangas: MangaStore.getAll(),
       filterText: '',
+      auth: props.auth
     };
 
     this.filterMangas = this.filterMangas.bind(this);

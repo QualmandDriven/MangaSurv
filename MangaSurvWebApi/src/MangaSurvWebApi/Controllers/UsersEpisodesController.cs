@@ -4,8 +4,10 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using MangaSurvWebApi.Model;
+using Microsoft.AspNetCore.Authorization;
+using MangaSurvWebApi.Service;
 
-namespace EpisodeSurvWebApi.Controllers
+namespace MangaSurvWebApi.Controllers
 {
     [Route("api/users")]
     public class UsersEpisodesController : Controller
@@ -17,44 +19,62 @@ namespace EpisodeSurvWebApi.Controllers
         }
 
         // GET api/episodes
+        [Authorize(Roles = WebApiAccess.USER_ROLE)]
         [HttpGet("{userid}/episodes/")]
         public IActionResult Get(int userid)
         {
-            var episodeslist = (from episode in _context.UserNewEpisodes
-                                where episode.UserId == userid
-                                select episode.Episode).ToList();
+            UserTokenDetails userDetails = new UserTokenDetails(User);
+            User user = Model.User.GetUser(userid, userDetails);
+
+            if (user == null)
+                return this.Forbid();
+
+            List<Episode> episodeslist = (from episode in _context.UserNewEpisodes
+                                          where episode.UserId == user.Id
+                                          orderby episode.Episode
+                                          select episode.Episode).ToList();
 
             return this.Ok(episodeslist);
         }
-        
+
         // GET api/episodes/5
+        [Authorize(Roles = WebApiAccess.USER_ROLE)]
         [HttpGet("{userid}/episodes/{episodeid}", Name ="UserEpisodeLink")]
         [Produces(typeof(Episode))]
         public IActionResult Get(int userid, int episodeid)
         {
-            var episodeslist = (from episode in _context.UserNewEpisodes
-                                where episode.UserId == userid
-                                && episode.EpisodeId == episodeid
-                                select episode.Episode).ToList();
+            UserTokenDetails userDetails = new UserTokenDetails(User);
+            User user = Model.User.GetUser(userid, userDetails);
+
+            if (user == null)
+                return this.Forbid();
+
+            List<Episode> episodeslist = (from episode in _context.UserNewEpisodes
+                                          where episode.UserId == user.Id
+                                          && episode.EpisodeId == episodeid
+                                          select episode.Episode).ToList();
 
             return this.Ok(episodeslist.FirstOrDefault());
         }
 
         // POST api/episodes
+        [Authorize(Roles = WebApiAccess.USER_ROLE)]
         [HttpPost("{userid}/episodes/")]
         public IActionResult Post(int userid, [FromBody]Episode value)
         {
             try
             {
-                var user = this._context.Users.FirstOrDefault(u => u.Id == userid);
+                UserTokenDetails userDetails = new UserTokenDetails(User);
+                User user = Model.User.GetUser(userid, userDetails);
+
                 if (user == null)
-                    return this.NotFound();
+                    return this.Forbid();
 
                 var episode = this._context.Episodes.FirstOrDefault(m => m.Id == value.Id);
                 if (episode == null)
                     return this.NotFound();
 
-                var entry = UserNewEpisodes.AddEpisodeToUser(this._context, episode, user.Id, true).Result;
+                var entry = UserNewEpisodes.AddEpisodeToUser(episode, user.Id).Result;
 
                 return this.CreatedAtRoute("UserEpisodeLink", new { userid = entry.UserId, episodeid = entry.EpisodeId }, entry);
             }
@@ -65,16 +85,24 @@ namespace EpisodeSurvWebApi.Controllers
         }
 
         // PUT api/episodes/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]Episode value)
-        {
-        }
+        //[Authorize(Roles = WebApiAccess.USER_ROLE)]
+        //[HttpPut("{id}")]
+        //public void Put(int id, [FromBody]Episode value)
+        //{
+        //}
 
         // DELETE api/episodes/5
+        [Authorize(Roles = WebApiAccess.USER_ROLE)]
         [HttpDelete("{userid}/episodes/{episodeid}")]
         public void Delete(int userid, int episodeid)
         {
-            var userepisode = this._context.UserNewEpisodes.FirstOrDefault(u => u.UserId == userid && u.EpisodeId == episodeid);
+            UserTokenDetails userDetails = new UserTokenDetails(User);
+            User user = Model.User.GetUser(userid, userDetails);
+
+            if (user == null)
+                return;
+
+            var userepisode = this._context.UserNewEpisodes.FirstOrDefault(u => u.UserId == user.Id && u.EpisodeId == episodeid);
             if (userepisode == null)
                 return;
 

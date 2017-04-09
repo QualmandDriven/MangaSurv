@@ -63,9 +63,9 @@ namespace mangasurvlib.Anime
             return lAnimes;
         }
 
-        public static IAnimeManager CreateAnimeManager()
+        public static IAnimeManager CreateAnimeManager(string sApiToken)
         {
-            return new AnimeManager();
+            return new AnimeManager(sApiToken);
         }
 
         public static AnimeEpisode CreateAnimeEpisode()

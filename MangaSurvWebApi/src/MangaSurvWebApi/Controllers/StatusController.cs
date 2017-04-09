@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using MangaSurvWebApi.Model;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Authorization;
+using MangaSurvWebApi.Service;
 
 namespace MangaSurvWebApi.Controllers
 {
@@ -18,6 +23,13 @@ namespace MangaSurvWebApi.Controllers
         // GET api/mangas
         [HttpGet]
         public IActionResult Get()
+        {
+            return this.Ok();
+        }
+
+        [Authorize(Roles = WebApiAccess.USER_ROLE)]
+        [HttpGet("login")]
+        public IActionResult CheckLogin()
         {
             return this.Ok();
         }

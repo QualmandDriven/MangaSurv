@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "mangasurvfetcher": {
+      "commandName": "Project",
+      "commandLineArgs": "--api-secret-key vkCc5F90_cfUGcKNUsejbrgpJMFZ-Ff8nJ-w6-vA-R3wKWos2GrhX6yNeEfdRpkt -api-clientid YAmDw5AUhffZAJoYD1kdFWTp0vA8coXv -api-username raksaha@outlook.com -api-password Evilspirit"
+    }
+  }
+}

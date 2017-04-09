@@ -71,9 +71,9 @@ namespace mangasurvlib.Manga
             return lMangas;
         }
 
-        public static IMangaManager CreateMangaManager()
+        public static IMangaManager CreateMangaManager(string sApiToken)
         {
-            return new MangaManager();
+            return new MangaManager(sApiToken);
         }
 
         public static MangaChapter CreateMangaChapter()

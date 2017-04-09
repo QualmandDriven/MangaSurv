@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using MangaSurvWebApi.Model;
+using Microsoft.AspNetCore.Authorization;
+using MangaSurvWebApi.Service;
 
 namespace MangaSurvWebApi.Controllers
 {
@@ -50,6 +52,7 @@ namespace MangaSurvWebApi.Controllers
         }
 
         // POST api/chapters
+        [Authorize(Roles = WebApiAccess.WRITE_ROLE)]
         [HttpPost]
         public IActionResult Post([FromBody]Chapter value)
         {
@@ -58,7 +61,7 @@ namespace MangaSurvWebApi.Controllers
                 if (!ModelState.IsValid)
                     return this.BadRequest(ModelState);
 
-                Chapter.AddChapter(this._context, value, true);
+                Chapter.AddChapter(value);
 
                 return this.CreatedAtRoute("ChapterLink", new { id = value.Id }, value);
             }
@@ -69,6 +72,7 @@ namespace MangaSurvWebApi.Controllers
         }
 
         // PUT api/chapters/5
+        [Authorize(Roles = WebApiAccess.WRITE_ROLE)]
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody]Chapter value)
         {
@@ -82,6 +86,7 @@ namespace MangaSurvWebApi.Controllers
         }
 
         // DELETE api/chapters/5
+        [Authorize(Roles = WebApiAccess.WRITE_ROLE)]
         [HttpDelete("{id}")]
         public void Delete(int id)
         {

@@ -9,6 +9,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using MangaSurvWebApi.Model;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Options;
+using MangaSurvWebApi.Service;
+using Microsoft.IdentityModel.Tokens;
 
 namespace MangaSurvWebApi
 {
@@ -36,10 +42,13 @@ namespace MangaSurvWebApi
         // This method gets called by the runtime. Use this method to add services to the container
         public void ConfigureServices(IServiceCollection services)
         {
+            ApplicationConfiguration appConfig = ApplicationConfiguration.GetApplicationConfiguration();
+            appConfig.PostgresConString = Configuration.GetConnectionString("MangaSurvPostgres");
+
             // Add framework services.
             services.AddApplicationInsightsTelemetry(Configuration);
             services.AddDbContext<MangaSurvContext>(opts => 
-                opts.UseNpgsql(Configuration.GetConnectionString("MangaSurvPostgres"))
+                opts.UseNpgsql(appConfig.PostgresConString)
             );
 
             services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
@@ -50,13 +59,61 @@ namespace MangaSurvWebApi
             }));
 
             services.AddMvc();
+
+            // Add functionality to inject IOptions<T>
+            services.AddOptions();
+            services.Configure<Auth0Settings>(Configuration.GetSection("Auth0"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, IOptions<Auth0Settings> auth0Settings)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
+
+            var options = new JwtBearerOptions
+            {
+                //Audience = auth0Settings.Value.ClientId,
+                Audience = "YAmDw5AUhffZAJoYD1kdFWTp0vA8coXv",
+                Authority = $"https://{auth0Settings.Value.Domain}/",
+                //TokenValidationParameters =
+                //{
+                //    ValidIssuer = $"https://{auth0Settings.Value.Domain}/",
+                //    ValidAudience = auth0Settings.Value.ClientId,
+                //    IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(auth0Settings.Value.SecretKey))
+                //},
+
+                Events = new JwtBearerEvents
+                {
+                    OnChallenge = context =>
+                    {
+
+                        return Task.FromResult(0);
+                    },
+                    OnMessageReceived = context =>
+                    {
+                        return Task.FromResult(0);
+                    },
+                    OnTokenValidated = context =>
+                    {
+                        // If you need the user's information for any reason at this point, you can get it by looking at the Claims property
+                        // of context.Ticket.Principal.Identity
+                        var claimsIdentity = context.Ticket.Principal.Identity as ClaimsIdentity;
+                        if (claimsIdentity != null)
+                        {
+                            // Get the user's ID
+                            string userId = claimsIdentity.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
+
+                            // Get the name
+                            string name = claimsIdentity.Claims.FirstOrDefault(c => c.Type == "name")?.Value;
+                        }
+
+                        return Task.FromResult(0);
+                    }
+                }
+            };
+
+            app.UseJwtBearerAuthentication(options);
 
             app.UseApplicationInsightsRequestTelemetry();
 

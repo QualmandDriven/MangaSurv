@@ -5,8 +5,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MangaSurvWebApi.Model;
+using Microsoft.AspNetCore.Authorization;
+using MangaSurvWebApi.Service;
 
-namespace AnimeSurvWebApi.Controllers
+namespace MangaSurvWebApi.Controllers
 {
     [Route("api/animes")]
     public class AnimesEpisodesController : Controller
@@ -34,6 +36,7 @@ namespace AnimeSurvWebApi.Controllers
         }
 
         // POST api/animes
+        [Authorize(Roles = WebApiAccess.WRITE_ROLE)]
         [HttpPost("{animeid}/episodes")]
         public IActionResult Post(int animeid, [FromBody]Episode value)
         {
@@ -48,7 +51,7 @@ namespace AnimeSurvWebApi.Controllers
                 if (anime is NotFoundResult)
                     return this.NotFound();
 
-                Episode.AddEpisode(this._context, value, true);
+                Episode.AddEpisode(value);
 
                 return this.CreatedAtRoute("AnimeEpisodeLink", new { animeid = animeid, episodeid = value.Id }, value);
             }
@@ -59,6 +62,7 @@ namespace AnimeSurvWebApi.Controllers
         }
 
         // PUT api/animes/5
+        [Authorize(Roles = WebApiAccess.WRITE_ROLE)]
         [HttpPut("{animeid}/episodes/{episodeid}")]
         public IActionResult Put(int animeid, int episodeid, [FromBody]Episode value)
         {
@@ -72,6 +76,7 @@ namespace AnimeSurvWebApi.Controllers
         }
 
         // DELETE api/animes/5
+        [Authorize(Roles = WebApiAccess.WRITE_ROLE)]
         [HttpDelete("{animeid}/episodes/{episodeid}")]
         public void Delete(int animeid, int episodeid)
         {

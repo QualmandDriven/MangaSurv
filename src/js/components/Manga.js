@@ -4,8 +4,11 @@ import * as MangaActions from "../actions/MangaActions";
 var moment = require("moment");
 
 export default class Manga extends React.Component {
-  constructor(props) {
-    super();
+  constructor(props, context) {
+      super(props, context);
+      this.state = {
+        auth: props.auth
+      };
   }
 
   followManga() {
@@ -25,7 +28,7 @@ export default class Manga extends React.Component {
     // const { id, name, chapters, followed, lastupdate, image, chapterUpdates } = this.props;
     // const imagePath = "images/" + this.props.image;
     const imagePath = "images/" + this.props.fileSystemName.replace(/[ :]/g, "_") + ".jpg";
-    
+
     return (
       <div class={ this.props.chapterUpdates ? "overview overviewWide" : "overview" }>
         <div class={ this.props.chapterUpdates ? "divHalfHorizontal" : "" }>
@@ -65,7 +68,7 @@ export default class Manga extends React.Component {
               <table>
                 <tbody>
                   {this.props.chapterUpdates.map((chapter) => {
-                    return <tr key={chapter.id}><td>{chapter.chapterNo}</td><td>{moment(chapter.enterDate).format("ll")}</td></tr>;
+                    return <tr><td><a href={chapter.address} target="blank">{chapter.chapterNo} {moment(chapter.enterDate).format("ll")}</a></td></tr>;
                   })}
                 </tbody>
               </table>
@@ -74,7 +77,6 @@ export default class Manga extends React.Component {
           </div>
           :
           ""
-          
         }
       </div>
     );

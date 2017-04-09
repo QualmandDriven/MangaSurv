@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using MangaSurvWebApi.Model;
+using Microsoft.AspNetCore.Authorization;
+using MangaSurvWebApi.Service;
 
 namespace MangaSurvWebApi.Controllers
 {
@@ -60,7 +62,8 @@ namespace MangaSurvWebApi.Controllers
                 }
             }
 
-            return this.Ok(this._context.Mangas.ToList());
+            var mangas = this._context.Mangas.ToList();
+            return this.Ok(mangas);
         }
 
         // GET api/mangas/5
@@ -85,6 +88,7 @@ namespace MangaSurvWebApi.Controllers
         }
 
         // POST api/mangas
+        [Authorize(Roles = WebApiAccess.WRITE_ROLE)]
         [HttpPost]
         public IActionResult Post([FromBody]Manga value)
         {
@@ -93,7 +97,7 @@ namespace MangaSurvWebApi.Controllers
                 if (!ModelState.IsValid)
                     return this.BadRequest(ModelState);
 
-                Manga.AddManga(this._context, value, true);
+                Manga.AddManga(value);
 
                 return this.CreatedAtRoute("MangaLink", new { id = value.Id }, value);
             }
@@ -104,6 +108,7 @@ namespace MangaSurvWebApi.Controllers
         }
 
         // PUT api/mangas/5
+        [Authorize(Roles = WebApiAccess.WRITE_ROLE)]
         [HttpPut("{id}")]
         public void Put(int id, [FromBody]Manga value)
         {
@@ -117,6 +122,7 @@ namespace MangaSurvWebApi.Controllers
         }
 
         // DELETE api/mangas/5
+        [Authorize(Roles = WebApiAccess.WRITE_ROLE)]
         [HttpDelete("{id}")]
         public void Delete(int id)
         {

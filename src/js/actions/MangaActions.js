@@ -15,10 +15,6 @@ export function deleteManga(id) {
 }
 
 export function reloadMangas() {
-  // axios("http://someurl.com/somedataendpoint").then((data) => {
-  //   console.log("got the data!", data);
-  // })
-  
   dispatcher.dispatch({type: "FETCH_MANGAS"});
   fetch('http://192.168.178.70:5000/api/mangas')
     .then(result => result.json())
@@ -27,21 +23,25 @@ export function reloadMangas() {
   }));
 }
 
-export function reloadMangasFollowed(user) {
+export function reloadMangasFollowed(user, token) {
   dispatcher.dispatch({type: "FETCH_MANGAS"});
   // fetch('http://192.168.178.70:5000/api/users/' + user.id + '/mangas')
-  fetch('http://192.168.178.70:5000/api/users/' + 1 + '/mangas')
+  fetch('http://localhost:5000/api/users/0/mangas', {
+    headers: {'Authorization': 'Bearer ' + localStorage.getItem('id_token') }
+  })
     .then(result => result.json())
     .then(items => dispatcher.dispatch({
     type: "RECEIVE_FOLLOWED_MANGAS", mangas: items
   }));
 }
 
-export function reloadNewChapters(user) {
+export function reloadNewChapters(user, token) {
   dispatcher.dispatch({type: "FETCH_MANGAS"});
   // fetch('http://192.168.178.70:5000/api/mangas?chapterstateid=1')
   // fetch('http://192.168.178.70:5000/api/users/' + user.id + '/chapters')
-  fetch('http://192.168.178.70:5000/api/users/1/chapters?sortby=manga')
+  fetch('http://localhost:5000/api/users/0/chapters?sortby=manga', {
+    headers: {'Authorization': 'Bearer ' + localStorage.getItem('id_token') }
+    })
     .then(result => result.json())
     .then(items => {
       dispatcher.dispatch({ type: "RECEIVE_NEW_CHAPTERS", mangas: items });
@@ -49,23 +49,50 @@ export function reloadNewChapters(user) {
   
 }
 
-export function followManga(manga) {
-  dispatcher.dispatch({type: "FOLLOW_MANGA", manga});
+export function followManga(manga, token) {
+  // fetch('http://192.168.178.70:5000/api/users/1/mangas', {
+  fetch('http://localhost:5000/api/users/0/mangas', {
+    method: 'POST',
+    headers: new Headers({
+		  'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('id_token')
+	  }),
+    body: JSON.stringify({
+      id: manga.id
+    })
+  })
+  .then(result => {
+    reloadMangasFollowed();
+    dispatcher.dispatch({type: "FOLLOW_MANGA", manga})
+    
+  })
+  .catch(err => {
+    reloadMangasFollowed();
+    dispatcher.dispatch({type: "FOLLOW_MANGA", manga});
+  });
 }
 
-export function unfollowManga(manga) {
-  dispatcher.dispatch({type: "UNFOLLOW_MANGA", manga});
+export function unfollowManga(manga, token) {
+  // fetch('http://192.168.178.70:5000/api/users/1/mangas/' + manga.id, {
+  fetch('http://localhost:5000/api/users/0/mangas/' + manga.id, {
+    method: 'DELETE',
+    headers: {'Authorization': 'Bearer ' + localStorage.getItem('id_token') }
+  })
+  .then(result => {
+    reloadMangasFollowed();
+    dispatcher.dispatch({type: "UNFOLLOW_MANGA", manga});
+  })
+  .catch(err => {
+    reloadMangasFollowed();
+    dispatcher.dispatch({type: "UNFOLLOW_MANGA", manga});
+  });
 }
 
 export function markAsRead(manga) {
-  // dispatcher.dispatch({type: "MARKASREAD_MANGA", manga});
     manga.chapters.forEach(chapter => {
-      // const formData = new FormData();
-      // formData.append('id', chapter.id);
-      // console.log(formData);
-      fetch('http://localhost:50107/api/users/1/chapters/' + chapter.id, {
-        method: 'DELETE'
-        // body: formData
+      fetch('http://localhost:5000/api/users/0/chapters/' + chapter.id, {
+        method: 'DELETE',
+        headers: {'Authorization': 'Bearer ' + localStorage.getItem('id_token') }
       })
       .then(result => { 
         console.log(result);
@@ -76,5 +103,4 @@ export function markAsRead(manga) {
         reloadNewChapters(); 
       });
     });
-    // reloadNewChapters();
 }

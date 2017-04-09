@@ -4,6 +4,8 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using MangaSurvWebApi.Model;
+using Microsoft.AspNetCore.Authorization;
+using MangaSurvWebApi.Service;
 
 namespace MangaSurvWebApi.Controllers
 {
@@ -17,6 +19,7 @@ namespace MangaSurvWebApi.Controllers
         }
 
         // GET api/mangas
+        [Authorize(Roles = WebApiAccess.WRITE_ROLE)]
         [HttpGet("{mangaid}/users")]
         public IActionResult Get(int mangaid)
         {
