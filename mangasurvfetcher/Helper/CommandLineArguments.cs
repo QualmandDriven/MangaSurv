@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,6 +12,8 @@ namespace mangasurvfetcher.Helper
     /// </summary>
     public class CommandLineArguments : IArguments
     {
+        private static ILogger logger = mangasurvlib.Logging.ApplicationLogging.CreateLogger<Program>();
+
         private static readonly string[] _keyidentifiers = new string[] { "--", "-" };
         private readonly Dictionary<string, string> _dicArgs = new Dictionary<string, string>();
 
@@ -20,6 +23,8 @@ namespace mangasurvfetcher.Helper
         /// <param name="args">Command line arguments which were provided by main method.</param>
         public CommandLineArguments(string[] args)
         {
+            logger.LogInformation("Parsing following command line arguments: {0}", String.Join(" ", args));
+
             string sLastKey = String.Empty;
             foreach (string s in args)
             {
@@ -33,7 +38,12 @@ namespace mangasurvfetcher.Helper
                 {
                     this._dicArgs[sLastKey] = s;
                 }
+            }
 
+            logger.LogInformation("Parsed command line arguments:");
+            foreach (KeyValuePair<string, string> pair in this._dicArgs)
+            {
+                logger.LogInformation("Key: '{0}' Value: '{0}'", pair.Key, pair.Value);
             }
         }
 

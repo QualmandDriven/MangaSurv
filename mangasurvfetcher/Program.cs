@@ -27,6 +27,8 @@ namespace mangasurvfetcher
                 return;
             }
 
+            logger.LogInformation(argMng.GetValue("api-username"));
+
             // Load Auth0 connection details provided by arguments either of command line arguments or environemnt variables
             API.Auth0Connector auth0Con = new API.Auth0Connector(argMng.GetValue("api-username"), argMng.GetValue("api-password"), argMng.GetValue("api-clientid"), argMng.GetValue("api-secret-key"));
             string sToken = auth0Con.GetIdToken();
