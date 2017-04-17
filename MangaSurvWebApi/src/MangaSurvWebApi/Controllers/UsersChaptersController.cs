@@ -63,7 +63,7 @@ namespace MangaSurvWebApi.Controllers
                         }
                     }
 
-                    return this.Ok(lMangas);
+                    return this.Ok(lMangas.OrderBy(m => m.Name));
                 }
             } 
 

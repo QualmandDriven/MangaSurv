@@ -50,7 +50,6 @@ export default class MangasFollowed extends React.Component {
 
   render() {
     const { mangas, profile } = this.state;
-    console.log(profile);
 
     return (
       <div>

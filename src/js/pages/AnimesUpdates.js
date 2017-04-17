@@ -50,7 +50,6 @@ export default class AnimesFollowed extends React.Component {
 
   render() {
     const { animes, profile } = this.state;
-    console.log(animes);
 
     return (
       <div>
