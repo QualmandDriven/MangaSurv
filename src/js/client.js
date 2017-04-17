@@ -8,6 +8,9 @@ import Settings from "./pages/Settings";
 import Mangas from "./pages/Mangas.js";
 import MangasFollowed from "./pages/MangasFollowed.js";
 import MangasUpdates from "./pages/MangasUpdates.js";
+import Animes from "./pages/Animes.js";
+import AnimesFollowed from "./pages/AnimesFollowed.js";
+import AnimesUpdates from "./pages/AnimesUpdates.js";
 import AuthService from "./utils/AuthService"
 import Login from "./pages/Login/Login";
 
@@ -34,6 +37,9 @@ ReactDOM.render(
       <Route path="mangas" component={Mangas}></Route>
       <Route path="mangas/followed" component={MangasFollowed} onEnter={requireAuth}></Route>
       <Route path="mangas/updates" component={MangasUpdates} onEnter={requireAuth}></Route>
+      <Route path="animes" component={Animes}></Route>
+      <Route path="animes/followed" component={AnimesFollowed} onEnter={requireAuth}></Route>
+      <Route path="animes/updates" component={AnimesUpdates} onEnter={requireAuth}></Route>
       <Route path="login" component={Login}></Route>
     </Route>
   </Router>,

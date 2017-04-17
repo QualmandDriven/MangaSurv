@@ -55,7 +55,7 @@ export default class MangasFollowed extends React.Component {
       <div>
         <h1>Mangas</h1>
         <SearchBar filterText = {this.state.filterText} onUserInput={this.filterMangas} />
-        <button class="btn btn-success" onClick={this.reloadMangas.bind(this)}>Refresh</button>
+        <button class="btn-success" onClick={this.reloadMangas.bind(this)}>Refresh</button>
 
         <div>
           {mangas.map((manga) => {

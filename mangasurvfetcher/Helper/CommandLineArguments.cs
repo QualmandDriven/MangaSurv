@@ -25,8 +25,14 @@ namespace mangasurvfetcher.Helper
         {
             logger.LogInformation("Parsing following command line arguments: {0}", String.Join(" ", args));
 
+            List<string> lArgs = new List<string>();
+            foreach(string s in args)
+            {
+                lArgs.AddRange(s.Split(' '));
+            }
+
             string sLastKey = String.Empty;
-            foreach (string s in args)
+            foreach (string s in lArgs)
             {
                 string sTempKey;
                 if (this.IsKey(s, out sTempKey))

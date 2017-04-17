@@ -15,7 +15,7 @@ namespace mangasurvfetcher
         {
             mangasurvlib.Logging.ApplicationLogging.ConfigureLogger();
             logger.StartLogging(System.Reflection.Assembly.GetEntryAssembly());
-
+            
             ArgumentsManager argMng;
             try
             {

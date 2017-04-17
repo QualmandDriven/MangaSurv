@@ -27,7 +27,7 @@ namespace MangaSurvWebApi.Controllers
             {
                 if (queryString.ContainsKey("include") && queryString.GetValue("include") == "1")
                 {
-                    var results = _context.Animes.Select(a => new { a.Id, a.Name, a.FileSystemName, a.Episodes }).ToList();
+                    var results = _context.Animes.Select(a => new { a.Id, a.Name, a.FileSystemName, a.Episodes }).OrderBy(anime => anime.Name);
                     return this.Ok(results);
                 }
                 else if (queryString.ContainsKey("name"))
@@ -36,7 +36,7 @@ namespace MangaSurvWebApi.Controllers
                 }
             }
 
-            return this.Ok(this._context.Animes.ToList());
+            return this.Ok(this._context.Animes.OrderBy(anime => anime.Name));
         }
 
         // GET api/animes/5

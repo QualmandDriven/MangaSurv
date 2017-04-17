@@ -1,9 +1,9 @@
 import React from "react";
 
-import * as MangaActions from "../actions/MangaActions";
+import * as AnimeActions from "../actions/AnimeActions";
 var moment = require("moment");
 
-export default class Manga extends React.Component {
+export default class Anime extends React.Component {
   constructor(props, context) {
       super(props, context);
       this.state = {
@@ -11,32 +11,32 @@ export default class Manga extends React.Component {
       };
   }
 
-  followManga() {
-    MangaActions.followManga(this.props);
+  followAnime() {
+    AnimeActions.followAnime(this.props);
   }
 
-  unfollowManga() {
-    MangaActions.unfollowManga(this.props);
+  unfollowAnime() {
+    AnimeActions.unfollowAnime(this.props);
   }
 
   markAsRead() {
-    MangaActions.markAsRead(this.props);
+    AnimeActions.markAsRead(this.props);
   }
 
   render() {
 
-    // const { id, name, chapters, followed, lastupdate, image, chapterUpdates } = this.props;
+    // const { id, name, episodes, followed, lastupdate, image, episodeUpdates } = this.props;
     // const imagePath = "images/" + this.props.image;
     const imagePath = "images/" + this.props.fileSystemName.replace(/[ :]/g, "_") + ".jpg";
 
     return (
-      <div class={ this.props.chapterUpdates ? "overview overviewWide" : "overview " }>
-        <div class={ this.props.chapterUpdates ? "divHalfHorizontal overviewThumb" : "overviewThumb" }>
+      <div class={ this.props.episodeUpdates ? "overview overviewWide" : "overview " }>
+        <div class={ this.props.episodeUpdates ? "divHalfHorizontal overviewThumb" : "overviewThumb" }>
           {
             this.props.followed ? 
-            <button class="btn-danger hoverdeleteoverview" onClick={this.unfollowManga.bind(this)}>- Unfollow</button>
+            <button class="btn-danger hoverdeleteoverview" onClick={this.unfollowAnime.bind(this)}>- Unfollow</button>
             :
-            <button class="btn-success hoveraddoverview" onClick={this.followManga.bind(this)}>+ Follow</button> 
+            <button class="btn-success hoveraddoverview" onClick={this.followAnime.bind(this)}>+ Follow</button> 
           }
           <a href="#">
             <img src={imagePath}/>
@@ -51,8 +51,8 @@ export default class Manga extends React.Component {
               </thead>
               <tbody>
                 <tr>
-                  <td>Chapters:</td>
-                  <td>{ this.props.chapters.length }</td>
+                  <td>Episodes:</td>
+                  <td>{ this.props.episodes.length }</td>
                 </tr>
                 <tr>
                   <td>Last Update:<br/></td>
@@ -68,13 +68,13 @@ export default class Manga extends React.Component {
           </div>
         </div>
         {
-          this.props.chapterUpdates ?
+          this.props.episodeUpdates ?
           <div class="divHalfHorizontal divOverviewUpdates">
             <div>
               <table>
                 <tbody>
-                  {this.props.chapterUpdates.map((chapter) => {
-                    return <tr><td><a href={chapter.address} target="blank">{chapter.chapterNo} {moment(chapter.enterDate).format("ll")}</a></td></tr>;
+                  {this.props.episodeUpdates.map((episode) => {
+                    return <tr><td><a href={episode.address} target="blank">{episode.episodeNo} {moment(episode.enterDate).format("ll")}</a></td></tr>;
                   })}
                 </tbody>
               </table>

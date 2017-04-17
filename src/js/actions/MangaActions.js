@@ -25,8 +25,7 @@ export function reloadMangas() {
 
 export function reloadMangasFollowed(user, token) {
   dispatcher.dispatch({type: "FETCH_MANGAS"});
-  // fetch('http://192.168.178.70:5000/api/users/' + user.id + '/mangas')
-  fetch('http://localhost:5000/api/users/0/mangas', {
+  fetch('http://192.168.178.70:5000/api/users/0/mangas', {
     headers: {'Authorization': 'Bearer ' + localStorage.getItem('id_token') }
   })
     .then(result => result.json())
@@ -37,9 +36,7 @@ export function reloadMangasFollowed(user, token) {
 
 export function reloadNewChapters(user, token) {
   dispatcher.dispatch({type: "FETCH_MANGAS"});
-  // fetch('http://192.168.178.70:5000/api/mangas?chapterstateid=1')
-  // fetch('http://192.168.178.70:5000/api/users/' + user.id + '/chapters')
-  fetch('http://localhost:5000/api/users/0/chapters?sortby=manga', {
+  fetch('http://192.168.178.70:5000/api/users/0/chapters?sortby=manga', {
     headers: {'Authorization': 'Bearer ' + localStorage.getItem('id_token') }
     })
     .then(result => result.json())
@@ -50,8 +47,7 @@ export function reloadNewChapters(user, token) {
 }
 
 export function followManga(manga, token) {
-  // fetch('http://192.168.178.70:5000/api/users/1/mangas', {
-  fetch('http://localhost:5000/api/users/0/mangas', {
+  fetch('http://192.168.178.70:5000/api/users/0/mangas', {
     method: 'POST',
     headers: new Headers({
 		  'Content-Type': 'application/json',
@@ -73,8 +69,7 @@ export function followManga(manga, token) {
 }
 
 export function unfollowManga(manga, token) {
-  // fetch('http://192.168.178.70:5000/api/users/1/mangas/' + manga.id, {
-  fetch('http://localhost:5000/api/users/0/mangas/' + manga.id, {
+  fetch('http://192.168.178.70:5000/api/users/0/mangas/' + manga.id, {
     method: 'DELETE',
     headers: {'Authorization': 'Bearer ' + localStorage.getItem('id_token') }
   })
@@ -90,7 +85,7 @@ export function unfollowManga(manga, token) {
 
 export function markAsRead(manga) {
     manga.chapters.forEach(chapter => {
-      fetch('http://localhost:5000/api/users/0/chapters/' + chapter.id, {
+      fetch('http://192.168.178.70:5000/api/users/0/chapters/' + chapter.id, {
         method: 'DELETE',
         headers: {'Authorization': 'Bearer ' + localStorage.getItem('id_token') }
       })

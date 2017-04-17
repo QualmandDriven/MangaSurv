@@ -50,11 +50,11 @@ namespace MangaSurvWebApi.Controllers
                         }
                     }
 
-                    return this.Ok(lMangas);
+                    return this.Ok(lMangas.OrderBy(manga => manga.Name));
                 }
                 else if (queryString.ContainsKey("INCLUDE"))
                 {
-                    return this.Ok(this._context.Mangas.Include(m => m.Chapters));
+                    return this.Ok(this._context.Mangas.Include(m => m.Chapters).OrderBy(manga => manga.Name));
                 }
                 else if(queryString.ContainsKey("NAME"))
                 {
@@ -62,7 +62,7 @@ namespace MangaSurvWebApi.Controllers
                 }
             }
 
-            var mangas = this._context.Mangas.ToList();
+            var mangas = this._context.Mangas.OrderBy(manga => manga.Name);
             return this.Ok(mangas);
         }
 

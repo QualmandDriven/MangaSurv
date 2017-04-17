@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router";
 
 import Footer from "../components/layout/Footer";
-import Nav from "../components/layout/Nav";
 import NavSide from "../components/layout/NavSide";
 
 export default class Layout extends React.Component {
@@ -22,16 +21,17 @@ export default class Layout extends React.Component {
 
     return (
       <div>
-        <Nav location={location} />
-        <div class="container-fluid">
+        <div class="">
           <div class="row">
-            <NavSide location={location} />
-            <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <div class="">
+              <NavSide location={location} />
+            </div>
+            {/*<Footer/>*/}
+            <div class="main">
               {children}
             </div>
           </div>
-        </div>      
-        <Footer/>
+        </div>
     </div>
     );
   }

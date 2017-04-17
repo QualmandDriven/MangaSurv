@@ -14,7 +14,7 @@ export default class SearchBar extends React.Component {
   
   render() {
     return (
-      <form>
+      
         <input
           type="text"
           placeholder="Search..."
@@ -22,7 +22,7 @@ export default class SearchBar extends React.Component {
           ref="filterTextInput"
           onChange={this.handleChange}
         />
-      </form>
+      
     );
   }
 }

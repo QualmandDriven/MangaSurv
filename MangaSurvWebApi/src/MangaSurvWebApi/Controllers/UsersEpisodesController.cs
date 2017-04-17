@@ -29,6 +29,44 @@ namespace MangaSurvWebApi.Controllers
             if (user == null)
                 return this.Forbid();
 
+            if (Request.QueryString.HasValue)
+            {
+                Helper.QueryString queryString = new Helper.QueryString(Request);
+                if (queryString.ContainsKey("SORTBY") && queryString.GetValue("SORTBY").ToUpper().Equals("ANIME"))
+                {
+                    List<Episode> lNewEpisodes = (from epidose in _context.UserNewEpisodes
+                                                  where epidose.UserId == user.Id
+                                                  orderby epidose.Episode
+                                                  select epidose.Episode).ToList();
+
+                    List<Anime> lAnimes = new List<Anime>();
+                    List<long> lAnimeIds = new List<long>();
+
+                    foreach (Episode episode in lNewEpisodes)
+                    {
+                        if (lAnimeIds.Contains(episode.AnimeId))
+                        {
+                            Anime anime = lAnimes.Find(a => a.Id == episode.AnimeId);
+                            if (!anime.Episodes.Contains(episode))
+                                anime.Episodes.Add(episode);
+
+                            anime.Episodes.Sort();
+                        }
+                        else
+                        {
+                            Anime anime = this._context.Animes.FirstOrDefault(m => m.Id == episode.AnimeId);
+                            if (anime != null)
+                            {
+                                lAnimes.Add(anime);
+                                lAnimeIds.Add(anime.Id);
+                            }
+                        }
+                    }
+
+                    return this.Ok(lAnimes.OrderBy(anime => anime.Name));
+                }
+            }
+
             List<Episode> episodeslist = (from episode in _context.UserNewEpisodes
                                           where episode.UserId == user.Id
                                           orderby episode.Episode
