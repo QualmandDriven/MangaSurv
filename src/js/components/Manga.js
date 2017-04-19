@@ -1,4 +1,5 @@
 import React from "react";
+import { IndexLink, Link } from "react-router";
 
 import * as MangaActions from "../actions/MangaActions";
 var moment = require("moment");
@@ -29,6 +30,9 @@ export default class Manga extends React.Component {
     // const imagePath = "images/" + this.props.image;
     const imagePath = "images/" + this.props.fileSystemName.replace(/[ :]/g, "_") + ".jpg";
 
+    const linkDetails = "mangas/" + this.props.id;
+    console.log(linkDetails);
+
     return (
       <div class={ this.props.chapterUpdates ? "overview overviewWide" : "overview " }>
         <div class={ this.props.chapterUpdates ? "divHalfHorizontal overviewThumb" : "overviewThumb" }>
@@ -38,9 +42,9 @@ export default class Manga extends React.Component {
             :
             <button class="btn-success hoveraddoverview" onClick={this.followManga.bind(this)}>+ Follow</button> 
           }
-          <a href="#">
+          <Link to={linkDetails}>
             <img src={imagePath}/>
-          </a>
+          </Link>
           <div>
             <p>{ this.props.name }</p>
             {/*<table>

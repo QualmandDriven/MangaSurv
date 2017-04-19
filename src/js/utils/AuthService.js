@@ -2,6 +2,7 @@ import { EventEmitter } from 'events'
 import { isTokenExpired } from './jwtHelper'
 import Auth0Lock from 'auth0-lock'
 import { browserHistory } from 'react-router'
+import * as MangaActions from "../actions/MangaActions";
 
 export default class AuthService extends EventEmitter {
   constructor(clientId, domain) {
@@ -26,13 +27,12 @@ export default class AuthService extends EventEmitter {
     // Saves the user token
     this.setToken(authResult.idToken)
     // navigate to the home route
-    browserHistory.replace('/#/login')
+    // browserHistory.replace('/#/login')
     // Async loads the user profile data
     this.lock.getProfile(authResult.idToken, (error, profile) => {
       if (error) {
         console.log('Error loading the Profile', error)
       } else {
-        console.log(profile);
         this.setProfile(profile)
       }
     })

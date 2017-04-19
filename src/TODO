@@ -1,0 +1,7 @@
+- Admin-Punkt einbauen zur Erstellung von neuen Mangas und Animes
+- CSS für mobile Geräte verbesser
+  - Sidebar (Navigation) verkleinern, so dass nur die Bilder angezeigt werden
+- Profil Seite aktualisieren mit Infos von Auth0 (E-Mail, Name, etc.)
+- Auth0-Login bei Followed und Update Seiten, wenn noch nicht eingeloggt, anzeigen
+- Nach einloggen, Followed und Update aktualisieren (von Server neu laden)
+- Manga-Details und Anime-Details erstellen

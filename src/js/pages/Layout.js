@@ -24,7 +24,7 @@ export default class Layout extends React.Component {
         <div class="">
           <div class="row">
             <div class="">
-              <NavSide location={location} />
+              <NavSide location={location} auth={this.props.route.auth} />
             </div>
             {/*<Footer/>*/}
             <div class="main">

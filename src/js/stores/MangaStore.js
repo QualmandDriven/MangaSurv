@@ -11,6 +11,7 @@ class MangaStore extends EventEmitter {
         this.mangas = [];
         this.followedMangas = [];
         this.mangasUpdates = [];
+        this.manga = undefined;
         
         MangaActions.reloadMangas();
         MangaActions.reloadMangasFollowed();
@@ -43,6 +44,10 @@ class MangaStore extends EventEmitter {
 
   getAllMangasUpdates() {
     return this.mangasUpdates;
+  }
+
+  getManga() {
+    return this.manga;
   }
 
   followManga(manga) {
@@ -117,6 +122,11 @@ class MangaStore extends EventEmitter {
       }
       case "MARKASREAD_MANGA": {
         this.markAsRead(action.manga);
+      }
+      case "RECEIVE_MANGA": {
+        this.manga = action.manga;
+        this.emit("change");
+        break;
       }
     }
   }

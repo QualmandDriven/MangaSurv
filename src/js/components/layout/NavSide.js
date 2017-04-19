@@ -2,10 +2,11 @@ import React from "react";
 import { IndexLink, Link } from "react-router";
 
 export default class Nav extends React.Component {
-  constructor() {
-    super()
+  constructor(props, context) {
+    super(props, context);
     this.state = {
       collapsed: true,
+      auth: props.auth
     };
   }
 
@@ -16,7 +17,7 @@ export default class Nav extends React.Component {
 
   render() {
     const { location } = this.props;
-    const { collapsed } = this.state;
+    const { collapsed, auth } = this.state;
     const mangasClass = location.pathname === "/" || location.pathname.match(/^\/mangas$/) ? "active" : "";
     const animeClass = location.pathname.match(/^\/animes$/) ? "active" : "";
     const profileClass = location.pathname.match(/^\/profile/) ? "active" : "";
@@ -27,13 +28,15 @@ export default class Nav extends React.Component {
     const animesUpdatesClass = location.pathname.match(/^\/animes\/updates/) ? "active" : "";
     const navClass = collapsed ? "collapse" : "";
 
+    const isUserloggedIn = auth.loggedIn();
+
     return (
       <div class="sidebar" role="navigation">
-        <h4><a href="/">MangaSurv</a></h4>
+        <h4><a href="/"><img class="nav-image" alt="Home" src="images/nav/home.svg"/><span>MangaSurv</span></a></h4>
         <ul class="nav nav-sidebar">
-          <li class={profileClass}><Link to="profile" onClick={this.toggleCollapse.bind(this)}><img class="nav-image" alt="Profile" src="images/nav/profile.svg"/><span>Profile</span></Link></li>
-          <li><Link to="login" onClick={this.toggleCollapse.bind(this)}><img class="nav-image" alt="Login" src="images/nav/login.svg"/><span>Login</span></Link></li>
-          <li><a href="#"><img class="nav-image" alt="Logout" src="images/nav/logout.svg"/> Logout</a></li>
+          { isUserloggedIn == true ? <li class={profileClass}><Link to="profile" onClick={this.toggleCollapse.bind(this)}><img class="nav-image" alt="Profile" src="images/nav/profile.svg"/><span>Profile</span></Link></li> : null }
+          { isUserloggedIn == false ? <li><Link to="login" onClick={this.toggleCollapse.bind(this)}><img class="nav-image" alt="Login" src="images/nav/login.svg"/><span>Login</span></Link></li> : null}
+          { isUserloggedIn == true ? <li><Link to="logout"><img class="nav-image" alt="Logout" src="images/nav/logout.svg"/><span>Logout</span></Link></li> : null }
         </ul>
         <ul class="nav nav-sidebar">
           <li class={mangasClass}><Link to="mangas" onClick={this.toggleCollapse.bind(this)}><img class="nav-image" alt="Mangas" src="images/nav/manga.svg"/><span>Mangas</span></Link></li>

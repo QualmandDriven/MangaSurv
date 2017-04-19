@@ -14,6 +14,16 @@ export function deleteManga(id) {
   });
 }
 
+export function getManga(id) {
+  console.log("Fetch manga with id " + id)
+  dispatcher.dispatch({type: "FETCH_MANGA"});
+  fetch('http://192.168.178.70:5000/api/mangas/' + id + "?include=1")
+    .then(result => result.json())
+    .then(item => dispatcher.dispatch({
+    type: "RECEIVE_MANGA", manga: item
+  }));
+}
+
 export function reloadMangas() {
   dispatcher.dispatch({type: "FETCH_MANGAS"});
   fetch('http://192.168.178.70:5000/api/mangas')

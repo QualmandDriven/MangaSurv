@@ -23,7 +23,8 @@ export default class Profile extends React.Component {
 
   render() {
     const { profile, auth } = this.state;
-    console.log(profile);
+    
+    console.log(auth.getProfile());
     return (
       <div>
         <h1>Profile</h1>

@@ -18,6 +18,7 @@ export default class MangasFollowed extends React.Component {
     };
 
     props.auth.on('profile_updated', (newProfile) => {
+      console.log("followed prifle update");
       this.setState({profile: newProfile})
     })
 
@@ -39,7 +40,9 @@ export default class MangasFollowed extends React.Component {
   }
 
   reloadMangas() {
-    MangaActions.reloadMangasFollowed(this.state.profile.name, this.state.auth.getToken());
+    if(this.state.auth.loggedIn()) {
+      MangaActions.reloadMangasFollowed(this.state.profile.name, this.state.auth.getToken());
+    }
   }
 
   filterMangas(e) {
@@ -49,19 +52,26 @@ export default class MangasFollowed extends React.Component {
   }
 
   render() {
-    const { mangas, profile } = this.state;
-
+    const { mangas, filterText, profile, auth } = this.state;
+    
     return (
-      <div>
-        <h1>Mangas</h1>
-        <SearchBar filterText = {this.state.filterText} onUserInput={this.filterMangas} />
-        <button class="btn-success" onClick={this.reloadMangas.bind(this)}>Refresh</button>
 
-        <div>
-          {mangas.map((manga) => {
-            return manga.name.toUpperCase().indexOf(this.state.filterText.toUpperCase()) >= 0 ? <Manga key={manga.id} {...manga}/> : "";
-          })}
-        </div>
+      <div>
+        { 
+          auth.loggedIn() == false ?
+            (<div>
+              <h2>Login</h2>
+              <button bsStyle="primary" onClick={auth.login.bind(this)}>Login</button>
+            </div>)
+          : null }
+          <h1>Mangas</h1>
+          <SearchBar filterText = {this.state.filterText} onUserInput={this.filterMangas} />
+          <button class="btn-success" onClick={this.reloadMangas.bind(this)}>Refresh</button>
+          <div>
+            {mangas.map((manga) => {
+              return manga.name.toUpperCase().indexOf(this.state.filterText.toUpperCase()) >= 0 ? <Manga key={manga.id} {...manga}/> : "";
+            })}
+          </div>
       </div>
     );
   }
