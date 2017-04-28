@@ -47,7 +47,7 @@ namespace MangaSurvWebApi.Controllers
                         if (lMangaIds.Contains(chapter.MangaId))
                         {
                             Manga manga = lMangas.Find(m => m.Id == chapter.MangaId);
-                            if(!manga.Chapters.Contains(chapter))
+                            if (!manga.Chapters.Contains(chapter))
                                 manga.Chapters.Add(chapter);
 
                             manga.Chapters.Sort();
@@ -65,7 +65,7 @@ namespace MangaSurvWebApi.Controllers
 
                     return this.Ok(lMangas.OrderBy(m => m.Name));
                 }
-            } 
+            }
 
             var chapterslist = (from chapter in _context.UserNewChapters
                                 where chapter.UserId == user.Id
@@ -76,7 +76,7 @@ namespace MangaSurvWebApi.Controllers
 
         // GET api/chapters/5
         [Authorize(Roles = WebApiAccess.USER_ROLE)]
-        [HttpGet("{userid}/chapters/{chapterid}", Name ="UserChapterLink")]
+        [HttpGet("{userid}/chapters/{chapterid}", Name = "UserChapterLink")]
         [Produces(typeof(Chapter))]
         public IActionResult Get(int userid, int chapterid)
         {
@@ -115,7 +115,7 @@ namespace MangaSurvWebApi.Controllers
 
                 return this.CreatedAtRoute("UserChapterLink", new { userid = entry.UserId, chapterid = entry.ChapterId }, entry);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return this.BadRequest(ex);
             }
@@ -150,10 +150,53 @@ namespace MangaSurvWebApi.Controllers
             }
             catch
             {
-                
+
             }
 
             return this.Ok();
+        }
+
+        // DELETE api/chapters/5
+        [Authorize(Roles = WebApiAccess.USER_ROLE)]
+        [HttpDelete("{userid}/chapters")]
+        public IActionResult DeleteAllChapters(int userid)
+        {
+            try
+            {
+                if (Request.QueryString.HasValue)
+                {
+                    Helper.QueryString queryString = new Helper.QueryString(Request);
+                    if (queryString.ContainsKey("MANGAID") && !String.IsNullOrEmpty(queryString.GetValue("MANGAID")))
+                    {
+
+                        UserTokenDetails userDetails = new UserTokenDetails(User);
+                        User user = Model.User.GetUser(userid, userDetails);
+
+                        if (user == null)
+                            return this.Forbid();
+
+                        int mangaId = int.Parse(queryString.GetValue("MANGAID"));
+                        var userchapters = (from chapter in _context.UserNewChapters
+                                                      where chapter.UserId == user.Id
+                                                      && chapter.Chapter.MangaId == mangaId
+                                                      select chapter).ToList();
+
+                        if (userchapters != null && userchapters.Count() > 0)
+                        {
+                            this._context.UserNewChapters.RemoveRange(userchapters);
+                            this._context.SaveChangesAsync();
+                        }
+
+                        return this.Ok();
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+
+            return this.BadRequest();
         }
 
         [HttpOptions]
