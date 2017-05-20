@@ -25,17 +25,106 @@ namespace MangaSurvWebApi.Controllers
             Helper.QueryString queryString = new Helper.QueryString(Request);
             if (queryString.ContainsKeys())
             {
-                if (queryString.ContainsKey("STATEID"))
+                List<Episode> results = new List<Episode>();
+
+                DateTime dt = new DateTime();
+                if (queryString.ContainsKey("FROM") && DateTime.TryParse(queryString.GetValue("FROM"), out dt))
                 {
-                    return this.Ok(this._context.Episodes.Where(o => o.StateId == int.Parse(queryString.GetValue("STATEID"))).ToList());
+                    results = (from chapter in _context.Episodes
+                               where chapter.EnterDate >= dt
+                               orderby chapter.EnterDate
+                               select chapter).ToList();
+
+                    HashSet<long> hsAnimeIds = new HashSet<long>();
+                    results.ForEach(c => hsAnimeIds.Add(c.AnimeId));
+
+                    var animes = (from anime in _context.Animes
+                                  where hsAnimeIds.Contains(anime.Id)
+                                  select anime).ToList();
+
+                    Dictionary<Tuple<int, long>, Anime> dicAnimes = new Dictionary<Tuple<int, long>, Anime>();
+                    foreach (Episode c in results)
+                    {
+                        Tuple<int, long> t = new Tuple<int, long>(c.EnterDate.DayOfYear, c.AnimeId);
+                        if (dicAnimes.ContainsKey(t))
+                        {
+                            dicAnimes[t].Episodes.Add(c);
+                        }
+                        else
+                        {
+                            //var ma = _context.Animes.FirstOrDefault(m => m.Id == c.AnimeId);
+                            var ma = animes.First(m => m.Id == c.AnimeId).Copy();
+                            ma.Episodes.Clear();
+                            ma.Episodes.Add(c);
+                            dicAnimes.Add(t, ma);
+                        }
+                    }
+
+                    List<Anime> lAnimes = new List<Anime>();
+                    foreach (var kv in dicAnimes)
+                    {
+                        lAnimes.Add(kv.Value);
+                    }
+
+                    return this.Ok(lAnimes);
+
                 }
                 else
                 {
-                    return this.Ok(this._context.Episodes.ToList());
+                    results = this._context.Episodes.ToList();
                 }
+
+                foreach (KeyValuePair<string, Microsoft.Extensions.Primitives.StringValues> pair in Request.Query)
+                {
+                    switch (pair.Key.ToUpper())
+                    {
+                        case "STATEID":
+                            results = results.Where(o => o.StateId == int.Parse(pair.Value.ToString())).ToList();
+                            break;
+                        default:
+                            break;
+                    }
+                }
+
+                if (queryString.ContainsKey("SORTBY") && queryString.GetValue("SORTBY").ToUpper().Equals("ANIME"))
+                {
+                    return this.Ok(results.SortByAnime());
+                }
+
+                return this.Ok(results);
             }
 
             return this.Ok(this._context.Episodes.ToList());
+
+            //Helper.QueryString queryString = new Helper.QueryString(Request);
+            //if (queryString.ContainsKeys())
+            //{
+            //    List<Episode> results = new List<Episode>();
+            //    DateTime dt = new DateTime();
+
+            //    if (queryString.ContainsKey("STATEID"))
+            //    {
+            //        return this.Ok(this._context.Episodes.Where(o => o.StateId == int.Parse(queryString.GetValue("STATEID"))).ToList());
+            //    }
+            //    else if (queryString.ContainsKey("FROM") && DateTime.TryParse(queryString.GetValue("FROM"), out dt))
+            //    {
+            //        results = (from episode in _context.Episodes
+            //                   where episode.EnterDate >= dt
+            //                   orderby episode.EnterDate
+            //                   select episode).ToList();
+            //    }
+            //    else
+            //    {
+            //        return this.Ok(this._context.Episodes.ToList());
+            //    }
+
+            //    if (queryString.ContainsKey("SORTBY") && queryString.GetValue("SORTBY").ToUpper().Equals("ANIME"))
+            //    {
+            //        return this.Ok(results.SortByAnime());
+            //    }
+            //}
+
+            //return this.Ok(this._context.Episodes.ToList());
         }
 
         // GET api/episodes/5

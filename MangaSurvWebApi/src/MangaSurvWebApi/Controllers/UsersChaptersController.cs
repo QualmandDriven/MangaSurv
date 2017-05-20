@@ -39,31 +39,7 @@ namespace MangaSurvWebApi.Controllers
                                                   orderby chapter.Chapter
                                                   select chapter.Chapter).ToList();
 
-                    List<Manga> lMangas = new List<Manga>();
-                    List<long> lMangaIds = new List<long>();
-
-                    foreach (Chapter chapter in lNewChapters)
-                    {
-                        if (lMangaIds.Contains(chapter.MangaId))
-                        {
-                            Manga manga = lMangas.Find(m => m.Id == chapter.MangaId);
-                            if (!manga.Chapters.Contains(chapter))
-                                manga.Chapters.Add(chapter);
-
-                            manga.Chapters.Sort();
-                        }
-                        else
-                        {
-                            Manga manga = this._context.Mangas.FirstOrDefault(m => m.Id == chapter.MangaId);
-                            if (manga != null)
-                            {
-                                lMangas.Add(manga);
-                                lMangaIds.Add(manga.Id);
-                            }
-                        }
-                    }
-
-                    return this.Ok(lMangas.OrderBy(m => m.Name));
+                    return this.Ok(lNewChapters.SortByManga().OrderBy(m => m.Name));
                 }
             }
 

@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using MangaSurvWebApi.Model;
 using Microsoft.AspNetCore.Authorization;
 using MangaSurvWebApi.Service;
+using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 
 namespace MangaSurvWebApi.Controllers
 {
@@ -24,7 +26,56 @@ namespace MangaSurvWebApi.Controllers
         {
             if(Request.QueryString.HasValue)
             {
-                var results = this._context.Chapters.ToList();
+                List<Chapter> results = new List<Chapter>();
+
+                Helper.QueryString queryString = new Helper.QueryString(Request);
+                DateTime dt = new DateTime();
+                if (queryString.ContainsKey("FROM") && DateTime.TryParse(queryString.GetValue("FROM"), out dt))
+                {
+                    results = (from chapter in _context.Chapters
+                                where chapter.EnterDate >= dt
+                                orderby chapter.EnterDate
+                                select chapter).ToList();
+                    
+                    HashSet<long> hsMangaIds = new HashSet<long>();
+                    results.ForEach(c => hsMangaIds.Add(c.MangaId));
+
+                    var mangas = (from manga in _context.Mangas
+                                 where hsMangaIds.Contains(manga.Id)
+                                 select manga).ToList();
+
+                    Dictionary<Tuple<int, long>, Manga> dicMangas = new Dictionary<Tuple<int, long>, Manga>();
+                    foreach(Chapter c in results)
+                    {
+                        Tuple<int, long> t = new Tuple<int, long>(c.EnterDate.DayOfYear, c.MangaId);
+                        if (dicMangas.ContainsKey(t))
+                        {
+                            dicMangas[t].Chapters.Add(c);
+                        }
+                        else
+                        {
+                            //var ma = _context.Mangas.FirstOrDefault(m => m.Id == c.MangaId);
+                            var ma = mangas.First(m => m.Id == c.MangaId).Copy();
+                            ma.Chapters.Clear();
+                            ma.Chapters.Add(c);
+                            dicMangas.Add(t, ma);
+                        }
+                    }
+
+                    List<Manga> lMangas = new List<Manga>();
+                    foreach(var kv in dicMangas)
+                    {
+                        lMangas.Add(kv.Value);
+                    }
+
+                    return this.Ok(lMangas);
+
+                }
+                else
+                {
+                    results = this._context.Chapters.ToList();
+                }
+
                 foreach (KeyValuePair<string, Microsoft.Extensions.Primitives.StringValues> pair in Request.Query)
                 {
                     switch (pair.Key.ToUpper())
@@ -35,6 +86,11 @@ namespace MangaSurvWebApi.Controllers
                         default:
                             break;
                     }
+                }
+
+                if (queryString.ContainsKey("SORTBY") && queryString.GetValue("SORTBY").ToUpper().Equals("MANGA"))
+                {
+                    return this.Ok(results.SortByManga());
                 }
 
                 return this.Ok(results);

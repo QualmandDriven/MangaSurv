@@ -7,6 +7,9 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.Threading.Tasks;
 using MangaSurvWebApi.Service;
+using System.IO;
+using System.Xml.Serialization;
+using Newtonsoft.Json;
 
 namespace MangaSurvWebApi.Model
 {
@@ -43,6 +46,8 @@ namespace MangaSurvWebApi.Model
                 context.SaveChanges();
             }
         }
+
+
     }
 
     public class Chapter : IComparable
@@ -412,6 +417,102 @@ namespace MangaSurvWebApi.Model
 
             //return (obj as Episode).CompareTo(this.EpisodeNo);
             return this.EpisodeNo.CompareTo((obj as Episode).EpisodeNo);
+        }
+    }
+
+    public static class MangaDbExtensions
+    {
+        /// <summary>
+        /// Sort chapters by Mangas.
+        /// </summary>
+        /// <param name="lChapters"></param>
+        /// <returns></returns>
+        public static IEnumerable<Manga> SortByManga(this List<Chapter> lChapters)
+        {
+            List<Manga> lMangas = new List<Manga>();
+            List<long> lMangaIds = new List<long>();
+
+            foreach (Chapter chapter in lChapters)
+            {
+                if (lMangaIds.Contains(chapter.MangaId))
+                {
+                    Manga manga = lMangas.Find(m => m.Id == chapter.MangaId);
+                    if (!manga.Chapters.Contains(chapter))
+                        manga.Chapters.Add(chapter);
+
+                    //manga.Chapters.Sort();
+                }
+                else
+                {
+                    using (MangaSurvContext context = ApplicationDependencies.GetMangaSurvContext())
+                    {
+                        Manga manga = context.Mangas.FirstOrDefault(m => m.Id == chapter.MangaId);
+                        if (manga != null)
+                        {
+                            manga.Chapters.Add(chapter);
+                            lMangas.Add(manga);
+                            lMangaIds.Add(manga.Id);
+                        }
+                    }
+                }
+            }
+
+            //return lMangas.OrderBy(m => m.Name);
+            return lMangas;
+        }
+
+        /// <summary>
+        /// Sort episodes by anime.
+        /// </summary>
+        /// <param name="lEpisodes"></param>
+        /// <returns></returns>
+        public static IEnumerable<Anime> SortByAnime(this List<Episode> lEpisodes)
+        {
+            List<Anime> lAnimes = new List<Anime>();
+            List<long> lAnimeIds = new List<long>();
+
+            foreach (Episode episode in lEpisodes)
+            {
+                if (lAnimeIds.Contains(episode.AnimeId))
+                {
+                    Anime anime = lAnimes.Find(a => a.Id == episode.AnimeId);
+                    if (!anime.Episodes.Contains(episode))
+                        anime.Episodes.Add(episode);
+
+                    //anime.Episodes.Sort();
+                }
+                else
+                {
+                    using (MangaSurvContext context = ApplicationDependencies.GetMangaSurvContext())
+                    {
+                        Anime anime = context.Animes.FirstOrDefault(m => m.Id == episode.AnimeId);
+                        if (anime != null)
+                        {
+                            anime.Episodes.Add(episode);
+                            lAnimes.Add(anime);
+                            lAnimeIds.Add(anime.Id);
+                        }
+                    }
+                }
+            }
+
+            //return lAnimes.OrderBy(anime => anime.Name);
+            return lAnimes;
+        }
+
+        public static T Copy<T>(this T m)
+        {
+            string tmpStr = JsonConvert.SerializeObject(m);
+            T ret = JsonConvert.DeserializeObject<T>(tmpStr);
+            return ret;
+        }
+
+        public static List<T> CopyAll<T>(this List<T> list)
+        {
+            List<T> ret = new List<T>();
+            string tmpStr = JsonConvert.SerializeObject(list);
+            ret = JsonConvert.DeserializeObject<List<T>>(tmpStr);
+            return ret;
         }
     }
 

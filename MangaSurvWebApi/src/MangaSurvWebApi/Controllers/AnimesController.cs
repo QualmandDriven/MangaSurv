@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using MangaSurvWebApi.Model;
 using Microsoft.AspNetCore.Authorization;
 using MangaSurvWebApi.Service;
+using Microsoft.EntityFrameworkCore;
 
 namespace MangaSurvWebApi.Controllers
 {
@@ -27,7 +28,7 @@ namespace MangaSurvWebApi.Controllers
             {
                 if (queryString.ContainsKey("include") && queryString.GetValue("include") == "1")
                 {
-                    var results = _context.Animes.Select(a => new { a.Id, a.Name, a.FileSystemName, a.Episodes }).OrderBy(anime => anime.Name);
+                    var results = _context.Animes.Select(a => new { a.Id, a.Name, a.FileSystemName, a.Episodes }).Include(a => a.Episodes).OrderBy(anime => anime.Name);
                     return this.Ok(results);
                 }
                 else if (queryString.ContainsKey("name"))
