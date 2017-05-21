@@ -135,7 +135,7 @@ namespace mangasurvfetcher
 
         public static void AddAnimesAndMangasToUser(string sBearerToken)
         {
-            mangasurvlib.Rest.RestController restCtr = mangasurvlib.Rest.RestController.GetRestController("http://localhost:5000/api", new List<KeyValuePair<System.Net.HttpRequestHeader, string>>() { new KeyValuePair<System.Net.HttpRequestHeader, string>(System.Net.HttpRequestHeader.Authorization, "Bearer " + sBearerToken) });
+            mangasurvlib.Rest.RestController restCtr = mangasurvlib.Rest.RestController.GetRestController("http://h2688485.stratoserver.net:5000/api", new List<KeyValuePair<System.Net.HttpRequestHeader, string>>() { new KeyValuePair<System.Net.HttpRequestHeader, string>(System.Net.HttpRequestHeader.Authorization, "Bearer " + sBearerToken) });
             Tuple<HttpStatusCode, string> result = restCtr.Get("mangas");
             var res = (List<System.Dynamic.ExpandoObject>)mangasurvlib.Helper.JsonHelper.DeserializeString(result.Item2, typeof(List<System.Dynamic.ExpandoObject>));
             foreach (System.Dynamic.ExpandoObject objitem in res)

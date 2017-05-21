@@ -15,6 +15,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using MangaSurvWebApi.Service;
 using Microsoft.IdentityModel.Tokens;
+using NLog.Extensions.Logging;
+using NLog.Web;
 
 namespace MangaSurvWebApi
 {
@@ -26,6 +28,8 @@ namespace MangaSurvWebApi
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
+
+            env.ConfigureNLog("nlog.config");
 
             if (env.IsEnvironment("Development"))
             {
@@ -70,6 +74,8 @@ namespace MangaSurvWebApi
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
+            loggerFactory.AddNLog();
+            app.AddNLogWeb();
 
             var options = new JwtBearerOptions
             {
