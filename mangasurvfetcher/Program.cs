@@ -44,7 +44,7 @@ namespace mangasurvfetcher
             string sToken = auth0Con.GetIdToken();
 
             //MySqlTakeOver.TakeOver(sToken);
-            //MySqlTakeOver.AddAnimesAndMangasToUser(sToken);
+            MySqlTakeOver.AddAnimesAndMangasToUser(sToken);
 
             mangasurvlib.Manga.IMangaManager mangaManager = mangasurvlib.Manga.MangaFactory.CreateMangaManager(sToken);
             mangaManager.LoadMangas();

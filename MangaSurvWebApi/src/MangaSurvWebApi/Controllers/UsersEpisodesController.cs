@@ -88,7 +88,7 @@ namespace MangaSurvWebApi.Controllers
                 if (episode == null)
                     return this.NotFound();
 
-                var entry = UserNewEpisodes.AddEpisodeToUser(episode, user.Id).Result;
+                var entry = UserNewEpisodes.AddEpisodeToUser(episode, user.Id);
 
                 return this.CreatedAtRoute("UserEpisodeLink", new { userid = entry.UserId, episodeid = entry.EpisodeId }, entry);
             }

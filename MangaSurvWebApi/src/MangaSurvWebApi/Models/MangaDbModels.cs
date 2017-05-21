@@ -193,18 +193,16 @@ namespace MangaSurvWebApi.Model
         /// </summary>
         /// <param name="context"></param>
         /// <param name="manga"></param>
-        public async static Task<UserFollowMangas> AddMangaToUser(Manga manga, User user)
+        public static UserFollowMangas AddMangaToUser(Manga manga, User user)
         {
             using (MangaSurvContext context = ApplicationDependencies.GetMangaSurvContext())
             {
                 UserFollowMangas ufm = new UserFollowMangas();
-                ufm.Manga = manga;
                 ufm.MangaId = manga.Id;
-                ufm.User = user;
                 ufm.UserId = user.Id;
 
-                await context.UserFollowMangas.AddAsync(ufm);
-                await context.SaveChangesAsync();
+                context.UserFollowMangas.Add(ufm);
+                context.SaveChanges();
 
                 return ufm;
             }
@@ -221,7 +219,7 @@ namespace MangaSurvWebApi.Model
         public long EpisodeId { get; set; }
         public Episode Episode { get; set; }
 
-        public static async void AddEpisodeToUsers(Episode episode)
+        public static void AddEpisodeToUsers(Episode episode)
         {
             using (MangaSurvContext context = ApplicationDependencies.GetMangaSurvContext())
             {
@@ -232,14 +230,14 @@ namespace MangaSurvWebApi.Model
 
                 foreach (int userId in users)
                 {
-                    await AddEpisodeToUser(episode, userId);
+                    AddEpisodeToUser(episode, userId);
                 }
                 
-                await context.SaveChangesAsync();
+                context.SaveChanges();
             }
         }
 
-        public static async Task<UserNewEpisodes> AddEpisodeToUser(Episode episode, long userId)
+        public static UserNewEpisodes AddEpisodeToUser(Episode episode, long userId)
         {
             using (MangaSurvContext context = ApplicationDependencies.GetMangaSurvContext())
             {
@@ -248,8 +246,8 @@ namespace MangaSurvWebApi.Model
                 une.UserId = userId;
                 context.UserNewEpisodes.Add(une);
 
-                await context.UserNewEpisodes.AddAsync(une);
-                await context.SaveChangesAsync();
+                context.UserNewEpisodes.Add(une);
+                context.SaveChanges();
 
                 return une;
             }
@@ -271,9 +269,7 @@ namespace MangaSurvWebApi.Model
             using (MangaSurvContext context = ApplicationDependencies.GetMangaSurvContext())
             {
                 UserFollowAnimes ufa = new UserFollowAnimes();
-                ufa.Anime = anime;
                 ufa.AnimeId = anime.Id;
-                ufa.User = user;
                 ufa.UserId = user.Id;
 
                 await context.UserFollowAnimes.AddAsync(ufa);

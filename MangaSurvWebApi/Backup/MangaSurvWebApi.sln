@@ -1,15 +1,18 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26430.6
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{078F8211-0371-49F8-86D6-08E8EFF98474}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3256BB2A-4674-4F12-A72F-F480C16FA18C}"
+	ProjectSection(SolutionItems) = preProject
+		global.json = global.json
+	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MangaSurvWebApi", "src\MangaSurvWebApi\MangaSurvWebApi.csproj", "{CA201577-58CF-41A8-899D-4F4DEBAC25D0}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "MangaSurvWebApi", "src\MangaSurvWebApi\MangaSurvWebApi.xproj", "{CA201577-58CF-41A8-899D-4F4DEBAC25D0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MangaSurvWebApi.Tests", "test\MangaSurvWebApi.Tests\MangaSurvWebApi.Tests.csproj", "{66BF70E7-22B1-4E21-9C97-4AACDB682A7E}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "MangaSurvWebApi.Tests", "test\MangaSurvWebApi.Tests\MangaSurvWebApi.Tests.xproj", "{66BF70E7-22B1-4E21-9C97-4AACDB682A7E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

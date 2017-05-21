@@ -92,7 +92,7 @@ namespace MangaSurvWebApi.Controllers
                 if (manga == null)
                     return this.NotFound();
 
-                var entry = UserFollowMangas.AddMangaToUser(manga, user).Result;
+                var entry = UserFollowMangas.AddMangaToUser(manga, user);
 
                 return this.CreatedAtRoute("UserMangaLink", new { userid = entry.UserId, mangaid = entry.MangaId }, entry);
             }
