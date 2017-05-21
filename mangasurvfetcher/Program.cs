@@ -4,6 +4,7 @@ using System;
 using mangasurvlib.Rest;
 using mangasurvfetcher.Helper;
 using System.Collections.Generic;
+using Microsoft.Extensions.Configuration;
 
 namespace mangasurvfetcher
 {
@@ -13,6 +14,15 @@ namespace mangasurvfetcher
 
         public static void Main(string[] args)
         {
+            //var builder = new ConfigurationBuilder()
+            //                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+
+            //var configuration = builder.Build();
+            
+
+            //builder.AddEnvironmentVariables();
+            //Configuration = builder.Build();
+
             mangasurvlib.Logging.ApplicationLogging.ConfigureLogger();
             logger.StartLogging(System.Reflection.Assembly.GetEntryAssembly());
             

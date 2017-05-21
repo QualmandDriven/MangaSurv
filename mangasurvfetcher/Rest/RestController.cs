@@ -23,7 +23,7 @@ namespace mangasurvlib.Rest
 #if DEBUG
         public const string API_URL = "http://localhost:5000/api";
 #else
-        public const string API_URL = "http://192.168.178.70:5000/api";
+        public const string API_URL = "http:/localhost:5000/api";
 #endif
 
         private readonly Uri Url;
