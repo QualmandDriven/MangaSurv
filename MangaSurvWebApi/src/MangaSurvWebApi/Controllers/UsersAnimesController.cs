@@ -34,7 +34,24 @@ namespace MangaSurvWebApi.Controllers
                                       orderby anime.Anime.Name
                                       select anime.Anime).ToList();
 
-            return this.Ok(animeslist);
+            List<dynamic> lAnimes = new List<dynamic>();
+            foreach (Anime anime in animeslist)
+            {
+                dynamic m = new
+                {
+                    anime.Episodes,
+                    anime.EnterDate,
+                    anime.FileSystemName,
+                    anime.Id,
+                    anime.LastUpdate,
+                    anime.Name,
+                    followed = true
+                };
+
+                lAnimes.Add(m);
+            }
+
+            return this.Ok(lAnimes);
         }
 
         // GET api/animes/5

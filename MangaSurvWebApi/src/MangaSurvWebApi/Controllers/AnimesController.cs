@@ -45,6 +45,20 @@ namespace MangaSurvWebApi.Controllers
         [Produces(typeof(Manga))]
         public IActionResult GetAnime(int id)
         {
+            Helper.QueryString queryString = new Helper.QueryString(Request);
+            if (queryString.ContainsKeys())
+            {
+                if (queryString.ContainsKey("INCLUDE"))
+                {
+                    var result = this._context.Animes.Where(a => a.Id == id).Include(a => a.Episodes).FirstOrDefault();
+                    if (result == null)
+                        return this.NotFound();
+
+                    result.Episodes = result.Episodes.OrderByDescending(e => e.EpisodeNo).ToList();
+                    return this.Ok(result);
+                }
+            }
+
             var anime = this._context.Animes.FirstOrDefault(a => a.Id == id);
             if (anime == null)
                 return this.NotFound();

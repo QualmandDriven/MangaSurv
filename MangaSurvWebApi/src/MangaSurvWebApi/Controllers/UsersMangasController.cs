@@ -112,20 +112,22 @@ namespace MangaSurvWebApi.Controllers
         // DELETE api/mangas/5
         [Authorize]
         [HttpDelete("{userid}/mangas/{mangaid}")]
-        public void Delete(int userid, int mangaid)
+        public IActionResult Delete(int userid, int mangaid)
         {
             UserTokenDetails userDetails = new UserTokenDetails(User);
             User user = Model.User.GetUser(userid, userDetails);
 
             if (user == null)
-                return;
+                return this.NotFound();
 
             var usermanga = this._context.UserFollowMangas.FirstOrDefault(u => u.UserId == user.Id && u.MangaId == mangaid);
             if (usermanga == null)
-                return;
+                return this.NotFound();
 
             this._context.UserFollowMangas.Remove(usermanga);
             this._context.SaveChanges();
+
+            return this.Ok();
         }
 
         [HttpOptions("{userid}/mangas")]

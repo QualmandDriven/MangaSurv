@@ -54,7 +54,7 @@ namespace MangaSurvWebApi.Controllers
                 }
                 else if (queryString.ContainsKey("INCLUDE"))
                 {
-                    return this.Ok(this._context.Mangas.Include(m => m.Chapters).OrderBy(manga => manga.Name));
+                    return this.Ok(this._context.Mangas.Include(m => m.Chapters.OrderBy(c => c.ChapterNo)).OrderBy(manga => manga.Name));
                 }
                 else if(queryString.ContainsKey("NAME"))
                 {
@@ -71,18 +71,23 @@ namespace MangaSurvWebApi.Controllers
         [Produces(typeof(Manga))]
         public IActionResult Get(int id)
         {
-            Manga manga = this._context.Mangas.FirstOrDefault(m => m.Id == id);
-            if (manga == null)
-                return this.NotFound();
-
             Helper.QueryString queryString = new Helper.QueryString(Request);
             if(queryString.ContainsKeys())
             {
                 if (queryString.ContainsKey("INCLUDE"))
                 {
-                    return this.Ok(this._context.Mangas.Where(m=> m.Id == id).Include(m => m.Chapters).FirstOrDefault());
+                    var result = this._context.Mangas.Where(m => m.Id == id).Include(m => m.Chapters).FirstOrDefault();
+                    if (result == null)
+                        return this.NotFound();
+
+                    result.Chapters = result.Chapters.OrderByDescending(c => c.ChapterNo).ToList();
+                    return this.Ok(result);
                 }
             }
+
+            Manga manga = this._context.Mangas.FirstOrDefault(m => m.Id == id);
+            if (manga == null)
+                return this.NotFound();
 
             return this.Ok(manga);
         }
