@@ -29,7 +29,7 @@ namespace mangasurvlib.Anime
             throw new NotImplementedException();
         }
 
-        public List<KeyValuePair<int, Uri>> GetFiles(Uri EpisodeUrl)
+        public List<KeyValuePair<int, Uri>> GetFiles(string anime, double episodeNo, Uri EpisodeUrl)
         {
             List<KeyValuePair<int, Uri>> iuFiles = new List<KeyValuePair<int, Uri>>();
 

@@ -83,9 +83,9 @@ namespace mangasurvlib.Anime
             return new AnimeEpisode(AnimeName, Episode);
         }
 
-        internal static IAnimeLoader CreateLoaderAnimeFansFtw()
+        internal static IAnimeLoader CreateLoaderHorribleSubs()
         {
-            return new AnimeAnimefansFtw();
+            return new HorribleSubs();
         }
     }
 }

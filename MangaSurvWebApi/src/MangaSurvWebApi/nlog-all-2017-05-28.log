@@ -1,0 +1,483 @@
+2017-05-28 15:52:38.1376|3|Microsoft.AspNetCore.Hosting.Internal.WebHost|DEBUG|Hosting starting 
+2017-05-28 15:52:38.2963|4|Microsoft.AspNetCore.Hosting.Internal.WebHost|DEBUG|Hosting started 
+2017-05-28 15:53:10.0939|1|Microsoft.AspNetCore.Server.Kestrel|DEBUG|Connection id "0HL55Q3G4LVNU" started. 
+2017-05-28 15:53:10.0939|1|Microsoft.AspNetCore.Server.Kestrel|DEBUG|Connection id "0HL55Q3G4LVNT" started. 
+2017-05-28 15:53:10.2455|1|Microsoft.AspNetCore.Hosting.Internal.WebHost|INFO|Request starting HTTP/1.1 OPTIONS http://localhost:5000/api/episodes?from=2017-04-18   
+2017-05-28 15:53:10.2455|1|Microsoft.AspNetCore.Hosting.Internal.WebHost|INFO|Request starting HTTP/1.1 OPTIONS http://localhost:5000/api/chapters?from=2017-04-18   
+2017-05-28 15:53:10.5233|9|Microsoft.AspNetCore.Server.Kestrel|DEBUG|Connection id "0HL55Q3G4LVNU" completed keep alive response. 
+2017-05-28 15:53:10.5233|9|Microsoft.AspNetCore.Server.Kestrel|DEBUG|Connection id "0HL55Q3G4LVNT" completed keep alive response. 
+2017-05-28 15:53:10.5540|2|Microsoft.AspNetCore.Hosting.Internal.WebHost|INFO|Request finished in 335.5685ms 204  
+2017-05-28 15:53:10.5540|2|Microsoft.AspNetCore.Hosting.Internal.WebHost|INFO|Request finished in 335.5589ms 204  
+2017-05-28 15:53:10.5822|1|Microsoft.AspNetCore.Hosting.Internal.WebHost|INFO|Request starting HTTP/1.1 GET http://localhost:5000/api/chapters?from=2017-04-18 application/json  
+2017-05-28 15:53:10.5822|1|Microsoft.AspNetCore.Hosting.Internal.WebHost|INFO|Request starting HTTP/1.1 GET http://localhost:5000/api/episodes?from=2017-04-18 application/json  
+2017-05-28 15:53:11.7890|1|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerMiddleware|INFO|Failed to validate the token eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IlJrVkVPREpGTmpKR05rRkZNVFkzTlRFelJVVTJPREF6TlRsRE5EbEZOakU0T0RWRU1rSTFOZyJ9.eyJuYW1lIjoicmFrc2FoYUBvdXRsb29rLmNvbSIsImVtYWlsIjoicmFrc2FoYUBvdXRsb29rLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJyb2xlcyI6WyJhZG1pbiIsInVzZXIiXSwiaXNzIjoiaHR0cHM6Ly9xdWFsbWFuZGRyaXZlbi5ldS5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NTgxNzU4OWQzNDQwNzNhMzAxMmEyZTA4IiwiYXVkIjoiWUFtRHc1QVVoZmZaQUpvWUQxa2RGV1RwMHZBOGNvWHYiLCJleHAiOjE0OTUzOTg0NzgsImlhdCI6MTQ5NTM2MjQ3OH0.zxJeNX9d_S8gDyS6cbudxrZPv2LGW_Hb4ScU9CUASSULdu1G_lWI1csZaxlR7issymqAFUemYRzaQMx_qq4gvbBcv_iqWyJjRXQuqf1wAmzJ8zP-nDLNcKMfl5O0cLFwfyKZdW-QtoQGeGTRAjoKkFhgd7Kzp18SASEsku35ss-F3RKB6JxsgZ8DJy5IA8jV5pW7oOadIJSEropkOQzZ5Z0-Zr1KyEuS_KbFYhR_K52egkk1BIaw6HBDEBW4g59Bn58P2K7As4qk406FvrLADsE6BJ9X7s21gaYizuM6ojB6wmij1D6cAiKzkelnWF5fhdiBDEAVmBTfucxdRsgqHg. IDX10223: Lifetime validation failed. The token is expired.
+ValidTo: '05/21/2017 20:27:58'
+Current time: '05/28/2017 13:53:11'.
+2017-05-28 15:53:11.7915|1|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerMiddleware|INFO|Failed to validate the token eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IlJrVkVPREpGTmpKR05rRkZNVFkzTlRFelJVVTJPREF6TlRsRE5EbEZOakU0T0RWRU1rSTFOZyJ9.eyJuYW1lIjoicmFrc2FoYUBvdXRsb29rLmNvbSIsImVtYWlsIjoicmFrc2FoYUBvdXRsb29rLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJyb2xlcyI6WyJhZG1pbiIsInVzZXIiXSwiaXNzIjoiaHR0cHM6Ly9xdWFsbWFuZGRyaXZlbi5ldS5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NTgxNzU4OWQzNDQwNzNhMzAxMmEyZTA4IiwiYXVkIjoiWUFtRHc1QVVoZmZaQUpvWUQxa2RGV1RwMHZBOGNvWHYiLCJleHAiOjE0OTUzOTg0NzgsImlhdCI6MTQ5NTM2MjQ3OH0.zxJeNX9d_S8gDyS6cbudxrZPv2LGW_Hb4ScU9CUASSULdu1G_lWI1csZaxlR7issymqAFUemYRzaQMx_qq4gvbBcv_iqWyJjRXQuqf1wAmzJ8zP-nDLNcKMfl5O0cLFwfyKZdW-QtoQGeGTRAjoKkFhgd7Kzp18SASEsku35ss-F3RKB6JxsgZ8DJy5IA8jV5pW7oOadIJSEropkOQzZ5Z0-Zr1KyEuS_KbFYhR_K52egkk1BIaw6HBDEBW4g59Bn58P2K7As4qk406FvrLADsE6BJ9X7s21gaYizuM6ojB6wmij1D6cAiKzkelnWF5fhdiBDEAVmBTfucxdRsgqHg. IDX10223: Lifetime validation failed. The token is expired.
+ValidTo: '05/21/2017 20:27:58'
+Current time: '05/28/2017 13:53:11'.
+2017-05-28 15:53:11.8231|7|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerMiddleware|INFO|Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired.
+ValidTo: '05/21/2017 20:27:58'
+Current time: '05/28/2017 13:53:11'. 
+2017-05-28 15:53:11.8231|7|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerMiddleware|INFO|Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired.
+ValidTo: '05/21/2017 20:27:58'
+Current time: '05/28/2017 13:53:11'. 
+2017-05-28 15:53:12.2676|1|Microsoft.AspNetCore.Routing.Tree.TreeRouter|DEBUG|Request successfully matched the route with name '(null)' and template 'api/Episodes'. 
+2017-05-28 15:53:12.2676|1|Microsoft.AspNetCore.Routing.Tree.TreeRouter|DEBUG|Request successfully matched the route with name '(null)' and template 'api/Chapters'. 
+2017-05-28 15:53:12.2861|2|Microsoft.AspNetCore.Mvc.Internal.ActionSelector|DEBUG|Action 'MangaSurvWebApi.Controllers.EpisodesController.Post (MangaSurvWebApi)' with id 'a397e468-1319-4191-86d4-1bb9e35c9db1' did not match the constraint 'Microsoft.AspNetCore.Mvc.Internal.HttpMethodActionConstraint' 
+2017-05-28 15:53:12.2861|2|Microsoft.AspNetCore.Mvc.Internal.ActionSelector|DEBUG|Action 'MangaSurvWebApi.Controllers.ChaptersController.Post (MangaSurvWebApi)' with id '5fd99703-0cca-4714-aa53-f921b812b2fc' did not match the constraint 'Microsoft.AspNetCore.Mvc.Internal.HttpMethodActionConstraint' 
+2017-05-28 15:53:12.3176|1|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|DEBUG|Executing action MangaSurvWebApi.Controllers.EpisodesController.Get (MangaSurvWebApi) 
+2017-05-28 15:53:12.3176|1|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|DEBUG|Executing action MangaSurvWebApi.Controllers.ChaptersController.Get (MangaSurvWebApi) 
+2017-05-28 15:53:12.4517|1|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|INFO|Executing action method MangaSurvWebApi.Controllers.EpisodesController.Get (MangaSurvWebApi) with arguments ((null)) - ModelState is Valid 
+2017-05-28 15:53:12.4517|1|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|INFO|Executing action method MangaSurvWebApi.Controllers.ChaptersController.Get (MangaSurvWebApi) with arguments ((null)) - ModelState is Valid 
+2017-05-28 15:53:13.1732|2|Microsoft.EntityFrameworkCore.Query.Internal.NpgsqlQueryCompilationContextFactory|DEBUG|Compiling query model: 
+'from Episode chapter in DbSet<Episode>
+where chapter.EnterDate >= __dt_0
+order by chapter.EnterDate asc
+select chapter' 
+2017-05-28 15:53:13.1732|2|Microsoft.EntityFrameworkCore.Query.Internal.NpgsqlQueryCompilationContextFactory|DEBUG|Compiling query model: 
+'from Chapter chapter in DbSet<Chapter>
+where chapter.EnterDate >= __dt_0
+order by chapter.EnterDate asc
+select chapter' 
+2017-05-28 15:53:13.1932|3|Microsoft.EntityFrameworkCore.Query.Internal.NpgsqlQueryCompilationContextFactory|DEBUG|Optimized query model: 
+'from Chapter chapter in DbSet<Chapter>
+where chapter.EnterDate >= __dt_0
+order by chapter.EnterDate asc
+select chapter' 
+2017-05-28 15:53:13.1932|3|Microsoft.EntityFrameworkCore.Query.Internal.NpgsqlQueryCompilationContextFactory|DEBUG|Optimized query model: 
+'from Episode chapter in DbSet<Episode>
+where chapter.EnterDate >= __dt_0
+order by chapter.EnterDate asc
+select chapter' 
+2017-05-28 15:53:13.3163|5|Microsoft.EntityFrameworkCore.Query.Internal.NpgsqlQueryCompilationContextFactory|DEBUG|TRACKED: True
+(QueryContext queryContext) => IEnumerable<Chapter> _ShapedQuery(
+    queryContext: queryContext, 
+    shaperCommandContext: SelectExpression: 
+        SELECT "chapter"."Id", "chapter"."Address", "chapter"."ChapterNo", "chapter"."EnterDate", "chapter"."MangaId", "chapter"."PageId", "chapter"."StateId"
+        FROM "Chapters" AS "chapter"
+        WHERE "chapter"."EnterDate" >= @__dt_0
+        ORDER BY "chapter"."EnterDate"
+    , 
+    shaper: UnbufferedEntityShaper<Chapter>
+)
+ 
+2017-05-28 15:53:13.3163|5|Microsoft.EntityFrameworkCore.Query.Internal.NpgsqlQueryCompilationContextFactory|DEBUG|TRACKED: True
+(QueryContext queryContext) => IEnumerable<Episode> _ShapedQuery(
+    queryContext: queryContext, 
+    shaperCommandContext: SelectExpression: 
+        SELECT "chapter"."Id", "chapter"."Address", "chapter"."AnimeId", "chapter"."EnterDate", "chapter"."EpisodeNo", "chapter"."StateId"
+        FROM "Episodes" AS "chapter"
+        WHERE "chapter"."EnterDate" >= @__dt_0
+        ORDER BY "chapter"."EnterDate"
+    , 
+    shaper: UnbufferedEntityShaper<Episode>
+)
+ 
+2017-05-28 15:53:13.3825|3|Npgsql.NpgsqlConnection|DEBUG|Opening connection to database 'MangaSurv' on server 'tcp://192.168.178.70:5432'. 
+2017-05-28 15:53:13.3825|3|Npgsql.NpgsqlConnection|DEBUG|Opening connection to database 'MangaSurv' on server 'tcp://192.168.178.70:5432'. 
+2017-05-28 15:53:13.5781|1|Microsoft.EntityFrameworkCore.Storage.IRelationalCommandBuilderFactory|INFO|Executed DbCommand (24ms) [Parameters=[@__dt_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT "chapter"."Id", "chapter"."Address", "chapter"."ChapterNo", "chapter"."EnterDate", "chapter"."MangaId", "chapter"."PageId", "chapter"."StateId"
+FROM "Chapters" AS "chapter"
+WHERE "chapter"."EnterDate" >= @__dt_0
+ORDER BY "chapter"."EnterDate" 
+2017-05-28 15:53:13.5921|4|Npgsql.NpgsqlConnection|DEBUG|Closing connection to database 'MangaSurv' on server 'tcp://192.168.178.70:5432'. 
+2017-05-28 15:53:13.6136|2|Microsoft.EntityFrameworkCore.Query.Internal.NpgsqlQueryCompilationContextFactory|DEBUG|Compiling query model: 
+'from Manga manga in DbSet<Manga>
+where 
+    (from long <generated>_1 in __hsMangaIds_0
+    select <generated>_1)
+    .Contains([manga].Id)
+select manga' 
+2017-05-28 15:53:13.6136|3|Microsoft.EntityFrameworkCore.Query.Internal.NpgsqlQueryCompilationContextFactory|DEBUG|Optimized query model: 
+'from Manga manga in DbSet<Manga>
+where 
+    (from long <generated>_1 in __hsMangaIds_0
+    select <generated>_1)
+    .Contains([manga].Id)
+select manga' 
+2017-05-28 15:53:13.6287|5|Microsoft.EntityFrameworkCore.Query.Internal.NpgsqlQueryCompilationContextFactory|DEBUG|TRACKED: True
+(QueryContext queryContext) => IEnumerable<Manga> _ShapedQuery(
+    queryContext: queryContext, 
+    shaperCommandContext: SelectExpression: 
+        SELECT "manga"."Id", "manga"."EnterDate", "manga"."FileSystemName", "manga"."LastUpdate", "manga"."Name"
+        FROM "Mangas" AS "manga"
+        WHERE 0 = 1
+    , 
+    shaper: UnbufferedEntityShaper<Manga>
+)
+ 
+2017-05-28 15:53:13.6287|3|Npgsql.NpgsqlConnection|DEBUG|Opening connection to database 'MangaSurv' on server 'tcp://192.168.178.70:5432'. 
+2017-05-28 15:53:13.6367|1|Microsoft.EntityFrameworkCore.Storage.IRelationalCommandBuilderFactory|INFO|Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT "manga"."Id", "manga"."EnterDate", "manga"."FileSystemName", "manga"."LastUpdate", "manga"."Name"
+FROM "Mangas" AS "manga"
+WHERE 0 = 1 
+2017-05-28 15:53:13.6367|4|Npgsql.NpgsqlConnection|DEBUG|Closing connection to database 'MangaSurv' on server 'tcp://192.168.178.70:5432'. 
+2017-05-28 15:53:13.6367|2|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|DEBUG|Executed action method MangaSurvWebApi.Controllers.ChaptersController.Get (MangaSurvWebApi), returned result Microsoft.AspNetCore.Mvc.OkObjectResult. 
+2017-05-28 15:53:13.6627|2|Microsoft.AspNetCore.Mvc.Internal.ObjectResultExecutor|DEBUG|Selected output formatter 'Microsoft.AspNetCore.Mvc.Formatters.JsonOutputFormatter' and content type 'application/json' to write the response. 
+2017-05-28 15:53:13.6667|1|Microsoft.AspNetCore.Mvc.Internal.ObjectResultExecutor|INFO|Executing ObjectResult, writing value Microsoft.AspNetCore.Mvc.ControllerContext. 
+2017-05-28 15:53:13.7187|2|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|INFO|Executed action MangaSurvWebApi.Controllers.ChaptersController.Get (MangaSurvWebApi) in 1395.4393ms 
+2017-05-28 15:53:13.7187|9|Microsoft.AspNetCore.Server.Kestrel|DEBUG|Connection id "0HL55Q3G4LVNU" completed keep alive response. 
+2017-05-28 15:53:13.7187|2|Microsoft.AspNetCore.Hosting.Internal.WebHost|INFO|Request finished in 3165.1766ms 200 application/json; charset=utf-8 
+2017-05-28 15:53:16.4423|1|Microsoft.EntityFrameworkCore.Storage.IRelationalCommandBuilderFactory|INFO|Executed DbCommand (3ms) [Parameters=[@__dt_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT "chapter"."Id", "chapter"."Address", "chapter"."AnimeId", "chapter"."EnterDate", "chapter"."EpisodeNo", "chapter"."StateId"
+FROM "Episodes" AS "chapter"
+WHERE "chapter"."EnterDate" >= @__dt_0
+ORDER BY "chapter"."EnterDate" 
+2017-05-28 15:53:16.4423|4|Npgsql.NpgsqlConnection|DEBUG|Closing connection to database 'MangaSurv' on server 'tcp://192.168.178.70:5432'. 
+2017-05-28 15:53:16.4553|2|Microsoft.EntityFrameworkCore.Query.Internal.NpgsqlQueryCompilationContextFactory|DEBUG|Compiling query model: 
+'from Anime anime in DbSet<Anime>
+where 
+    (from long <generated>_1 in __hsAnimeIds_0
+    select <generated>_1)
+    .Contains([anime].Id)
+select anime' 
+2017-05-28 15:53:16.4553|3|Microsoft.EntityFrameworkCore.Query.Internal.NpgsqlQueryCompilationContextFactory|DEBUG|Optimized query model: 
+'from Anime anime in DbSet<Anime>
+where 
+    (from long <generated>_1 in __hsAnimeIds_0
+    select <generated>_1)
+    .Contains([anime].Id)
+select anime' 
+2017-05-28 15:53:16.4553|5|Microsoft.EntityFrameworkCore.Query.Internal.NpgsqlQueryCompilationContextFactory|DEBUG|TRACKED: True
+(QueryContext queryContext) => IEnumerable<Anime> _ShapedQuery(
+    queryContext: queryContext, 
+    shaperCommandContext: SelectExpression: 
+        SELECT "anime"."Id", "anime"."EnterDate", "anime"."FileSystemName", "anime"."LastUpdate", "anime"."Name"
+        FROM "Animes" AS "anime"
+        WHERE 0 = 1
+    , 
+    shaper: UnbufferedEntityShaper<Anime>
+)
+ 
+2017-05-28 15:53:16.4553|3|Npgsql.NpgsqlConnection|DEBUG|Opening connection to database 'MangaSurv' on server 'tcp://192.168.178.70:5432'. 
+2017-05-28 15:53:16.4653|1|Microsoft.EntityFrameworkCore.Storage.IRelationalCommandBuilderFactory|INFO|Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT "anime"."Id", "anime"."EnterDate", "anime"."FileSystemName", "anime"."LastUpdate", "anime"."Name"
+FROM "Animes" AS "anime"
+WHERE 0 = 1 
+2017-05-28 15:53:16.4653|4|Npgsql.NpgsqlConnection|DEBUG|Closing connection to database 'MangaSurv' on server 'tcp://192.168.178.70:5432'. 
+2017-05-28 15:53:16.4653|2|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|DEBUG|Executed action method MangaSurvWebApi.Controllers.EpisodesController.Get (MangaSurvWebApi), returned result Microsoft.AspNetCore.Mvc.OkObjectResult. 
+2017-05-28 15:53:16.4653|2|Microsoft.AspNetCore.Mvc.Internal.ObjectResultExecutor|DEBUG|Selected output formatter 'Microsoft.AspNetCore.Mvc.Formatters.JsonOutputFormatter' and content type 'application/json' to write the response. 
+2017-05-28 15:53:16.4653|1|Microsoft.AspNetCore.Mvc.Internal.ObjectResultExecutor|INFO|Executing ObjectResult, writing value Microsoft.AspNetCore.Mvc.ControllerContext. 
+2017-05-28 15:53:16.4653|2|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|INFO|Executed action MangaSurvWebApi.Controllers.EpisodesController.Get (MangaSurvWebApi) in 4155.4732ms 
+2017-05-28 15:53:16.4798|9|Microsoft.AspNetCore.Server.Kestrel|DEBUG|Connection id "0HL55Q3G4LVNT" completed keep alive response. 
+2017-05-28 15:53:16.4798|2|Microsoft.AspNetCore.Hosting.Internal.WebHost|INFO|Request finished in 5920.7883ms 200 application/json; charset=utf-8 
+2017-05-28 15:53:22.9992|1|Microsoft.AspNetCore.Hosting.Internal.WebHost|INFO|Request starting HTTP/1.1 OPTIONS http://localhost:5000/api/mangas   
+2017-05-28 15:53:22.9992|9|Microsoft.AspNetCore.Server.Kestrel|DEBUG|Connection id "0HL55Q3G4LVNT" completed keep alive response. 
+2017-05-28 15:53:23.0117|2|Microsoft.AspNetCore.Hosting.Internal.WebHost|INFO|Request finished in 16.0553ms 204  
+2017-05-28 15:53:23.0117|1|Microsoft.AspNetCore.Hosting.Internal.WebHost|INFO|Request starting HTTP/1.1 GET http://localhost:5000/api/mangas application/json  
+2017-05-28 15:53:23.0117|1|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerMiddleware|INFO|Failed to validate the token eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IlJrVkVPREpGTmpKR05rRkZNVFkzTlRFelJVVTJPREF6TlRsRE5EbEZOakU0T0RWRU1rSTFOZyJ9.eyJuYW1lIjoicmFrc2FoYUBvdXRsb29rLmNvbSIsImVtYWlsIjoicmFrc2FoYUBvdXRsb29rLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJyb2xlcyI6WyJhZG1pbiIsInVzZXIiXSwiaXNzIjoiaHR0cHM6Ly9xdWFsbWFuZGRyaXZlbi5ldS5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NTgxNzU4OWQzNDQwNzNhMzAxMmEyZTA4IiwiYXVkIjoiWUFtRHc1QVVoZmZaQUpvWUQxa2RGV1RwMHZBOGNvWHYiLCJleHAiOjE0OTUzOTg0NzgsImlhdCI6MTQ5NTM2MjQ3OH0.zxJeNX9d_S8gDyS6cbudxrZPv2LGW_Hb4ScU9CUASSULdu1G_lWI1csZaxlR7issymqAFUemYRzaQMx_qq4gvbBcv_iqWyJjRXQuqf1wAmzJ8zP-nDLNcKMfl5O0cLFwfyKZdW-QtoQGeGTRAjoKkFhgd7Kzp18SASEsku35ss-F3RKB6JxsgZ8DJy5IA8jV5pW7oOadIJSEropkOQzZ5Z0-Zr1KyEuS_KbFYhR_K52egkk1BIaw6HBDEBW4g59Bn58P2K7As4qk406FvrLADsE6BJ9X7s21gaYizuM6ojB6wmij1D6cAiKzkelnWF5fhdiBDEAVmBTfucxdRsgqHg. IDX10223: Lifetime validation failed. The token is expired.
+ValidTo: '05/21/2017 20:27:58'
+Current time: '05/28/2017 13:53:23'.
+2017-05-28 15:53:23.0282|7|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerMiddleware|INFO|Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired.
+ValidTo: '05/21/2017 20:27:58'
+Current time: '05/28/2017 13:53:23'. 
+2017-05-28 15:53:23.0282|1|Microsoft.AspNetCore.Routing.Tree.TreeRouter|DEBUG|Request successfully matched the route with name '(null)' and template 'api/Mangas'. 
+2017-05-28 15:53:23.0282|2|Microsoft.AspNetCore.Mvc.Internal.ActionSelector|DEBUG|Action 'MangaSurvWebApi.Controllers.MangasController.Post (MangaSurvWebApi)' with id '85c256e9-80a0-4926-a0c3-76765d6bf8bb' did not match the constraint 'Microsoft.AspNetCore.Mvc.Internal.HttpMethodActionConstraint' 
+2017-05-28 15:53:23.0282|1|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|DEBUG|Executing action MangaSurvWebApi.Controllers.MangasController.Get (MangaSurvWebApi) 
+2017-05-28 15:53:23.0282|1|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|INFO|Executing action method MangaSurvWebApi.Controllers.MangasController.Get (MangaSurvWebApi) with arguments ((null)) - ModelState is Valid 
+2017-05-28 15:53:23.0457|2|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|DEBUG|Executed action method MangaSurvWebApi.Controllers.MangasController.Get (MangaSurvWebApi), returned result Microsoft.AspNetCore.Mvc.OkObjectResult. 
+2017-05-28 15:53:23.0457|2|Microsoft.AspNetCore.Mvc.Internal.ObjectResultExecutor|DEBUG|Selected output formatter 'Microsoft.AspNetCore.Mvc.Formatters.JsonOutputFormatter' and content type 'application/json' to write the response. 
+2017-05-28 15:53:23.0457|1|Microsoft.AspNetCore.Mvc.Internal.ObjectResultExecutor|INFO|Executing ObjectResult, writing value Microsoft.AspNetCore.Mvc.ControllerContext. 
+2017-05-28 15:53:23.0457|2|Microsoft.EntityFrameworkCore.Query.Internal.NpgsqlQueryCompilationContextFactory|DEBUG|Compiling query model: 
+'from Manga manga in DbSet<Manga>
+order by manga.Name asc
+select manga' 
+2017-05-28 15:53:23.0457|3|Microsoft.EntityFrameworkCore.Query.Internal.NpgsqlQueryCompilationContextFactory|DEBUG|Optimized query model: 
+'from Manga manga in DbSet<Manga>
+order by manga.Name asc
+select manga' 
+2017-05-28 15:53:23.0457|5|Microsoft.EntityFrameworkCore.Query.Internal.NpgsqlQueryCompilationContextFactory|DEBUG|TRACKED: True
+(QueryContext queryContext) => IEnumerable<Manga> _ShapedQuery(
+    queryContext: queryContext, 
+    shaperCommandContext: SelectExpression: 
+        SELECT "manga"."Id", "manga"."EnterDate", "manga"."FileSystemName", "manga"."LastUpdate", "manga"."Name"
+        FROM "Mangas" AS "manga"
+        ORDER BY "manga"."Name"
+    , 
+    shaper: UnbufferedEntityShaper<Manga>
+)
+ 
+2017-05-28 15:53:23.0457|3|Npgsql.NpgsqlConnection|DEBUG|Opening connection to database 'MangaSurv' on server 'tcp://192.168.178.70:5432'. 
+2017-05-28 15:53:23.0632|1|Microsoft.EntityFrameworkCore.Storage.IRelationalCommandBuilderFactory|INFO|Executed DbCommand (4ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT "manga"."Id", "manga"."EnterDate", "manga"."FileSystemName", "manga"."LastUpdate", "manga"."Name"
+FROM "Mangas" AS "manga"
+ORDER BY "manga"."Name" 
+2017-05-28 15:53:23.1338|4|Npgsql.NpgsqlConnection|DEBUG|Closing connection to database 'MangaSurv' on server 'tcp://192.168.178.70:5432'. 
+2017-05-28 15:53:23.1368|2|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|INFO|Executed action MangaSurvWebApi.Controllers.MangasController.Get (MangaSurvWebApi) in 101.3763ms 
+2017-05-28 15:53:23.1368|9|Microsoft.AspNetCore.Server.Kestrel|DEBUG|Connection id "0HL55Q3G4LVNT" completed keep alive response. 
+2017-05-28 15:53:23.1368|2|Microsoft.AspNetCore.Hosting.Internal.WebHost|INFO|Request finished in 127.3085ms 200 application/json; charset=utf-8 
+2017-05-28 15:53:23.1368|1|Microsoft.AspNetCore.Hosting.Internal.WebHost|INFO|Request starting HTTP/1.1 OPTIONS http://localhost:5000/api/users/0/mangas   
+2017-05-28 15:53:23.1528|9|Microsoft.AspNetCore.Server.Kestrel|DEBUG|Connection id "0HL55Q3G4LVNT" completed keep alive response. 
+2017-05-28 15:53:23.1528|2|Microsoft.AspNetCore.Hosting.Internal.WebHost|INFO|Request finished in 5.3428ms 204  
+2017-05-28 15:53:23.2549|1|Microsoft.AspNetCore.Hosting.Internal.WebHost|INFO|Request starting HTTP/1.1 GET http://localhost:5000/api/users/0/mangas application/json  
+2017-05-28 15:53:23.2664|1|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerMiddleware|INFO|Failed to validate the token eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IlJrVkVPREpGTmpKR05rRkZNVFkzTlRFelJVVTJPREF6TlRsRE5EbEZOakU0T0RWRU1rSTFOZyJ9.eyJuYW1lIjoicmFrc2FoYUBvdXRsb29rLmNvbSIsImVtYWlsIjoicmFrc2FoYUBvdXRsb29rLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJyb2xlcyI6WyJhZG1pbiIsInVzZXIiXSwiaXNzIjoiaHR0cHM6Ly9xdWFsbWFuZGRyaXZlbi5ldS5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NTgxNzU4OWQzNDQwNzNhMzAxMmEyZTA4IiwiYXVkIjoiWUFtRHc1QVVoZmZaQUpvWUQxa2RGV1RwMHZBOGNvWHYiLCJleHAiOjE0OTUzOTg0NzgsImlhdCI6MTQ5NTM2MjQ3OH0.zxJeNX9d_S8gDyS6cbudxrZPv2LGW_Hb4ScU9CUASSULdu1G_lWI1csZaxlR7issymqAFUemYRzaQMx_qq4gvbBcv_iqWyJjRXQuqf1wAmzJ8zP-nDLNcKMfl5O0cLFwfyKZdW-QtoQGeGTRAjoKkFhgd7Kzp18SASEsku35ss-F3RKB6JxsgZ8DJy5IA8jV5pW7oOadIJSEropkOQzZ5Z0-Zr1KyEuS_KbFYhR_K52egkk1BIaw6HBDEBW4g59Bn58P2K7As4qk406FvrLADsE6BJ9X7s21gaYizuM6ojB6wmij1D6cAiKzkelnWF5fhdiBDEAVmBTfucxdRsgqHg. IDX10223: Lifetime validation failed. The token is expired.
+ValidTo: '05/21/2017 20:27:58'
+Current time: '05/28/2017 13:53:23'.
+2017-05-28 15:53:23.2664|7|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerMiddleware|INFO|Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired.
+ValidTo: '05/21/2017 20:27:58'
+Current time: '05/28/2017 13:53:23'. 
+2017-05-28 15:53:23.2664|1|Microsoft.AspNetCore.Routing.Tree.TreeRouter|DEBUG|Request successfully matched the route with name '(null)' and template 'api/users/{userid}/mangas'. 
+2017-05-28 15:53:23.2664|2|Microsoft.AspNetCore.Mvc.Internal.ActionSelector|DEBUG|Action 'MangaSurvWebApi.Controllers.UsersMangasController.Post (MangaSurvWebApi)' with id '616f7bec-e04d-4257-8a56-d3f62480b1b2' did not match the constraint 'Microsoft.AspNetCore.Mvc.Internal.HttpMethodActionConstraint' 
+2017-05-28 15:53:23.2770|2|Microsoft.AspNetCore.Mvc.Internal.ActionSelector|DEBUG|Action 'MangaSurvWebApi.Controllers.UsersMangasController.Options (MangaSurvWebApi)' with id '3e84530d-5837-49a5-97cd-9b02d0c7829f' did not match the constraint 'Microsoft.AspNetCore.Mvc.Internal.HttpMethodActionConstraint' 
+2017-05-28 15:53:23.2770|1|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|DEBUG|Executing action MangaSurvWebApi.Controllers.UsersMangasController.Get (MangaSurvWebApi) 
+2017-05-28 15:53:23.3120|2|Microsoft.AspNetCore.Authorization.DefaultAuthorizationService|INFO|Authorization failed for user: (null). 
+2017-05-28 15:53:23.3120|1|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|INFO|Authorization failed for the request at filter 'Microsoft.AspNetCore.Mvc.Authorization.AuthorizeFilter'. 
+2017-05-28 15:53:23.3320|1|Microsoft.AspNetCore.Mvc.ChallengeResult|INFO|Executing ChallengeResult with authentication schemes (). 
+2017-05-28 15:53:23.3685|12|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerMiddleware|INFO|AuthenticationScheme: Bearer was challenged. 
+2017-05-28 15:53:23.3735|2|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|INFO|Executed action MangaSurvWebApi.Controllers.UsersMangasController.Get (MangaSurvWebApi) in 88.1914ms 
+2017-05-28 15:53:23.3735|9|Microsoft.AspNetCore.Server.Kestrel|DEBUG|Connection id "0HL55Q3G4LVNT" completed keep alive response. 
+2017-05-28 15:53:23.3735|2|Microsoft.AspNetCore.Hosting.Internal.WebHost|INFO|Request finished in 130.5364ms 401  
+2017-05-28 15:53:24.8799|1|Microsoft.AspNetCore.Hosting.Internal.WebHost|INFO|Request starting HTTP/1.1 OPTIONS http://localhost:5000/api/chapters?from=2017-04-18   
+2017-05-28 15:53:24.8799|1|Microsoft.AspNetCore.Hosting.Internal.WebHost|INFO|Request starting HTTP/1.1 OPTIONS http://localhost:5000/api/episodes?from=2017-04-18   
+2017-05-28 15:53:24.8799|9|Microsoft.AspNetCore.Server.Kestrel|DEBUG|Connection id "0HL55Q3G4LVNT" completed keep alive response. 
+2017-05-28 15:53:24.8859|9|Microsoft.AspNetCore.Server.Kestrel|DEBUG|Connection id "0HL55Q3G4LVNU" completed keep alive response. 
+2017-05-28 15:53:24.8859|2|Microsoft.AspNetCore.Hosting.Internal.WebHost|INFO|Request finished in 16.7138ms 204  
+2017-05-28 15:53:24.8859|2|Microsoft.AspNetCore.Hosting.Internal.WebHost|INFO|Request finished in 17.8572ms 204  
+2017-05-28 15:53:24.8859|1|Microsoft.AspNetCore.Hosting.Internal.WebHost|INFO|Request starting HTTP/1.1 GET http://localhost:5000/api/episodes?from=2017-04-18 application/json  
+2017-05-28 15:53:24.9014|1|Microsoft.AspNetCore.Hosting.Internal.WebHost|INFO|Request starting HTTP/1.1 GET http://localhost:5000/api/chapters?from=2017-04-18 application/json  
+2017-05-28 15:53:24.9014|1|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerMiddleware|INFO|Failed to validate the token eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IlJrVkVPREpGTmpKR05rRkZNVFkzTlRFelJVVTJPREF6TlRsRE5EbEZOakU0T0RWRU1rSTFOZyJ9.eyJuYW1lIjoicmFrc2FoYUBvdXRsb29rLmNvbSIsImVtYWlsIjoicmFrc2FoYUBvdXRsb29rLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJyb2xlcyI6WyJhZG1pbiIsInVzZXIiXSwiaXNzIjoiaHR0cHM6Ly9xdWFsbWFuZGRyaXZlbi5ldS5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NTgxNzU4OWQzNDQwNzNhMzAxMmEyZTA4IiwiYXVkIjoiWUFtRHc1QVVoZmZaQUpvWUQxa2RGV1RwMHZBOGNvWHYiLCJleHAiOjE0OTUzOTg0NzgsImlhdCI6MTQ5NTM2MjQ3OH0.zxJeNX9d_S8gDyS6cbudxrZPv2LGW_Hb4ScU9CUASSULdu1G_lWI1csZaxlR7issymqAFUemYRzaQMx_qq4gvbBcv_iqWyJjRXQuqf1wAmzJ8zP-nDLNcKMfl5O0cLFwfyKZdW-QtoQGeGTRAjoKkFhgd7Kzp18SASEsku35ss-F3RKB6JxsgZ8DJy5IA8jV5pW7oOadIJSEropkOQzZ5Z0-Zr1KyEuS_KbFYhR_K52egkk1BIaw6HBDEBW4g59Bn58P2K7As4qk406FvrLADsE6BJ9X7s21gaYizuM6ojB6wmij1D6cAiKzkelnWF5fhdiBDEAVmBTfucxdRsgqHg. IDX10223: Lifetime validation failed. The token is expired.
+ValidTo: '05/21/2017 20:27:58'
+Current time: '05/28/2017 13:53:24'.
+2017-05-28 15:53:24.9173|1|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerMiddleware|INFO|Failed to validate the token eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IlJrVkVPREpGTmpKR05rRkZNVFkzTlRFelJVVTJPREF6TlRsRE5EbEZOakU0T0RWRU1rSTFOZyJ9.eyJuYW1lIjoicmFrc2FoYUBvdXRsb29rLmNvbSIsImVtYWlsIjoicmFrc2FoYUBvdXRsb29rLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJyb2xlcyI6WyJhZG1pbiIsInVzZXIiXSwiaXNzIjoiaHR0cHM6Ly9xdWFsbWFuZGRyaXZlbi5ldS5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NTgxNzU4OWQzNDQwNzNhMzAxMmEyZTA4IiwiYXVkIjoiWUFtRHc1QVVoZmZaQUpvWUQxa2RGV1RwMHZBOGNvWHYiLCJleHAiOjE0OTUzOTg0NzgsImlhdCI6MTQ5NTM2MjQ3OH0.zxJeNX9d_S8gDyS6cbudxrZPv2LGW_Hb4ScU9CUASSULdu1G_lWI1csZaxlR7issymqAFUemYRzaQMx_qq4gvbBcv_iqWyJjRXQuqf1wAmzJ8zP-nDLNcKMfl5O0cLFwfyKZdW-QtoQGeGTRAjoKkFhgd7Kzp18SASEsku35ss-F3RKB6JxsgZ8DJy5IA8jV5pW7oOadIJSEropkOQzZ5Z0-Zr1KyEuS_KbFYhR_K52egkk1BIaw6HBDEBW4g59Bn58P2K7As4qk406FvrLADsE6BJ9X7s21gaYizuM6ojB6wmij1D6cAiKzkelnWF5fhdiBDEAVmBTfucxdRsgqHg. IDX10223: Lifetime validation failed. The token is expired.
+ValidTo: '05/21/2017 20:27:58'
+Current time: '05/28/2017 13:53:24'.
+2017-05-28 15:53:24.9173|7|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerMiddleware|INFO|Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired.
+ValidTo: '05/21/2017 20:27:58'
+Current time: '05/28/2017 13:53:24'. 
+2017-05-28 15:53:24.9173|1|Microsoft.AspNetCore.Routing.Tree.TreeRouter|DEBUG|Request successfully matched the route with name '(null)' and template 'api/Episodes'. 
+2017-05-28 15:53:24.9173|7|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerMiddleware|INFO|Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired.
+ValidTo: '05/21/2017 20:27:58'
+Current time: '05/28/2017 13:53:24'. 
+2017-05-28 15:53:24.9173|1|Microsoft.AspNetCore.Routing.Tree.TreeRouter|DEBUG|Request successfully matched the route with name '(null)' and template 'api/Chapters'. 
+2017-05-28 15:53:24.9173|2|Microsoft.AspNetCore.Mvc.Internal.ActionSelector|DEBUG|Action 'MangaSurvWebApi.Controllers.ChaptersController.Post (MangaSurvWebApi)' with id '5fd99703-0cca-4714-aa53-f921b812b2fc' did not match the constraint 'Microsoft.AspNetCore.Mvc.Internal.HttpMethodActionConstraint' 
+2017-05-28 15:53:24.9173|2|Microsoft.AspNetCore.Mvc.Internal.ActionSelector|DEBUG|Action 'MangaSurvWebApi.Controllers.EpisodesController.Post (MangaSurvWebApi)' with id 'be08a369-31be-45af-8ce6-cf2573525d34' did not match the constraint 'Microsoft.AspNetCore.Mvc.Internal.HttpMethodActionConstraint' 
+2017-05-28 15:53:24.9173|1|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|DEBUG|Executing action MangaSurvWebApi.Controllers.ChaptersController.Get (MangaSurvWebApi) 
+2017-05-28 15:53:24.9318|1|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|DEBUG|Executing action MangaSurvWebApi.Controllers.EpisodesController.Get (MangaSurvWebApi) 
+2017-05-28 15:53:24.9318|1|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|INFO|Executing action method MangaSurvWebApi.Controllers.ChaptersController.Get (MangaSurvWebApi) with arguments ((null)) - ModelState is Valid 
+2017-05-28 15:53:24.9318|1|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|INFO|Executing action method MangaSurvWebApi.Controllers.EpisodesController.Get (MangaSurvWebApi) with arguments ((null)) - ModelState is Valid 
+2017-05-28 15:53:24.9318|3|Npgsql.NpgsqlConnection|DEBUG|Opening connection to database 'MangaSurv' on server 'tcp://192.168.178.70:5432'. 
+2017-05-28 15:53:24.9318|3|Npgsql.NpgsqlConnection|DEBUG|Opening connection to database 'MangaSurv' on server 'tcp://192.168.178.70:5432'. 
+2017-05-28 15:53:24.9483|1|Microsoft.EntityFrameworkCore.Storage.IRelationalCommandBuilderFactory|INFO|Executed DbCommand (3ms) [Parameters=[@__dt_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT "chapter"."Id", "chapter"."Address", "chapter"."AnimeId", "chapter"."EnterDate", "chapter"."EpisodeNo", "chapter"."StateId"
+FROM "Episodes" AS "chapter"
+WHERE "chapter"."EnterDate" >= @__dt_0
+ORDER BY "chapter"."EnterDate" 
+2017-05-28 15:53:24.9483|4|Npgsql.NpgsqlConnection|DEBUG|Closing connection to database 'MangaSurv' on server 'tcp://192.168.178.70:5432'. 
+2017-05-28 15:53:24.9483|3|Npgsql.NpgsqlConnection|DEBUG|Opening connection to database 'MangaSurv' on server 'tcp://192.168.178.70:5432'. 
+2017-05-28 15:53:24.9483|1|Microsoft.EntityFrameworkCore.Storage.IRelationalCommandBuilderFactory|INFO|Executed DbCommand (9ms) [Parameters=[@__dt_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT "chapter"."Id", "chapter"."Address", "chapter"."ChapterNo", "chapter"."EnterDate", "chapter"."MangaId", "chapter"."PageId", "chapter"."StateId"
+FROM "Chapters" AS "chapter"
+WHERE "chapter"."EnterDate" >= @__dt_0
+ORDER BY "chapter"."EnterDate" 
+2017-05-28 15:53:24.9483|4|Npgsql.NpgsqlConnection|DEBUG|Closing connection to database 'MangaSurv' on server 'tcp://192.168.178.70:5432'. 
+2017-05-28 15:53:24.9483|1|Microsoft.EntityFrameworkCore.Storage.IRelationalCommandBuilderFactory|INFO|Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT "anime"."Id", "anime"."EnterDate", "anime"."FileSystemName", "anime"."LastUpdate", "anime"."Name"
+FROM "Animes" AS "anime"
+WHERE 0 = 1 
+2017-05-28 15:53:24.9483|4|Npgsql.NpgsqlConnection|DEBUG|Closing connection to database 'MangaSurv' on server 'tcp://192.168.178.70:5432'. 
+2017-05-28 15:53:24.9483|2|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|DEBUG|Executed action method MangaSurvWebApi.Controllers.EpisodesController.Get (MangaSurvWebApi), returned result Microsoft.AspNetCore.Mvc.OkObjectResult. 
+2017-05-28 15:53:24.9483|3|Npgsql.NpgsqlConnection|DEBUG|Opening connection to database 'MangaSurv' on server 'tcp://192.168.178.70:5432'. 
+2017-05-28 15:53:24.9483|2|Microsoft.AspNetCore.Mvc.Internal.ObjectResultExecutor|DEBUG|Selected output formatter 'Microsoft.AspNetCore.Mvc.Formatters.JsonOutputFormatter' and content type 'application/json' to write the response. 
+2017-05-28 15:53:24.9653|1|Microsoft.AspNetCore.Mvc.Internal.ObjectResultExecutor|INFO|Executing ObjectResult, writing value Microsoft.AspNetCore.Mvc.ControllerContext. 
+2017-05-28 15:53:24.9653|1|Microsoft.EntityFrameworkCore.Storage.IRelationalCommandBuilderFactory|INFO|Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT "manga"."Id", "manga"."EnterDate", "manga"."FileSystemName", "manga"."LastUpdate", "manga"."Name"
+FROM "Mangas" AS "manga"
+WHERE 0 = 1 
+2017-05-28 15:53:24.9653|2|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|INFO|Executed action MangaSurvWebApi.Controllers.EpisodesController.Get (MangaSurvWebApi) in 34.2256ms 
+2017-05-28 15:53:24.9653|4|Npgsql.NpgsqlConnection|DEBUG|Closing connection to database 'MangaSurv' on server 'tcp://192.168.178.70:5432'. 
+2017-05-28 15:53:24.9653|2|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|DEBUG|Executed action method MangaSurvWebApi.Controllers.ChaptersController.Get (MangaSurvWebApi), returned result Microsoft.AspNetCore.Mvc.OkObjectResult. 
+2017-05-28 15:53:24.9653|9|Microsoft.AspNetCore.Server.Kestrel|DEBUG|Connection id "0HL55Q3G4LVNT" completed keep alive response. 
+2017-05-28 15:53:24.9653|2|Microsoft.AspNetCore.Mvc.Internal.ObjectResultExecutor|DEBUG|Selected output formatter 'Microsoft.AspNetCore.Mvc.Formatters.JsonOutputFormatter' and content type 'application/json' to write the response. 
+2017-05-28 15:53:24.9653|2|Microsoft.AspNetCore.Hosting.Internal.WebHost|INFO|Request finished in 74.8924ms 200 application/json; charset=utf-8 
+2017-05-28 15:53:24.9653|1|Microsoft.AspNetCore.Mvc.Internal.ObjectResultExecutor|INFO|Executing ObjectResult, writing value Microsoft.AspNetCore.Mvc.ControllerContext. 
+2017-05-28 15:53:24.9793|2|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|INFO|Executed action MangaSurvWebApi.Controllers.ChaptersController.Get (MangaSurvWebApi) in 45.2662ms 
+2017-05-28 15:53:24.9793|9|Microsoft.AspNetCore.Server.Kestrel|DEBUG|Connection id "0HL55Q3G4LVNU" completed keep alive response. 
+2017-05-28 15:53:24.9793|2|Microsoft.AspNetCore.Hosting.Internal.WebHost|INFO|Request finished in 83.017ms 200 application/json; charset=utf-8 
+2017-05-28 15:53:46.1337|1|Microsoft.AspNetCore.Hosting.Internal.WebHost|INFO|Request starting HTTP/1.1 OPTIONS http://localhost:5000/api/chapters?from=2017-04-18   
+2017-05-28 15:53:46.1357|1|Microsoft.AspNetCore.Hosting.Internal.WebHost|INFO|Request starting HTTP/1.1 OPTIONS http://localhost:5000/api/episodes?from=2017-04-18   
+2017-05-28 15:53:46.1357|9|Microsoft.AspNetCore.Server.Kestrel|DEBUG|Connection id "0HL55Q3G4LVNU" completed keep alive response. 
+2017-05-28 15:53:46.1357|9|Microsoft.AspNetCore.Server.Kestrel|DEBUG|Connection id "0HL55Q3G4LVNT" completed keep alive response. 
+2017-05-28 15:53:46.1537|2|Microsoft.AspNetCore.Hosting.Internal.WebHost|INFO|Request finished in 16.2326ms 204  
+2017-05-28 15:53:46.1537|2|Microsoft.AspNetCore.Hosting.Internal.WebHost|INFO|Request finished in 22.0512ms 204  
+2017-05-28 15:53:46.1847|1|Microsoft.AspNetCore.Hosting.Internal.WebHost|INFO|Request starting HTTP/1.1 GET http://localhost:5000/api/chapters?from=2017-04-18 application/json  
+2017-05-28 15:53:46.1847|1|Microsoft.AspNetCore.Hosting.Internal.WebHost|INFO|Request starting HTTP/1.1 GET http://localhost:5000/api/episodes?from=2017-04-18 application/json  
+2017-05-28 15:53:46.1847|1|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerMiddleware|INFO|Failed to validate the token eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IlJrVkVPREpGTmpKR05rRkZNVFkzTlRFelJVVTJPREF6TlRsRE5EbEZOakU0T0RWRU1rSTFOZyJ9.eyJuYW1lIjoicmFrc2FoYUBvdXRsb29rLmNvbSIsImVtYWlsIjoicmFrc2FoYUBvdXRsb29rLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJyb2xlcyI6WyJhZG1pbiIsInVzZXIiXSwiaXNzIjoiaHR0cHM6Ly9xdWFsbWFuZGRyaXZlbi5ldS5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NTgxNzU4OWQzNDQwNzNhMzAxMmEyZTA4IiwiYXVkIjoiWUFtRHc1QVVoZmZaQUpvWUQxa2RGV1RwMHZBOGNvWHYiLCJleHAiOjE0OTUzOTg0NzgsImlhdCI6MTQ5NTM2MjQ3OH0.zxJeNX9d_S8gDyS6cbudxrZPv2LGW_Hb4ScU9CUASSULdu1G_lWI1csZaxlR7issymqAFUemYRzaQMx_qq4gvbBcv_iqWyJjRXQuqf1wAmzJ8zP-nDLNcKMfl5O0cLFwfyKZdW-QtoQGeGTRAjoKkFhgd7Kzp18SASEsku35ss-F3RKB6JxsgZ8DJy5IA8jV5pW7oOadIJSEropkOQzZ5Z0-Zr1KyEuS_KbFYhR_K52egkk1BIaw6HBDEBW4g59Bn58P2K7As4qk406FvrLADsE6BJ9X7s21gaYizuM6ojB6wmij1D6cAiKzkelnWF5fhdiBDEAVmBTfucxdRsgqHg. IDX10223: Lifetime validation failed. The token is expired.
+ValidTo: '05/21/2017 20:27:58'
+Current time: '05/28/2017 13:53:46'.
+2017-05-28 15:53:46.1847|1|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerMiddleware|INFO|Failed to validate the token eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IlJrVkVPREpGTmpKR05rRkZNVFkzTlRFelJVVTJPREF6TlRsRE5EbEZOakU0T0RWRU1rSTFOZyJ9.eyJuYW1lIjoicmFrc2FoYUBvdXRsb29rLmNvbSIsImVtYWlsIjoicmFrc2FoYUBvdXRsb29rLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJyb2xlcyI6WyJhZG1pbiIsInVzZXIiXSwiaXNzIjoiaHR0cHM6Ly9xdWFsbWFuZGRyaXZlbi5ldS5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NTgxNzU4OWQzNDQwNzNhMzAxMmEyZTA4IiwiYXVkIjoiWUFtRHc1QVVoZmZaQUpvWUQxa2RGV1RwMHZBOGNvWHYiLCJleHAiOjE0OTUzOTg0NzgsImlhdCI6MTQ5NTM2MjQ3OH0.zxJeNX9d_S8gDyS6cbudxrZPv2LGW_Hb4ScU9CUASSULdu1G_lWI1csZaxlR7issymqAFUemYRzaQMx_qq4gvbBcv_iqWyJjRXQuqf1wAmzJ8zP-nDLNcKMfl5O0cLFwfyKZdW-QtoQGeGTRAjoKkFhgd7Kzp18SASEsku35ss-F3RKB6JxsgZ8DJy5IA8jV5pW7oOadIJSEropkOQzZ5Z0-Zr1KyEuS_KbFYhR_K52egkk1BIaw6HBDEBW4g59Bn58P2K7As4qk406FvrLADsE6BJ9X7s21gaYizuM6ojB6wmij1D6cAiKzkelnWF5fhdiBDEAVmBTfucxdRsgqHg. IDX10223: Lifetime validation failed. The token is expired.
+ValidTo: '05/21/2017 20:27:58'
+Current time: '05/28/2017 13:53:46'.
+2017-05-28 15:53:46.1987|7|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerMiddleware|INFO|Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired.
+ValidTo: '05/21/2017 20:27:58'
+Current time: '05/28/2017 13:53:46'. 
+2017-05-28 15:53:46.1987|1|Microsoft.AspNetCore.Routing.Tree.TreeRouter|DEBUG|Request successfully matched the route with name '(null)' and template 'api/Chapters'. 
+2017-05-28 15:53:46.1987|2|Microsoft.AspNetCore.Mvc.Internal.ActionSelector|DEBUG|Action 'MangaSurvWebApi.Controllers.ChaptersController.Post (MangaSurvWebApi)' with id '5fd99703-0cca-4714-aa53-f921b812b2fc' did not match the constraint 'Microsoft.AspNetCore.Mvc.Internal.HttpMethodActionConstraint' 
+2017-05-28 15:53:46.1987|7|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerMiddleware|INFO|Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired.
+ValidTo: '05/21/2017 20:27:58'
+Current time: '05/28/2017 13:53:46'. 
+2017-05-28 15:53:46.1987|1|Microsoft.AspNetCore.Routing.Tree.TreeRouter|DEBUG|Request successfully matched the route with name '(null)' and template 'api/Episodes'. 
+2017-05-28 15:53:46.1987|2|Microsoft.AspNetCore.Mvc.Internal.ActionSelector|DEBUG|Action 'MangaSurvWebApi.Controllers.EpisodesController.Post (MangaSurvWebApi)' with id 'be08a369-31be-45af-8ce6-cf2573525d34' did not match the constraint 'Microsoft.AspNetCore.Mvc.Internal.HttpMethodActionConstraint' 
+2017-05-28 15:53:46.1987|1|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|DEBUG|Executing action MangaSurvWebApi.Controllers.EpisodesController.Get (MangaSurvWebApi) 
+2017-05-28 15:53:46.1987|1|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|DEBUG|Executing action MangaSurvWebApi.Controllers.ChaptersController.Get (MangaSurvWebApi) 
+2017-05-28 15:53:46.1987|1|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|INFO|Executing action method MangaSurvWebApi.Controllers.EpisodesController.Get (MangaSurvWebApi) with arguments ((null)) - ModelState is Valid 
+2017-05-28 15:53:46.1987|1|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|INFO|Executing action method MangaSurvWebApi.Controllers.ChaptersController.Get (MangaSurvWebApi) with arguments ((null)) - ModelState is Valid 
+2017-05-28 15:53:46.1987|3|Npgsql.NpgsqlConnection|DEBUG|Opening connection to database 'MangaSurv' on server 'tcp://192.168.178.70:5432'. 
+2017-05-28 15:53:46.2248|3|Npgsql.NpgsqlConnection|DEBUG|Opening connection to database 'MangaSurv' on server 'tcp://192.168.178.70:5432'. 
+2017-05-28 15:53:46.2298|1|Microsoft.EntityFrameworkCore.Storage.IRelationalCommandBuilderFactory|INFO|Executed DbCommand (2ms) [Parameters=[@__dt_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT "chapter"."Id", "chapter"."Address", "chapter"."AnimeId", "chapter"."EnterDate", "chapter"."EpisodeNo", "chapter"."StateId"
+FROM "Episodes" AS "chapter"
+WHERE "chapter"."EnterDate" >= @__dt_0
+ORDER BY "chapter"."EnterDate" 
+2017-05-28 15:53:46.2298|4|Npgsql.NpgsqlConnection|DEBUG|Closing connection to database 'MangaSurv' on server 'tcp://192.168.178.70:5432'. 
+2017-05-28 15:53:46.2298|1|Microsoft.EntityFrameworkCore.Storage.IRelationalCommandBuilderFactory|INFO|Executed DbCommand (9ms) [Parameters=[@__dt_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT "chapter"."Id", "chapter"."Address", "chapter"."ChapterNo", "chapter"."EnterDate", "chapter"."MangaId", "chapter"."PageId", "chapter"."StateId"
+FROM "Chapters" AS "chapter"
+WHERE "chapter"."EnterDate" >= @__dt_0
+ORDER BY "chapter"."EnterDate" 
+2017-05-28 15:53:46.2298|3|Npgsql.NpgsqlConnection|DEBUG|Opening connection to database 'MangaSurv' on server 'tcp://192.168.178.70:5432'. 
+2017-05-28 15:53:46.2298|4|Npgsql.NpgsqlConnection|DEBUG|Closing connection to database 'MangaSurv' on server 'tcp://192.168.178.70:5432'. 
+2017-05-28 15:53:46.2298|1|Microsoft.EntityFrameworkCore.Storage.IRelationalCommandBuilderFactory|INFO|Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT "anime"."Id", "anime"."EnterDate", "anime"."FileSystemName", "anime"."LastUpdate", "anime"."Name"
+FROM "Animes" AS "anime"
+WHERE 0 = 1 
+2017-05-28 15:53:46.2298|3|Npgsql.NpgsqlConnection|DEBUG|Opening connection to database 'MangaSurv' on server 'tcp://192.168.178.70:5432'. 
+2017-05-28 15:53:46.2298|4|Npgsql.NpgsqlConnection|DEBUG|Closing connection to database 'MangaSurv' on server 'tcp://192.168.178.70:5432'. 
+2017-05-28 15:53:46.2448|2|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|DEBUG|Executed action method MangaSurvWebApi.Controllers.EpisodesController.Get (MangaSurvWebApi), returned result Microsoft.AspNetCore.Mvc.OkObjectResult. 
+2017-05-28 15:53:46.2448|2|Microsoft.AspNetCore.Mvc.Internal.ObjectResultExecutor|DEBUG|Selected output formatter 'Microsoft.AspNetCore.Mvc.Formatters.JsonOutputFormatter' and content type 'application/json' to write the response. 
+2017-05-28 15:53:46.2448|1|Microsoft.EntityFrameworkCore.Storage.IRelationalCommandBuilderFactory|INFO|Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT "manga"."Id", "manga"."EnterDate", "manga"."FileSystemName", "manga"."LastUpdate", "manga"."Name"
+FROM "Mangas" AS "manga"
+WHERE 0 = 1 
+2017-05-28 15:53:46.2448|4|Npgsql.NpgsqlConnection|DEBUG|Closing connection to database 'MangaSurv' on server 'tcp://192.168.178.70:5432'. 
+2017-05-28 15:53:46.2448|2|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|DEBUG|Executed action method MangaSurvWebApi.Controllers.ChaptersController.Get (MangaSurvWebApi), returned result Microsoft.AspNetCore.Mvc.OkObjectResult. 
+2017-05-28 15:53:46.2448|2|Microsoft.AspNetCore.Mvc.Internal.ObjectResultExecutor|DEBUG|Selected output formatter 'Microsoft.AspNetCore.Mvc.Formatters.JsonOutputFormatter' and content type 'application/json' to write the response. 
+2017-05-28 15:53:46.2448|1|Microsoft.AspNetCore.Mvc.Internal.ObjectResultExecutor|INFO|Executing ObjectResult, writing value Microsoft.AspNetCore.Mvc.ControllerContext. 
+2017-05-28 15:53:46.2448|1|Microsoft.AspNetCore.Mvc.Internal.ObjectResultExecutor|INFO|Executing ObjectResult, writing value Microsoft.AspNetCore.Mvc.ControllerContext. 
+2017-05-28 15:53:46.2608|2|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|INFO|Executed action MangaSurvWebApi.Controllers.EpisodesController.Get (MangaSurvWebApi) in 50.6843ms 
+2017-05-28 15:53:46.2608|2|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|INFO|Executed action MangaSurvWebApi.Controllers.ChaptersController.Get (MangaSurvWebApi) in 51.78ms 
+2017-05-28 15:53:46.2608|9|Microsoft.AspNetCore.Server.Kestrel|DEBUG|Connection id "0HL55Q3G4LVNU" completed keep alive response. 
+2017-05-28 15:53:46.2923|2|Microsoft.AspNetCore.Hosting.Internal.WebHost|INFO|Request finished in 106.1341ms 200 application/json; charset=utf-8 
+2017-05-28 15:53:46.2893|9|Microsoft.AspNetCore.Server.Kestrel|DEBUG|Connection id "0HL55Q3G4LVNT" completed keep alive response. 
+2017-05-28 15:53:46.3093|2|Microsoft.AspNetCore.Hosting.Internal.WebHost|INFO|Request finished in 124.3995ms 200 application/json; charset=utf-8 
+2017-05-28 15:54:18.7946|1|Microsoft.AspNetCore.Hosting.Internal.WebHost|INFO|Request starting HTTP/1.1 OPTIONS http://localhost:5000/api/mangas   
+2017-05-28 15:54:18.7946|9|Microsoft.AspNetCore.Server.Kestrel|DEBUG|Connection id "0HL55Q3G4LVNT" completed keep alive response. 
+2017-05-28 15:54:18.7946|2|Microsoft.AspNetCore.Hosting.Internal.WebHost|INFO|Request finished in 9.2861ms 204  
+2017-05-28 15:54:18.8086|1|Microsoft.AspNetCore.Hosting.Internal.WebHost|INFO|Request starting HTTP/1.1 GET http://localhost:5000/api/mangas application/json  
+2017-05-28 15:54:18.8086|1|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerMiddleware|INFO|Failed to validate the token eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IlJrVkVPREpGTmpKR05rRkZNVFkzTlRFelJVVTJPREF6TlRsRE5EbEZOakU0T0RWRU1rSTFOZyJ9.eyJuYW1lIjoicmFrc2FoYUBvdXRsb29rLmNvbSIsImVtYWlsIjoicmFrc2FoYUBvdXRsb29rLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJyb2xlcyI6WyJhZG1pbiIsInVzZXIiXSwiaXNzIjoiaHR0cHM6Ly9xdWFsbWFuZGRyaXZlbi5ldS5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NTgxNzU4OWQzNDQwNzNhMzAxMmEyZTA4IiwiYXVkIjoiWUFtRHc1QVVoZmZaQUpvWUQxa2RGV1RwMHZBOGNvWHYiLCJleHAiOjE0OTUzOTg0NzgsImlhdCI6MTQ5NTM2MjQ3OH0.zxJeNX9d_S8gDyS6cbudxrZPv2LGW_Hb4ScU9CUASSULdu1G_lWI1csZaxlR7issymqAFUemYRzaQMx_qq4gvbBcv_iqWyJjRXQuqf1wAmzJ8zP-nDLNcKMfl5O0cLFwfyKZdW-QtoQGeGTRAjoKkFhgd7Kzp18SASEsku35ss-F3RKB6JxsgZ8DJy5IA8jV5pW7oOadIJSEropkOQzZ5Z0-Zr1KyEuS_KbFYhR_K52egkk1BIaw6HBDEBW4g59Bn58P2K7As4qk406FvrLADsE6BJ9X7s21gaYizuM6ojB6wmij1D6cAiKzkelnWF5fhdiBDEAVmBTfucxdRsgqHg. IDX10223: Lifetime validation failed. The token is expired.
+ValidTo: '05/21/2017 20:27:58'
+Current time: '05/28/2017 13:54:18'.
+2017-05-28 15:54:18.8086|7|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerMiddleware|INFO|Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired.
+ValidTo: '05/21/2017 20:27:58'
+Current time: '05/28/2017 13:54:18'. 
+2017-05-28 15:54:18.8086|1|Microsoft.AspNetCore.Routing.Tree.TreeRouter|DEBUG|Request successfully matched the route with name '(null)' and template 'api/Mangas'. 
+2017-05-28 15:54:18.8086|2|Microsoft.AspNetCore.Mvc.Internal.ActionSelector|DEBUG|Action 'MangaSurvWebApi.Controllers.MangasController.Post (MangaSurvWebApi)' with id '85c256e9-80a0-4926-a0c3-76765d6bf8bb' did not match the constraint 'Microsoft.AspNetCore.Mvc.Internal.HttpMethodActionConstraint' 
+2017-05-28 15:54:18.8086|1|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|DEBUG|Executing action MangaSurvWebApi.Controllers.MangasController.Get (MangaSurvWebApi) 
+2017-05-28 15:54:18.8086|1|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|INFO|Executing action method MangaSurvWebApi.Controllers.MangasController.Get (MangaSurvWebApi) with arguments ((null)) - ModelState is Valid 
+2017-05-28 15:54:18.8226|2|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|DEBUG|Executed action method MangaSurvWebApi.Controllers.MangasController.Get (MangaSurvWebApi), returned result Microsoft.AspNetCore.Mvc.OkObjectResult. 
+2017-05-28 15:54:18.8226|2|Microsoft.AspNetCore.Mvc.Internal.ObjectResultExecutor|DEBUG|Selected output formatter 'Microsoft.AspNetCore.Mvc.Formatters.JsonOutputFormatter' and content type 'application/json' to write the response. 
+2017-05-28 15:54:18.8226|1|Microsoft.AspNetCore.Mvc.Internal.ObjectResultExecutor|INFO|Executing ObjectResult, writing value Microsoft.AspNetCore.Mvc.ControllerContext. 
+2017-05-28 15:54:18.8226|3|Npgsql.NpgsqlConnection|DEBUG|Opening connection to database 'MangaSurv' on server 'tcp://192.168.178.70:5432'. 
+2017-05-28 15:54:18.8226|1|Microsoft.EntityFrameworkCore.Storage.IRelationalCommandBuilderFactory|INFO|Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT "manga"."Id", "manga"."EnterDate", "manga"."FileSystemName", "manga"."LastUpdate", "manga"."Name"
+FROM "Mangas" AS "manga"
+ORDER BY "manga"."Name" 
+2017-05-28 15:54:18.8386|4|Npgsql.NpgsqlConnection|DEBUG|Closing connection to database 'MangaSurv' on server 'tcp://192.168.178.70:5432'. 
+2017-05-28 15:54:18.8386|2|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|INFO|Executed action MangaSurvWebApi.Controllers.MangasController.Get (MangaSurvWebApi) in 20.1697ms 
+2017-05-28 15:54:18.8386|9|Microsoft.AspNetCore.Server.Kestrel|DEBUG|Connection id "0HL55Q3G4LVNT" completed keep alive response. 
+2017-05-28 15:54:18.8386|2|Microsoft.AspNetCore.Hosting.Internal.WebHost|INFO|Request finished in 38.1738ms 200 application/json; charset=utf-8 
+2017-05-28 15:54:18.8631|1|Microsoft.AspNetCore.Hosting.Internal.WebHost|INFO|Request starting HTTP/1.1 OPTIONS http://localhost:5000/api/users/0/mangas   
+2017-05-28 15:54:18.8631|9|Microsoft.AspNetCore.Server.Kestrel|DEBUG|Connection id "0HL55Q3G4LVNT" completed keep alive response. 
+2017-05-28 15:54:18.8631|2|Microsoft.AspNetCore.Hosting.Internal.WebHost|INFO|Request finished in 5.6032ms 204  
+2017-05-28 15:54:18.9898|1|Microsoft.AspNetCore.Hosting.Internal.WebHost|INFO|Request starting HTTP/1.1 GET http://localhost:5000/api/users/0/mangas application/json  
+2017-05-28 15:54:19.0133|1|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerMiddleware|INFO|Failed to validate the token eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IlJrVkVPREpGTmpKR05rRkZNVFkzTlRFelJVVTJPREF6TlRsRE5EbEZOakU0T0RWRU1rSTFOZyJ9.eyJuYW1lIjoicmFrc2FoYUBvdXRsb29rLmNvbSIsImVtYWlsIjoicmFrc2FoYUBvdXRsb29rLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJyb2xlcyI6WyJhZG1pbiIsInVzZXIiXSwiaXNzIjoiaHR0cHM6Ly9xdWFsbWFuZGRyaXZlbi5ldS5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NTgxNzU4OWQzNDQwNzNhMzAxMmEyZTA4IiwiYXVkIjoiWUFtRHc1QVVoZmZaQUpvWUQxa2RGV1RwMHZBOGNvWHYiLCJleHAiOjE0OTUzOTg0NzgsImlhdCI6MTQ5NTM2MjQ3OH0.zxJeNX9d_S8gDyS6cbudxrZPv2LGW_Hb4ScU9CUASSULdu1G_lWI1csZaxlR7issymqAFUemYRzaQMx_qq4gvbBcv_iqWyJjRXQuqf1wAmzJ8zP-nDLNcKMfl5O0cLFwfyKZdW-QtoQGeGTRAjoKkFhgd7Kzp18SASEsku35ss-F3RKB6JxsgZ8DJy5IA8jV5pW7oOadIJSEropkOQzZ5Z0-Zr1KyEuS_KbFYhR_K52egkk1BIaw6HBDEBW4g59Bn58P2K7As4qk406FvrLADsE6BJ9X7s21gaYizuM6ojB6wmij1D6cAiKzkelnWF5fhdiBDEAVmBTfucxdRsgqHg. IDX10223: Lifetime validation failed. The token is expired.
+ValidTo: '05/21/2017 20:27:58'
+Current time: '05/28/2017 13:54:18'.
+2017-05-28 15:54:19.0258|7|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerMiddleware|INFO|Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired.
+ValidTo: '05/21/2017 20:27:58'
+Current time: '05/28/2017 13:54:18'. 
+2017-05-28 15:54:19.0258|1|Microsoft.AspNetCore.Routing.Tree.TreeRouter|DEBUG|Request successfully matched the route with name '(null)' and template 'api/users/{userid}/mangas'. 
+2017-05-28 15:54:19.0258|2|Microsoft.AspNetCore.Mvc.Internal.ActionSelector|DEBUG|Action 'MangaSurvWebApi.Controllers.UsersMangasController.Post (MangaSurvWebApi)' with id '616f7bec-e04d-4257-8a56-d3f62480b1b2' did not match the constraint 'Microsoft.AspNetCore.Mvc.Internal.HttpMethodActionConstraint' 
+2017-05-28 15:54:19.0258|2|Microsoft.AspNetCore.Mvc.Internal.ActionSelector|DEBUG|Action 'MangaSurvWebApi.Controllers.UsersMangasController.Options (MangaSurvWebApi)' with id '3e84530d-5837-49a5-97cd-9b02d0c7829f' did not match the constraint 'Microsoft.AspNetCore.Mvc.Internal.HttpMethodActionConstraint' 
+2017-05-28 15:54:19.0258|1|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|DEBUG|Executing action MangaSurvWebApi.Controllers.UsersMangasController.Get (MangaSurvWebApi) 
+2017-05-28 15:54:19.0258|2|Microsoft.AspNetCore.Authorization.DefaultAuthorizationService|INFO|Authorization failed for user: (null). 
+2017-05-28 15:54:19.0258|1|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|INFO|Authorization failed for the request at filter 'Microsoft.AspNetCore.Mvc.Authorization.AuthorizeFilter'. 
+2017-05-28 15:54:19.0423|1|Microsoft.AspNetCore.Mvc.ChallengeResult|INFO|Executing ChallengeResult with authentication schemes (). 
+2017-05-28 15:54:19.0423|12|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerMiddleware|INFO|AuthenticationScheme: Bearer was challenged. 
+2017-05-28 15:54:19.0423|2|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|INFO|Executed action MangaSurvWebApi.Controllers.UsersMangasController.Get (MangaSurvWebApi) in 21.8054ms 
+2017-05-28 15:54:19.0683|9|Microsoft.AspNetCore.Server.Kestrel|DEBUG|Connection id "0HL55Q3G4LVNT" completed keep alive response. 
+2017-05-28 15:54:19.0683|2|Microsoft.AspNetCore.Hosting.Internal.WebHost|INFO|Request finished in 85.0682ms 401  
+2017-05-28 15:54:22.2237|1|Microsoft.AspNetCore.Hosting.Internal.WebHost|INFO|Request starting HTTP/1.1 OPTIONS http://localhost:5000/api/chapters?from=2017-04-18   
+2017-05-28 15:54:22.2237|1|Microsoft.AspNetCore.Hosting.Internal.WebHost|INFO|Request starting HTTP/1.1 OPTIONS http://localhost:5000/api/episodes?from=2017-04-18   
+2017-05-28 15:54:22.2237|9|Microsoft.AspNetCore.Server.Kestrel|DEBUG|Connection id "0HL55Q3G4LVNT" completed keep alive response. 
+2017-05-28 15:54:22.2297|9|Microsoft.AspNetCore.Server.Kestrel|DEBUG|Connection id "0HL55Q3G4LVNU" completed keep alive response. 
+2017-05-28 15:54:22.2547|2|Microsoft.AspNetCore.Hosting.Internal.WebHost|INFO|Request finished in 51.3145ms 204  
+2017-05-28 15:54:22.2547|2|Microsoft.AspNetCore.Hosting.Internal.WebHost|INFO|Request finished in 52.4371ms 204  
+2017-05-28 15:54:22.2547|1|Microsoft.AspNetCore.Hosting.Internal.WebHost|INFO|Request starting HTTP/1.1 GET http://localhost:5000/api/episodes?from=2017-04-18 application/json  
+2017-05-28 15:54:22.2612|1|Microsoft.AspNetCore.Hosting.Internal.WebHost|INFO|Request starting HTTP/1.1 GET http://localhost:5000/api/chapters?from=2017-04-18 application/json  
+2017-05-28 15:54:22.2612|1|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerMiddleware|INFO|Failed to validate the token eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IlJrVkVPREpGTmpKR05rRkZNVFkzTlRFelJVVTJPREF6TlRsRE5EbEZOakU0T0RWRU1rSTFOZyJ9.eyJuYW1lIjoicmFrc2FoYUBvdXRsb29rLmNvbSIsImVtYWlsIjoicmFrc2FoYUBvdXRsb29rLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJyb2xlcyI6WyJhZG1pbiIsInVzZXIiXSwiaXNzIjoiaHR0cHM6Ly9xdWFsbWFuZGRyaXZlbi5ldS5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NTgxNzU4OWQzNDQwNzNhMzAxMmEyZTA4IiwiYXVkIjoiWUFtRHc1QVVoZmZaQUpvWUQxa2RGV1RwMHZBOGNvWHYiLCJleHAiOjE0OTUzOTg0NzgsImlhdCI6MTQ5NTM2MjQ3OH0.zxJeNX9d_S8gDyS6cbudxrZPv2LGW_Hb4ScU9CUASSULdu1G_lWI1csZaxlR7issymqAFUemYRzaQMx_qq4gvbBcv_iqWyJjRXQuqf1wAmzJ8zP-nDLNcKMfl5O0cLFwfyKZdW-QtoQGeGTRAjoKkFhgd7Kzp18SASEsku35ss-F3RKB6JxsgZ8DJy5IA8jV5pW7oOadIJSEropkOQzZ5Z0-Zr1KyEuS_KbFYhR_K52egkk1BIaw6HBDEBW4g59Bn58P2K7As4qk406FvrLADsE6BJ9X7s21gaYizuM6ojB6wmij1D6cAiKzkelnWF5fhdiBDEAVmBTfucxdRsgqHg. IDX10223: Lifetime validation failed. The token is expired.
+ValidTo: '05/21/2017 20:27:58'
+Current time: '05/28/2017 13:54:22'.
+2017-05-28 15:54:22.2612|1|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerMiddleware|INFO|Failed to validate the token eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IlJrVkVPREpGTmpKR05rRkZNVFkzTlRFelJVVTJPREF6TlRsRE5EbEZOakU0T0RWRU1rSTFOZyJ9.eyJuYW1lIjoicmFrc2FoYUBvdXRsb29rLmNvbSIsImVtYWlsIjoicmFrc2FoYUBvdXRsb29rLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJyb2xlcyI6WyJhZG1pbiIsInVzZXIiXSwiaXNzIjoiaHR0cHM6Ly9xdWFsbWFuZGRyaXZlbi5ldS5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NTgxNzU4OWQzNDQwNzNhMzAxMmEyZTA4IiwiYXVkIjoiWUFtRHc1QVVoZmZaQUpvWUQxa2RGV1RwMHZBOGNvWHYiLCJleHAiOjE0OTUzOTg0NzgsImlhdCI6MTQ5NTM2MjQ3OH0.zxJeNX9d_S8gDyS6cbudxrZPv2LGW_Hb4ScU9CUASSULdu1G_lWI1csZaxlR7issymqAFUemYRzaQMx_qq4gvbBcv_iqWyJjRXQuqf1wAmzJ8zP-nDLNcKMfl5O0cLFwfyKZdW-QtoQGeGTRAjoKkFhgd7Kzp18SASEsku35ss-F3RKB6JxsgZ8DJy5IA8jV5pW7oOadIJSEropkOQzZ5Z0-Zr1KyEuS_KbFYhR_K52egkk1BIaw6HBDEBW4g59Bn58P2K7As4qk406FvrLADsE6BJ9X7s21gaYizuM6ojB6wmij1D6cAiKzkelnWF5fhdiBDEAVmBTfucxdRsgqHg. IDX10223: Lifetime validation failed. The token is expired.
+ValidTo: '05/21/2017 20:27:58'
+Current time: '05/28/2017 13:54:22'.
+2017-05-28 15:54:22.2612|7|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerMiddleware|INFO|Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired.
+ValidTo: '05/21/2017 20:27:58'
+Current time: '05/28/2017 13:54:22'. 
+2017-05-28 15:54:22.2612|7|Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerMiddleware|INFO|Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired.
+ValidTo: '05/21/2017 20:27:58'
+Current time: '05/28/2017 13:54:22'. 
+2017-05-28 15:54:22.2612|1|Microsoft.AspNetCore.Routing.Tree.TreeRouter|DEBUG|Request successfully matched the route with name '(null)' and template 'api/Episodes'. 
+2017-05-28 15:54:22.2757|2|Microsoft.AspNetCore.Mvc.Internal.ActionSelector|DEBUG|Action 'MangaSurvWebApi.Controllers.EpisodesController.Post (MangaSurvWebApi)' with id 'be08a369-31be-45af-8ce6-cf2573525d34' did not match the constraint 'Microsoft.AspNetCore.Mvc.Internal.HttpMethodActionConstraint' 
+2017-05-28 15:54:22.2612|1|Microsoft.AspNetCore.Routing.Tree.TreeRouter|DEBUG|Request successfully matched the route with name '(null)' and template 'api/Chapters'. 
+2017-05-28 15:54:22.2757|2|Microsoft.AspNetCore.Mvc.Internal.ActionSelector|DEBUG|Action 'MangaSurvWebApi.Controllers.ChaptersController.Post (MangaSurvWebApi)' with id '5fd99703-0cca-4714-aa53-f921b812b2fc' did not match the constraint 'Microsoft.AspNetCore.Mvc.Internal.HttpMethodActionConstraint' 
+2017-05-28 15:54:22.2757|1|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|DEBUG|Executing action MangaSurvWebApi.Controllers.ChaptersController.Get (MangaSurvWebApi) 
+2017-05-28 15:54:22.2757|1|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|DEBUG|Executing action MangaSurvWebApi.Controllers.EpisodesController.Get (MangaSurvWebApi) 
+2017-05-28 15:54:22.2757|1|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|INFO|Executing action method MangaSurvWebApi.Controllers.ChaptersController.Get (MangaSurvWebApi) with arguments ((null)) - ModelState is Valid 
+2017-05-28 15:54:22.2757|1|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|INFO|Executing action method MangaSurvWebApi.Controllers.EpisodesController.Get (MangaSurvWebApi) with arguments ((null)) - ModelState is Valid 
+2017-05-28 15:54:22.2757|3|Npgsql.NpgsqlConnection|DEBUG|Opening connection to database 'MangaSurv' on server 'tcp://192.168.178.70:5432'. 
+2017-05-28 15:54:22.2757|3|Npgsql.NpgsqlConnection|DEBUG|Opening connection to database 'MangaSurv' on server 'tcp://192.168.178.70:5432'. 
+2017-05-28 15:54:22.2757|1|Microsoft.EntityFrameworkCore.Storage.IRelationalCommandBuilderFactory|INFO|Executed DbCommand (2ms) [Parameters=[@__dt_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT "chapter"."Id", "chapter"."Address", "chapter"."AnimeId", "chapter"."EnterDate", "chapter"."EpisodeNo", "chapter"."StateId"
+FROM "Episodes" AS "chapter"
+WHERE "chapter"."EnterDate" >= @__dt_0
+ORDER BY "chapter"."EnterDate" 
+2017-05-28 15:54:22.2912|4|Npgsql.NpgsqlConnection|DEBUG|Closing connection to database 'MangaSurv' on server 'tcp://192.168.178.70:5432'. 
+2017-05-28 15:54:22.2912|3|Npgsql.NpgsqlConnection|DEBUG|Opening connection to database 'MangaSurv' on server 'tcp://192.168.178.70:5432'. 
+2017-05-28 15:54:22.2912|1|Microsoft.EntityFrameworkCore.Storage.IRelationalCommandBuilderFactory|INFO|Executed DbCommand (7ms) [Parameters=[@__dt_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT "chapter"."Id", "chapter"."Address", "chapter"."ChapterNo", "chapter"."EnterDate", "chapter"."MangaId", "chapter"."PageId", "chapter"."StateId"
+FROM "Chapters" AS "chapter"
+WHERE "chapter"."EnterDate" >= @__dt_0
+ORDER BY "chapter"."EnterDate" 
+2017-05-28 15:54:22.2912|1|Microsoft.EntityFrameworkCore.Storage.IRelationalCommandBuilderFactory|INFO|Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT "anime"."Id", "anime"."EnterDate", "anime"."FileSystemName", "anime"."LastUpdate", "anime"."Name"
+FROM "Animes" AS "anime"
+WHERE 0 = 1 
+2017-05-28 15:54:22.2912|4|Npgsql.NpgsqlConnection|DEBUG|Closing connection to database 'MangaSurv' on server 'tcp://192.168.178.70:5432'. 
+2017-05-28 15:54:22.2912|2|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|DEBUG|Executed action method MangaSurvWebApi.Controllers.EpisodesController.Get (MangaSurvWebApi), returned result Microsoft.AspNetCore.Mvc.OkObjectResult. 
+2017-05-28 15:54:22.2912|2|Microsoft.AspNetCore.Mvc.Internal.ObjectResultExecutor|DEBUG|Selected output formatter 'Microsoft.AspNetCore.Mvc.Formatters.JsonOutputFormatter' and content type 'application/json' to write the response. 
+2017-05-28 15:54:22.2912|4|Npgsql.NpgsqlConnection|DEBUG|Closing connection to database 'MangaSurv' on server 'tcp://192.168.178.70:5432'. 
+2017-05-28 15:54:22.2912|1|Microsoft.AspNetCore.Mvc.Internal.ObjectResultExecutor|INFO|Executing ObjectResult, writing value Microsoft.AspNetCore.Mvc.ControllerContext. 
+2017-05-28 15:54:22.2912|3|Npgsql.NpgsqlConnection|DEBUG|Opening connection to database 'MangaSurv' on server 'tcp://192.168.178.70:5432'. 
+2017-05-28 15:54:22.3072|2|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|INFO|Executed action MangaSurvWebApi.Controllers.EpisodesController.Get (MangaSurvWebApi) in 24.5418ms 
+2017-05-28 15:54:22.3072|9|Microsoft.AspNetCore.Server.Kestrel|DEBUG|Connection id "0HL55Q3G4LVNT" completed keep alive response. 
+2017-05-28 15:54:22.3072|1|Microsoft.EntityFrameworkCore.Storage.IRelationalCommandBuilderFactory|INFO|Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT "manga"."Id", "manga"."EnterDate", "manga"."FileSystemName", "manga"."LastUpdate", "manga"."Name"
+FROM "Mangas" AS "manga"
+WHERE 0 = 1 
+2017-05-28 15:54:22.3072|2|Microsoft.AspNetCore.Hosting.Internal.WebHost|INFO|Request finished in 57.0103ms 200 application/json; charset=utf-8 
+2017-05-28 15:54:22.3072|4|Npgsql.NpgsqlConnection|DEBUG|Closing connection to database 'MangaSurv' on server 'tcp://192.168.178.70:5432'. 
+2017-05-28 15:54:22.3072|2|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|DEBUG|Executed action method MangaSurvWebApi.Controllers.ChaptersController.Get (MangaSurvWebApi), returned result Microsoft.AspNetCore.Mvc.OkObjectResult. 
+2017-05-28 15:54:22.3072|2|Microsoft.AspNetCore.Mvc.Internal.ObjectResultExecutor|DEBUG|Selected output formatter 'Microsoft.AspNetCore.Mvc.Formatters.JsonOutputFormatter' and content type 'application/json' to write the response. 
+2017-05-28 15:54:22.3072|1|Microsoft.AspNetCore.Mvc.Internal.ObjectResultExecutor|INFO|Executing ObjectResult, writing value Microsoft.AspNetCore.Mvc.ControllerContext. 
+2017-05-28 15:54:22.3238|2|Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker|INFO|Executed action MangaSurvWebApi.Controllers.ChaptersController.Get (MangaSurvWebApi) in 44.1182ms 
+2017-05-28 15:54:22.3238|9|Microsoft.AspNetCore.Server.Kestrel|DEBUG|Connection id "0HL55Q3G4LVNU" completed keep alive response. 
+2017-05-28 15:54:22.3238|2|Microsoft.AspNetCore.Hosting.Internal.WebHost|INFO|Request finished in 68.3081ms 200 application/json; charset=utf-8 
+2017-05-28 15:56:22.9657|10|Microsoft.AspNetCore.Server.Kestrel|DEBUG|Connection id "0HL55Q3G4LVNT" disconnecting. 
+2017-05-28 15:56:22.9657|10|Microsoft.AspNetCore.Server.Kestrel|DEBUG|Connection id "0HL55Q3G4LVNU" disconnecting. 
+2017-05-28 15:56:22.9657|7|Microsoft.AspNetCore.Server.Kestrel|DEBUG|Connection id "0HL55Q3G4LVNT" sending FIN. 
+2017-05-28 15:56:22.9657|7|Microsoft.AspNetCore.Server.Kestrel|DEBUG|Connection id "0HL55Q3G4LVNU" sending FIN. 
+2017-05-28 15:56:22.9992|8|Microsoft.AspNetCore.Server.Kestrel|DEBUG|Connection id "0HL55Q3G4LVNT" sent FIN with status "0". 
+2017-05-28 15:56:22.9992|8|Microsoft.AspNetCore.Server.Kestrel|DEBUG|Connection id "0HL55Q3G4LVNU" sent FIN with status "0". 
+2017-05-28 15:56:22.9992|2|Microsoft.AspNetCore.Server.Kestrel|DEBUG|Connection id "0HL55Q3G4LVNT" stopped. 
+2017-05-28 15:56:22.9992|2|Microsoft.AspNetCore.Server.Kestrel|DEBUG|Connection id "0HL55Q3G4LVNU" stopped. 

@@ -20,7 +20,7 @@ namespace mangasurvlib.Anime
 
         public Anime(string Name, string SavePath)
         {
-            Page = AnimeConstants.AnimePage.AnimefansFtw;
+            Page = AnimeConstants.AnimePage.HorribleSubs;
             this.Name = Name;
             this.SavePath = SavePath;
         }

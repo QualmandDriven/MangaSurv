@@ -9,7 +9,7 @@ namespace mangasurvlib.Anime
     {
         public enum AnimePage
         {
-            AnimefansFtw
+            AnimefansFtw, HorribleSubs
         }
 
         /// <summary>

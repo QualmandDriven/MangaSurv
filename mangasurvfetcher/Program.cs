@@ -14,6 +14,13 @@ namespace mangasurvfetcher
 
         public static void Main(string[] args)
         {
+            //var hr = new mangasurvlib.Anime.HorribleSubs();
+            //var aUrl = hr.GetAnime("Berserk");
+            //var pUrl = hr.GetAnimePictureUrl(aUrl);
+            //var eUrls = hr.GetEpisodes(new mangasurvlib.Anime.Anime("Berserk", "Berserk"), aUrl);
+            //var fUrls = hr.GetFiles("Berserk", 19, eUrls[0].Url);
+            
+
             //var builder = new ConfigurationBuilder()
             //                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
 

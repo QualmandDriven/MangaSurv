@@ -26,6 +26,15 @@ namespace mangasurvlib.Anime
             //this.LoadUrls();
         }
 
+        internal AnimeEpisode(Anime Anime, Uri Url, double episode)
+        {
+            this.AnimeName = Anime.Name;
+            this.SavePath = Anime.SavePath;
+            this.Url = Url;
+
+            this.Episode = episode;
+        }
+
         internal AnimeEpisode(string Anime, double Episode)
         {
             this.AnimeName = Anime;
@@ -69,7 +78,7 @@ namespace mangasurvlib.Anime
 
             this.Files = new List<KeyValuePair<int, Uri>>();
 
-            this.Files = AnimeHelper.GetAnimeClass().GetFiles(this.Url);
+            this.Files = AnimeHelper.GetAnimeClass().GetFiles(this.AnimeName, this.Episode, this.Url);
             if (this.Files.Count == 0)
                 logger.LogWarning("No available torrent for '{0}'", this.Url);
 

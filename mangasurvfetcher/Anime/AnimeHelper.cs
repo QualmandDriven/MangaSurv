@@ -15,8 +15,8 @@ namespace mangasurvlib.Anime
 
             switch (_page)
             {
-                case AnimeConstants.AnimePage.AnimefansFtw:
-                    loader = new AnimeAnimefansFtw();
+                default:
+                    loader = new HorribleSubs();
                     break;
             }
 

@@ -9,7 +9,7 @@ namespace mangasurvlib.Anime
     {
         Uri GetAnime(string Name);
         List<AnimeEpisode> GetEpisodes(Anime Anime, Uri Url);
-        List<KeyValuePair<int, Uri>> GetFiles(Uri EpisodeUrl);
+        List<KeyValuePair<int, Uri>> GetFiles(string anime, double episodeNo, Uri EpisodeUrl);
         Uri GetAnimePictureUrl(Uri animeUrl);
     }
 }
