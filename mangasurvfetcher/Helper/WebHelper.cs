@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -9,8 +10,10 @@ using System.Threading.Tasks;
 
 namespace mangasurvlib.Helper
 {
-    public static class WebHelper
+    public class WebHelper
     {
+        private static ILogger logger = mangasurvlib.Logging.ApplicationLogging.CreateLogger<WebHelper>();
+
         public static bool UriExists(Uri uriToCheck)
         {
             try
@@ -62,7 +65,15 @@ namespace mangasurvlib.Helper
         }
         public static string DownloadString(Uri uri)
         {
-            return client.GetStringAsync(uri).Result;
+            try
+            {
+                return client.GetStringAsync(uri).Result;
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex.Message, ex);
+                return "";
+            }
         }
     }
 }
