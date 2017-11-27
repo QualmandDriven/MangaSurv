@@ -22,6 +22,7 @@ namespace MangaSurvWebApi.Controllers
 
         // GET api/mangas
         [HttpGet]
+        [Authorize]
         public IActionResult Get()
         {
             return this.Ok();
