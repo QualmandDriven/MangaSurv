@@ -65,15 +65,7 @@ namespace mangasurvlib.Helper
         }
         public static string DownloadString(Uri uri)
         {
-            try
-            {
-                return client.GetStringAsync(uri).Result;
-            }
-            catch (Exception ex)
-            {
-                logger.LogError(ex.Message, ex);
-                return "";
-            }
+            return client.GetStringAsync(uri).Result;
         }
     }
 }

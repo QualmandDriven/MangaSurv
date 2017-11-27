@@ -242,7 +242,7 @@ namespace mangasurvlib.Manga
             }
             catch
             {
-                return null; 
+                return null;
             }
         }
 
@@ -539,7 +539,7 @@ namespace mangasurvlib.Manga
                             string sLink = link.Attributes["href"].Value.Replace("&amp;", "&");
 
                             MangaChapter chapter = MangaFactory.CreateMangaChapter(manga, new System.Uri(sLink), MangaConstants.MangaPage.Batoto);
-                            if(chapter.Chapter == 0)
+                            if (chapter.Chapter == 0)
                             {
                                 chapter.GetChapterOfDescription(link.InnerText.Trim());
                             }
@@ -566,7 +566,7 @@ namespace mangasurvlib.Manga
                 return new List<KeyValuePair<int, Uri>>();
 
             // Load Files
-            
+
             List<Uri> lFileUrl = new List<Uri>();
 
             HtmlDocument doc = new HtmlDocument();
@@ -720,7 +720,16 @@ namespace mangasurvlib.Manga
             }
 
             logger.LogInformation("Loading Cache Part '{0}'", sUrl);
-            string sHtml = Helper.WebHelper.DownloadString(sUrl);
+            string sHtml = "";
+            try
+            {
+                sHtml = Helper.WebHelper.DownloadString(sUrl);
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex.Message, ex);
+                return new Tuple<bool, string>(false, String.Empty);
+            }
 
             if (sHtml.Contains("No (more) comics found!"))
                 return new Tuple<bool, string>(false, String.Empty);
