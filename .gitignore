@@ -7,3 +7,5 @@ release
 Debug
 Release
 /src/images
+/MangaSurvWebApi/src/MangaSurvWebApi/out
+/MangaSurvWebApi/.vs/MangaSurvWebApi/v15/Server/sqlite3
